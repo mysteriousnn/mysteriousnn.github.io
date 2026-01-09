@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIPD - Поддержка и правила</title>
+    <link rel="icon" href="iipdPin.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS Reset & Base Styles ===== */
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #262626;
+            --bg-accent: rgba(38, 38, 38, 0.98);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --accent-gradient: linear-gradient(135deg, #888, #aaa);
+            --accent-orange: linear-gradient(135deg, #999, #bbb);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --header-height: 70px;
+            --menu-border-radius: 15px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: auto;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            padding-top: var(--header-height);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.6;
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Скрываем скроллбар во всех браузерах */
+        body::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+        
+        body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        /* Убираем все скроллбары для меню */
+        .nav-list::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .nav-list {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* ===== Header & Navigation ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            z-index: 1000;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+            padding: 10px 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+        }
+        
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            height: 100%;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1002;
+            position: relative;
+            user-select: none;
+            padding: 8px 0;
+        }
+        
+        .logo:hover {
+            opacity: 0.8;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        /* Menu Toggle Button */
+        .menu-toggle {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+            z-index: 1002;
+            position: relative;
+            top: 2px;
+        }
+        
+        /* Main Menu */
+        .nav-list {
+            display: none;
+            flex-direction: column;
+            width: calc(100% - 40px);
+            max-width: 400px;
+            position: fixed;
+            top: calc(var(--header-height) + 15px);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-secondary);
+            padding: 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: var(--menu-border-radius);
+            z-index: 1001;
+            max-height: 85vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            list-style: none;
+        }
+        
+        .nav-list.active {
+            display: flex;
+        }
+        
+        .nav-item {
+            position: relative;
+            width: 100%;
+        }
+        
+        .nav-item:first-child .nav-link {
+            border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+        }
+        
+        .nav-item:last-child .nav-link {
+            border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 18px 24px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background-color: transparent;
+            position: relative;
+        }
+        
+        .nav-link i {
+            font-size: 1.1rem;
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .link-text {
+            flex-grow: 1;
+        }
+        
+        /* Special menu item */
+        .nav-item-special .nav-link {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            width: 100%;
+            background-color: rgba(26, 26, 26, 0.95);
+            border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
+            padding: 0;
+            margin: 0;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .dropdown.active .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 48px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            min-height: 48px;
+        }
+        
+        /* Diamond bullet for dropdown items */
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            width: 8px;
+            height: 8px;
+            background: #888;
+            flex-shrink: 0;
+        }
+        
+        .dropdown-item-text {
+            flex: 1;
+            padding-left: 8px;
+        }
+        
+        .dropdown-item::after {
+            content: ' ➥';
+            color: #888;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        
+        /* Dropdown arrow (diamond shape) */
+        .dropdown-toggle::after {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg);
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        
+        .dropdown.active .dropdown-toggle::after {
+            transform: rotate(-135deg);
+        }
+        
+        /* ===== Main Content ===== */
+        .content {
+            padding: 20px 0;
+            flex: 1 0 auto;
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: var(--bg-secondary);
+            border-radius: var(--menu-border-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .last-edited {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        /* Single Content Block */
+        .content-block {
+            background-color: var(--bg-secondary);
+            border-radius: var(--menu-border-radius);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--text-primary);
+        }
+        
+        .section-title:first-child {
+            margin-top: 0;
+        }
+        
+        .content-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .content-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Стили для списков без цифр и маркеров */
+        .simple-list {
+            margin: 15px 0 20px 0;
+            color: var(--text-secondary);
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .simple-list li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            padding-left: 0;
+        }
+        
+        /* Стили для ссылок внутри текста */
+        .inline-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted rgba(170, 170, 170, 0.5);
+            transition: all 0.2s ease;
+            padding: 0 2px;
+            position: relative;
+        }
+        
+        .inline-link:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .inline-link::after {
+            content: ' ↗';
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        /* Telegram Bot Link Styles */
+        .telegram-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted rgba(170, 170, 170, 0.5);
+        }
+        
+        .telegram-link:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+        
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--bg-secondary);
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+            border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .footer-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .copyright {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        /* ===== Decorative Elements ===== */
+        .decorative-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.02;
+            background: 
+                radial-gradient(circle at 20% 30%, #888 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
+        }
+        
+        .footer-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(136, 136, 136, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(153, 153, 153, 0.05) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        /* Menu Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            backdrop-filter: blur(2px);
+        }
+        
+        .menu-overlay.active {
+            display: block;
+        }
+        
+        /* ===== Media Queries ===== */
+        @media (min-width: 769px) {
+            .nav-list {
+                width: 400px;
+                max-width: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list {
+                width: calc(100% - 40px);
+                max-width: calc(100% - 40px);
+                max-height: 80vh;
+            }
+            
+            .footer {
+                padding: 40px 0 30px;
+            }
+            
+            .content-block {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                padding: 20px 0;
+            }
+            
+            .nav-list {
+                max-height: 75vh;
+                top: calc(var(--header-height) + 10px);
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .page-header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .page-title {
+                font-size: 1.3rem;
+            }
+            
+            .content-block {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+                margin: 25px 0 12px 0;
+            }
+            
+            .content-text {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+            
+            .footer {
+                padding: 30px 0 20px;
+            }
+            
+            .footer-logo {
+                font-size: 2.2rem;
+            }
+            
+            .copyright {
+                font-size: 1rem;
+            }
+            
+            .menu-toggle {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .nav-link {
+                padding: 16px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .dropdown-item {
+                padding: 14px 40px;
+            }
+            
+            .dropdown-item::before {
+                left: 24px;
+            }
+        }
+        
+        /* Очень маленькие экраны */
+        @media (max-width: 380px) and (max-height: 800px) {
+            .nav-list {
+                max-height: 70vh;
+                top: calc(var(--header-height) + 5px);
+            }
+            
+            .footer {
+                padding: 25px 0 15px;
+            }
+            
+            .content-block {
+                padding: 15px;
+            }
+        }
+        
+        /* Для горизонтальной ориентации */
+        @media (max-height: 500px) {
+            .nav-list {
+                max-height: 65vh;
+            }
+        }
+        
+        /* Large screens */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1300px;
+            }
+        }
+        
+        /* Improved hover states for better UX */
+        @media (hover: hover) {
+            .menu-toggle:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .nav-link:hover, .nav-link.active {
+                background-color: rgba(255, 255, 255, 0.08);
+                color: var(--text-primary);
+            }
+            
+            .nav-item-special .nav-link:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            .dropdown-item:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+            }
+            
+            .inline-link:hover {
+                color: var(--text-primary);
+                border-bottom: 1px solid var(--text-primary);
+                background: rgba(255, 255, 255, 0.05);
+            }
+            
+            .telegram-link:hover {
+                color: var(--text-primary);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative Background -->
+    <div class="decorative-bg"></div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="main-nav">
+                <!-- Logo as link to home page -->
+                <a href="https://mysteriousnn.github.io/iipd/" class="logo" id="logo" title="Перейти на главную страницу">
+                    <i class="fas fa-users"></i> IIPD
+                </a>
+                
+                <!-- Menu Toggle -->
+                <div class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                    <span>Меню</span>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <ul class="nav-list" id="nav-list">
+                    <li class="nav-item">
+                        <a href="https://mysteriousnn.github.io/iipd/" class="nav-link">
+                            <span class="link-text">
+                                <i class="fas fa-home"></i> Главная
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="https://t.me/ishupodrygyilidryga" class="nav-link" target="_blank" rel="noopener noreferrer">
+                            <span class="link-text">
+                                <i class="fab fa-telegram"></i> Наш канал
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item nav-item-special">
+                        <a href="https://t.me/ankety_bot" class="nav-link" target="_blank" rel="noopener noreferrer">
+                            <span class="link-text">
+                                <i class="fas fa-robot"></i> Бот для анкет
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="https://t.me/lymikanon" class="nav-link" target="_blank" rel="noopener noreferrer">
+                            <span class="link-text">
+                                <i class="fas fa-comments"></i> Наш чат
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="rules.html" class="nav-link">
+                            <span class="link-text">
+                                <i class="fas fa-scroll"></i> Правила
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+                            <span class="link-text">
+                                <i class="fas fa-chart-line"></i> Tgstat
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="https://uk.tgstat.com/channel/@ishupodrygyilidryga" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                                <span class="dropdown-item-text">iipd</span>
+                            </a>
+                            <a href="https://uk.tgstat.com/channel/@surrealtouch" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                                <span class="dropdown-item-text">surrealtouch</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+                            <span class="link-text">
+                                <i class="fas fa-user-shield"></i> Стать Админом
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="https://t.me/info_ishupodrygyilidryga/27" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                                <span class="dropdown-item-text">По Анкетам</span>
+                            </a>
+                            <a href="https://t.me/info_ishupodrygyilidryga/897" class="dropdown-item" target="_blank" rel="noopener noreferrer">
+                                <span class="dropdown-item-text">По Аватаркам</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Поддержка / Ответы</h1>
+                <div class="last-edited">Последнее редактирование - 24.08.2025 в 22:24 (МСК)</div>
+            </div>
+            
+            <!-- Single Content Block -->
+            <div class="content-block">
+                <!-- Отмена публикации анкеты -->
+                <h2 class="section-title">Отмена публикации анкеты</h2>
+                <p class="content-text">
+                    Согласно нашим условиям пункта 6. "Права и ответственность сторон" - 6.2. "Права и ответственность Пользователя". 6.2.5:
+                </p>
+                <p class="content-text">
+                    Пользователь в праве обратиться за отменой публикации анкеты, до момента её выхода на канал.
+                </p>
+                
+                <!-- Как это работает? -->
+                <h2 class="section-title">Как это работает?</h2>
+                <p class="content-text">
+                    Если ваша анкета еще не опубликована на канале, вы можете обратиться в поддержку с запросом на отмену публикации. Для этого вам необходимо:
+                </p>
+                
+                <!-- Шаги для отмены публикации -->
+                <h2 class="section-title">Шаги для отмены публикации:</h2>
+                <ul class="simple-list">
+                    <li>1. Направить запрос в поддержку.</li>
+                    <li>2. Включить в запрос четкую просьбу об отмене публикации.</li>
+                    <li>3. Указать номер вашей анкеты.</li>
+                </ul>
+                
+                <!-- Важные моменты -->
+                <h2 class="section-title">Важные моменты</h2>
+                <p class="content-text">
+                    <strong>Время рассмотрения запроса:</strong><br>
+                    Учтите, что ваша просьба об отмене публикации может потребовать некоторого времени для обработки.
+                </p>
+                <p class="content-text">
+                    <strong>Публикация анкеты во время рассмотрения:</strong><br>
+                    Если в момент, когда ваша заявка рассматривается, анкета уже была опубликована, она останется на канале и не будет удалена. Поэтому важно отправлять запрос как можно раньше.
+                </p>
+                <p class="content-text">
+                    <strong>Право администрации:</strong><br>
+                    Администрация оставляет за собой право отказать в отмене публикации анкеты. Это решение может быть принято по различным причинам. Также Администрация оставляет за собой право не раскрывать причину отказа.
+                </p>
+                <p class="content-text">
+                    <strong>Проверка на соответствие правилам:</strong><br>
+                    Пожалуйста, помните, что обращение с просьбой об отмене публикации не освобождает вашу анкету от проверки на наличие нарушений. Если будут выявлены какие-либо нарушения правил, ограничения всё равно будут выданы.
+                </p>
+                
+                <!-- Что этот пункт означает? -->
+                <h2 class="section-title">Что этот пункт означает?</h2>
+                <p class="content-text">
+                    Этот пункт не отменяет и не изменяет существующие правила, касающиеся удаления анкет с канала. Он лишь предоставляет возможность отменить публикацию анкеты до её выхода на канал. Если анкета уже опубликована, она останется доступной для подписчиков.
+                </p>
+                
+                <!-- Ожидание публикации -->
+                <h2 class="section-title">Ожидание публикации</h2>
+                <p class="content-text">
+                    <strong>Если ваша анкета не опубликована в течение 10 минут</strong>
+                </p>
+                <p class="content-text">
+                    Не спешите писать в поддержку. Ожидание публикации может занимать несколько дней.
+                </p>
+                <ul class="simple-list">
+                    <li>• Все анкеты публикуются вручную живыми Админами. Бот не осуществляет автоматическую публикацию.</li>
+                </ul>
+                
+                <!-- Удаление анкеты -->
+                <h2 class="section-title">Удаление анкеты</h2>
+                <p class="content-text">
+                    Анкеты с канала не удаляются
+                </p>
+                <p class="content-text">
+                    Это указано в наших условиях с которыми вы должны ознакомиться перед отправкой анкеты.
+                </p>
+                
+                <!-- Изменение анкеты -->
+                <h2 class="section-title">Изменение анкеты</h2>
+                <p class="content-text">
+                    Изменению подлежат только опубликованные анкеты. Анкету, которую вы отправили в бота, изменить невозможно. Если ваша анкета еще не опубликована на канале, то вы можете запросить отмену её публикации в поддержке.
+                </p>
+                <p class="content-text">
+                    Перепроверяйте написанное несколько раз перед отправкой
+                </p>
+                
+                <!-- Почему анкета не публикуется более 5 дней и т.д -->
+                <h2 class="section-title">Почему анкета не публикуется более 5 дней и т.д</h2>
+                <p class="content-text">
+                    Скорее всего, в вашей анкете отсутствует ваш Юзернейм. Согласно новым правилам, Админы игнорируют анкеты без указания Юзернейм`а.
+                </p>
+                <p class="content-text">
+                    Еще одна причина - указание в анкете акцента на поиск интернет-отношений. Такие анкеты не публикуются на канале.
+                </p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bg"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">IIPD</div>
+                <div class="footer-text">
+                    <div class="copyright">© 2026 IIPD - Ищу интернет подругу/друга.</div>
+                    <div class="copyright">Канал, созданный для людей, которые хотят найти новых друзей и общаться с интересными людьми в интернете.</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Оптимизированный JavaScript без анимаций
+        (function() {
+            'use strict';
+            
+            // DOM Elements
+            const dom = {
+                menuToggle: document.getElementById('menu-toggle'),
+                navList: document.getElementById('nav-list'),
+                menuOverlay: document.getElementById('menu-overlay'),
+                body: document.body,
+                dropdowns: document.querySelectorAll('.dropdown'),
+                dropdownToggles: document.querySelectorAll('.dropdown-toggle')
+            };
+            
+            // State
+            let isMenuOpen = false;
+            
+            // Menu Functions
+            const menu = {
+                open: function() {
+                    dom.navList.classList.add('active');
+                    dom.menuOverlay.classList.add('active');
+                    dom.body.style.overflow = 'hidden';
+                    dom.menuToggle.innerHTML = '<i class="fas fa-times"></i><span>Закрыть</span>';
+                    isMenuOpen = true;
+                    dom.menuToggle.setAttribute('aria-expanded', 'true');
+                },
+                
+                close: function() {
+                    dom.navList.classList.remove('active');
+                    dom.menuOverlay.classList.remove('active');
+                    dom.body.style.overflow = '';
+                    dom.menuToggle.innerHTML = '<i class="fas fa-bars"></i><span>Меню</span>';
+                    isMenuOpen = false;
+                    this.closeAllDropdowns();
+                    dom.menuToggle.setAttribute('aria-expanded', 'false');
+                },
+                
+                toggle: function() {
+                    if (isMenuOpen) {
+                        this.close();
+                    } else {
+                        this.open();
+                    }
+                },
+                
+                closeAllDropdowns: function() {
+                    dom.dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                        const toggle = dropdown.querySelector('.dropdown-toggle');
+                        if (toggle) {
+                            toggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                },
+                
+                toggleDropdown: function(dropdown) {
+                    const isActive = dropdown.classList.contains('active');
+                    
+                    // Close all other dropdowns
+                    this.closeAllDropdowns();
+                    
+                    // Toggle current dropdown
+                    if (!isActive) {
+                        dropdown.classList.add('active');
+                        const toggle = dropdown.querySelector('.dropdown-toggle');
+                        if (toggle) {
+                            toggle.setAttribute('aria-expanded', 'true');
+                        }
+                    }
+                }
+            };
+            
+            // Event Listeners
+            const initEventListeners = function() {
+                // Menu toggle
+                dom.menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menu.toggle();
+                });
+                
+                // Dropdown toggles
+                dom.dropdownToggles.forEach(toggle => {
+                    toggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const dropdown = this.parentElement;
+                        menu.toggleDropdown(dropdown);
+                    });
+                });
+                
+                // Close menu on overlay click
+                dom.menuOverlay.addEventListener('click', function() {
+                    menu.close();
+                });
+                
+                // Close menu on regular link click
+                document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+                    link.addEventListener('click', function() {
+                        menu.close();
+                    });
+                });
+                
+                // Закрытие меню при клике в любом месте кроме самого меню
+                document.addEventListener('click', function(e) {
+                    if (isMenuOpen && 
+                        !e.target.closest('.nav-list') && 
+                        !e.target.closest('.menu-toggle')) {
+                        menu.close();
+                    }
+                });
+                
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && isMenuOpen) {
+                        menu.close();
+                    }
+                });
+                
+                // Prevent multiple clicks
+                const links = document.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        if (this.dataset.clicked) {
+                            e.preventDefault();
+                            return;
+                        }
+                        
+                        this.dataset.clicked = 'true';
+                        setTimeout(() => {
+                            delete this.dataset.clicked;
+                        }, 1000);
+                    });
+                });
+            };
+            
+            // Initialize
+            const init = function() {
+                // Initialize event listeners
+                initEventListeners();
+                
+                // Set accessibility attributes
+                dom.menuToggle.setAttribute('aria-expanded', 'false');
+                dom.menuToggle.setAttribute('aria-label', 'Открыть меню навигации');
+                
+                // Add aria-labels to dropdown toggles
+                dom.dropdownToggles.forEach(toggle => {
+                    toggle.setAttribute('aria-expanded', 'false');
+                    toggle.setAttribute('aria-haspopup', 'true');
+                });
+            };
+            
+            // Start when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+            
+        })();
+    </script>
+</body>
+</html>
