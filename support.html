@@ -390,9 +390,11 @@
             border-bottom: 1px dotted rgba(170, 170, 170, 0.5);
         }
         
-        .telegram-link:hover {
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--text-primary);
+        /* Стиль для ссылок поддержки */
+        .support-link {
+            color: #aaa;
+            text-decoration: underline;
+            font-weight: 600;
         }
         
         /* ===== Footer ===== */
@@ -646,6 +648,10 @@
             .telegram-link:hover {
                 color: var(--text-primary);
             }
+            
+            .support-link:hover {
+                color: var(--text-primary);
+            }
         }
     </style>
 </head>
@@ -851,6 +857,7 @@
                 <h2 class="section-title">Бот поддержки</h2>
                 <p class="content-text">
                     Не нашли ответа на свой вопрос? Обращайтесь в бота поддержки - <a href="https://t.me/helpforsilencebot" class="support-link" target="_blank" rel="noopener noreferrer">@helpforsilencebot</a>.
+                </p>
             </div>
         </div>
     </main>
