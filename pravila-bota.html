@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правила бота | Ищу интернет подругу/друга</title>
+    <title>Пользовательское соглашение | Ищу интернет подругу/друга</title>
     <link rel="icon" href="iipdPin.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -588,6 +588,34 @@
             border-bottom: 1px solid var(--text-primary);
         }
         
+        /* Agreement Text Styles */
+        .agreement-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .agreement-section {
+            margin-bottom: 30px;
+        }
+        
+        .agreement-section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .agreement-point {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .agreement-subpoint {
+            margin-bottom: 10px;
+            padding-left: 40px;
+        }
+        
         /* Decorative Elements */
         .decorative-bg {
             position: fixed;
@@ -653,6 +681,10 @@
                 font-size: 1.4rem;
             }
             
+            .agreement-section-title {
+                font-size: 1.3rem;
+            }
+            
             .nav-footer {
                 padding: 15px;
             }
@@ -700,9 +732,21 @@
                 margin-bottom: 15px;
             }
             
-            .content-text {
+            .content-text, .agreement-text {
                 font-size: 1rem;
                 margin-bottom: 15px;
+            }
+            
+            .agreement-section-title {
+                font-size: 1.2rem;
+            }
+            
+            .agreement-point {
+                padding-left: 15px;
+            }
+            
+            .agreement-subpoint {
+                padding-left: 30px;
             }
             
             .requirement-item {
@@ -952,120 +996,144 @@
     <main class="content">
         <div class="container">
             <div class="page-header">
-                <h1 class="page-title">Правила бота</h1>
+                <h1 class="page-title">Пользовательское соглашение</h1>
             </div>
             
             <div class="main-content">
                 <div class="content-section">
-                    <h2 class="section-title">1.1 Нарушение правил модерации</h2>
-                    <p class="content-text">
-                        Запрещено размещение фотографий, содержащих порнографический или жестокий насильственный контент.
-                    </p>
-                </div>
-                
-                <div class="content-section">
-                    <h2 class="section-title">1.2 Указание чужого юзера в анкете</h2>
-                    <p class="content-text">
-                        При создании анкеты нельзя указывать чужой юзернейм.
-                    </p>
-                    
-                    <h3 class="section-title" style="font-size: 1.4rem; margin-top: 30px;">Доп.Инфо к пункту 1.2 ⤵</h3>
-                    
-                    <h4 class="section-title" style="font-size: 1.2rem; margin-top: 20px;">Раздел 1.2.1: Регламент для обработки исключительных нарушений</h4>
-                    <p class="content-text">
-                        Данный подраздел регламентирует процедуру вынесения ограничений за нарушения, носящие единичный характер, касающиеся нарушения условий, изложенных в поперечном пункте 1.2.
-                    </p>
-                    <p class="content-text">
-                        Настоящий пункт конкретизирует меры воздействия в отношении нарушений, связанных с намеренным искажением условий, обозначенных в пункте 1.2 регламента.
-                    </p>
-                    <p class="content-text">
-                        В случае факта нарушения, предусмотренного настоящим подразделом, нарушитель подвергается наказанию в виде временной блокировки доступа к функционалу создания новых анкет. Срок блокировки составляет 10 дней.
-                    </p>
-                    <p class="content-text">
-                        Данная мера обусловлена необходимостью пресечения действий, направленных на обход установленных правил и создание недобросовестных преимуществ.
-                    </p>
-                    <p class="content-text">
-                        Основанием для применения ограничений является преднамеренное нарушение правил при формировании анкетных данных, выраженное в следующем:
-                    </p>
-                    <p class="content-text">
-                        Пользователь умышленно, в нарушение установленных требований, размещает в анкете, кроме основного, Имени пользователя (далее - "Отправитель"), дополнительный Юзернейм.
-                    </p>
-                    
-                    <h5 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 600;">Пояснение;</h5>
-                    <p class="content-text">
-                        Помимо Основного Юзернейма (значимость которого датируется как "Отправитель"), добавляется другой Юзернейм, не относящийся к значимости "Отправитель".
-                    </p>
-                    
-                    <h5 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 600;">Примером подобного нарушения является следующая ситуация:</h5>
-                    <p class="content-text" style="background-color: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid #888; margin: 15px 0;">
-                        "Приветствую всех, меня зовут Лиза, мне 15 лет, и я ищу друга, преимущественно в возрасте от 15 до 17 лет, проживающего в России. Увлекаюсь рисованием, музыкой и вокалом. Мой основной аккаунт: @Liza Дополнительный аккаунт (второй аккаунт) (для связи, если не отвечаю на основном): @LizaSailomoina" *
-                    </p>
-                    <p class="content-text" style="font-size: 0.95rem; color: #aaa;">
-                        * Данное отступление является ярким примером нарушения пункта 1.2.1.
-                    </p>
-                    
-                    <p class="content-text">
-                        Важно понимать, что при создании анкеты нельзя указывать дополнительные Юзернеймы, которые не относятся к статусу "Отправителя".
-                    </p>
-                    <p class="content-text">
-                        Администрация не может лишь словесно гарантировать себе то, что дополнительный Юзернейм действительно является вторым (дополнительным аккаунтом "Отправителя").
-                    </p>
-                    <p class="content-text">
-                        Так как данный случай может предусматривать собой цели подставления других участников - пользователей, которые не имеют никакого отношения к "Отправителю".
-                    </p>
-                    <p class="content-text">
-                        Важно отметить, что тяжесть ограничения за данное нарушение была смягчена в результате компромиссного решения, принятого в связи со спорностью пункта 1.2.1 в части его интерпретации со стороны Администрации и понимания со стороны Пользователей. Учитывая вышеизложенное, временное ограничение на создание анкет, составляющее 10 дней, признано адекватной мерой воздействия.
-                    </p>
-                    <p class="content-text">
-                        Администрация оставляет за собой право пересмотра данного регламента в случае выявления системных нарушений и необходимости более жестких мер реагирования.
-                    </p>
-                </div>
-                
-                <div class="content-section">
-                    <h2 class="section-title">1.3 Реклама</h2>
-                    <p class="content-text">
-                        Указаны ссылки на каналы или призывы к подписке.
-                    </p>
-                    <p class="content-text">
-                        Запрещена любая реклама сторонних ресурсов, в том числе:
-                    </p>
-                    <ul class="requirements-list">
-                        <li class="requirement-item">Указание ссылок на каналы или призывы к подписке на них.</li>
-                        <li class="requirement-item">Высказывания, побуждающие пользователей переходить на другие каналы (например, "Больше обо мне узнаете в канале профиля").</li>
-                        <li class="requirement-item">Любые намеки на другие каналы, упоминания профилей с информацией/биографией, примеры каналов и т.д.</li>
-                    </ul>
-                    <p class="content-text">
-                        Любое подобное поведение будет расцениваться как реклама и повлечет за собой блокировку.
-                    </p>
-                </div>
-                
-                <div class="content-section">
-                    <h2 class="section-title">1.4 Нарушение правил заполнения анкеты</h2>
-                    <p class="content-text">
-                        Отправлено несерьёзное / "шуточное" сообщение вместо корректной анкеты. Также в этот пункт входит такая ситуация, как отправка не имеющих смысла слов /предложений — всего того, что не является анкетой. Отправляя бессмысленные слова / предложения, а не анкету, вы впустую тратите время админов и своё личное. Давайте уважать себя и других.
-                    </p>
-                </div>
-                
-                <div class="content-section">
-                    <h2 class="section-title">1.5 Причина бана по усмотрению администрации</h2>
-                    <p class="content-text">
-                        <strong>Пункт 1.5. (Применяется не только в боте*) ⤵</strong>
-                    </p>
-                    <p class="content-text">
-                        Пункт 1.5 обычно описывает ситуацию, когда администрация платформы оставляет за собой право блокировать пользователей по своему усмотрению, даже если конкретные нарушения правил не были явно зафиксированы. Это может включать в себя действия, которые, хотя и не подпадают под другие пункты правил, могут негативно сказываться на атмосфере сообщества или нарушать его основные принципы.
-                    </p>
-                    <ul class="requirements-list">
-                        <li class="requirement-item"><strong>Неуместное поведение:</strong> Пользователь может не нарушать конкретные правила, но его поведение (например, агрессивные высказывания или провокации) может создать токсичную атмосферу.</li>
-                        <li class="requirement-item"><strong>Нарушение доверия:</strong> Если администрация считает, что пользователь нарушает доверие сообщества (например, путем распространения ложной информации), она может принять решение о бане.</li>
-                        <li class="requirement-item"><strong>Неуместные строки/высказывание/упоминания.</strong></li>
-                        <li class="requirement-item"><strong>Использование некорректных выражений:</strong> публикация неуместных строк, высказываний или упоминаний, недопустимых на нашем канале. Сюда входят высказывания, способные вызвать негативные эмоции, дискомфорт или привести к нежелательным последствиям среди аудитории и самому каналу.</li>
-                    </ul>
-                    <p class="content-text">
-                        Важно отметить, что администрация сохраняет за собой право не раскрывать публично конкретные причины наложенного ограничения по пункту 1.5. Такое решение принимается в целях защиты конфиденциальности отдельных случаев нарушений либо предотвращения раскрытия чувствительной информации, способной нанести дополнительный ущерб ресурсу или отдельным лицам.
-                    </p>
-                    <p class="content-text">
-                        Пользователь, столкнувшийся с подобным решением, может обратиться в <a href="https://t.me/helpforsilencebot" class="content-link" target="_blank" rel="noopener noreferrer">поддержку</a> для получения разъяснений в частном порядке. Однако сама администрация оставляет за собой возможность отказать в предоставлении детальной информации, если сочтёт это необходимым.
-                    </p>
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">1. Общие положения</h2>
+                        <p class="agreement-text">
+                            1.1 Настоящий Договор-оферта (далее - "Договор") является публичной офертой, адресованной неопределенному кругу лиц, и регулирует отношения между Администрацией <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> (далее - "Администрация") и Пользователем, который заполняет и отправляет свою анкету в <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">бота</a> (далее - "Пользователь").
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">2. Предмет договора</h2>
+                        <p class="agreement-text">
+                            2.1. Предметом настоящего Договора является предоставление Пользователем Администрации права на обработку <a href="https://ishupodrygyilidryga.fun/posted" class="content-link" target="_blank" rel="noopener noreferrer">персональных данных</a> Пользователя, содержащихся в анкете, для целей публикации анкеты на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a>. Данные передаются через <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">бота</a>.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">3. Сбор и использование информации</h2>
+                        <p class="agreement-text">
+                            3.1. Администрация <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">Ищу интернет подругу/друга</a> собирает анкеты Пользователей, содержащие персональную информацию, предоставленную ими добровольно.
+                        </p>
+                        <p class="agreement-text">
+                            3.2. Администрация <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> использует предоставленную информацию с целью публикации анкет на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a>.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">4. Публикация и доступность информации</h2>
+                        <p class="agreement-text">
+                            4.1. Предоставленные анкеты публикуются на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a> Ищу интернет подругу/друга и становятся доступными для широкого круга пользователей.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">5. Согласие на обработку персональных данных анкеты</h2>
+                        <p class="agreement-text">
+                            5.1. Предоставляя свою анкету для публикации на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a> <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">Ищу интернет подругу/друга</a>, Пользователь соглашается на публикацию своей анкеты без права на удаление.
+                        </p>
+                        <p class="agreement-text">
+                            5.2. Пользователь разрешает использование своего имени (никнейма (@username)) и предоставленной информации для целей публикации анкеты на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a>.
+                        </p>
+                        <p class="agreement-text">
+                            5.3. Пользователь осознает и соглашается с тем, что его анкетная информация будет доступна широкому кругу пользователей и может быть использована третьими лицами, участниками <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> или другими пользователями <a href="https://telegram.org/" class="content-link" target="_blank" rel="noopener noreferrer">Telegram</a>.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">6. Права и ответственность сторон</h2>
+                        <div class="agreement-point">
+                            <p class="agreement-text"><strong>6.1. Права и ответственность Администрации:</strong></p>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.1. Администрация имеет право использовать предоставленные Пользователем <a href="https://ishupodrygyilidryga.fun/posted" class="content-link" target="_blank" rel="noopener noreferrer">персональные данные</a> для целей публикации анкеты на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a>.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.2. В случае необходимости исключительно для Администрации, анкета пользователя может быть отредактирована после её публикации.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.3. Администрация имеет право удалять опубликованные анкеты без объяснения причин.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.4. Администрация имеет право изменять условия настоящего Договора в одностороннем порядке.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.5. Администрация вправе блокировать или ограничивать Пользователя в случае нарушения данного договора или <a href="https://ishupodrygyilidryga.fun/pravila-bota" class="content-link" target="_blank" rel="noopener noreferrer">правил бота</a>.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.6. Пользователь осознает и соглашается с тем, что его анкетная информация будет доступна широкому кругу пользователей и может быть использована третьими лицами, участниками <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> или другими пользователями <a href="https://telegram.org/" class="content-link" target="_blank" rel="noopener noreferrer">Telegram</a> (см пункт 5.3). При этом, Администрация <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> не несет ответственности за любые последствия, возникшие в результате использования данной информации третьими лицами.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.1.7. Администрация оставляет за собой право отказать в отмене публикации анкеты. Это решение может быть принято по различным причинам. Также Администрация оставляет за собой право не раскрывать причину отказа.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="agreement-point">
+                            <p class="agreement-text"><strong>6.2. Права и ответственность Пользователя:</strong></p>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.2.1. Пользователь вправе обратиться с запросом на удаление анкеты с <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> в случае, если он утверждает, что анкета была создана без его согласия. В таких случаях пользователь должен предоставить соответствующие обоснования для подтверждения своих утверждений. Пользователь не может запросить удаление анкеты, если он сам создал и отправил её в <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">бота</a>.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.2.2. Пользователь обязуется предоставлять только информацию, относящуюся непосредственно к себе.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.2.3. Пользователь обязуется соблюдать условия настоящего договора и <a href="https://ishupodrygyilidryga.fun/pravila-bota" class="content-link" target="_blank" rel="noopener noreferrer">правил бота</a>, а также воздерживаться от передачи незаконной, дискриминационной или иной информации, способной нарушить права и интересы других участников <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a>.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">6.2.4. Пользователь несет полную ответственность за предоставленную информацию в анкете и за любые возможные последствия, связанные с этой информацией.</p>
+                            </div>
+                            <div class="agreement-subpoint">
+                                <p class="agreement-text">
+                                    6.2.5. Пользователь в праве обратиться за отменой публикации анкеты, до момента её выхода на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канал</a>.
+                                    Если анкета Пользователя еще не опубликована на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a>, он может обратиться в поддержку с запросом на отмену публикации. Для этого необходимо:<br>
+                                    1. Направить запрос в поддержку.<br>
+                                    2. Включить в запрос четкую просьбу об отмене публикации.<br>
+                                    3. Указать номер вашей анкеты.<br><br>
+                                    <em>Важные моменты<br>
+                                    Время рассмотрения запроса: Учтите, что ваша просьба об отмене публикации может потребовать некоторого времени для обработки.<br>
+                                    Публикация анкеты во время рассмотрения: Если в момент, когда ваша заявка рассматривается, анкета уже была опубликована, она останется на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a> и не будет удалена. Поэтому важно отправлять запрос как можно раньше.<br>
+                                    Проверка на соответствие правилам: Пожалуйста, помните, что обращение с просьбой об отмене публикации не освобождает вашу анкету от проверки на наличие нарушений. Если будут выявлены какие-либо нарушения <a href="https://ishupodrygyilidryga.fun/pravila-bota" class="content-link" target="_blank" rel="noopener noreferrer">правил</a>, ограничения всё равно будут выданы.<br><br>
+                                    Что этот пункт означает?<br>
+                                    Этот пункт не отменяет и не изменяет существующие правила, касающиеся удаления анкет с <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a>. Он лишь предоставляет возможность отменить публикацию анкеты до её выхода на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канал</a>. Если анкета уже опубликована, она останется доступной для подписчиков и других пользователей <a href="https://telegram.org/" class="content-link" target="_blank" rel="noopener noreferrer">Telegram</a>.</em>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">7. Решение споров</h2>
+                        <p class="agreement-text">
+                            7.1. Все споры, которые могут возникнуть между Пользователем и Администрацией, должны решаться путем переговоров.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">8. Прочие условия</h2>
+                        <p class="agreement-text">
+                            8.1. Настоящий договор является публичной офертой <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">бота</a> и <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канала</a> и доступен для ознакомления как на <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">канале</a>, так и в <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">боте</a> (Команда - /privacy).
+                        </p>
+                        <p class="agreement-text">
+                            8.2. Отправляя свою анкету в <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">бота</a>, пользователь подтверждает, что он внимательно ознакомился с условиями данной политики и согласен с ними.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">9. Контактная информация</h2>
+                        <p class="agreement-text">
+                            9.1. В случае возникновения вопросов, Пользователь может связаться с Администрацией по адресу <a href="https://t.me/helpforsilencebot" class="content-link" target="_blank" rel="noopener noreferrer">@helpforsilencebot</a>.
+                        </p>
+                    </div>
+
+                    <div class="agreement-section">
+                        <h2 class="agreement-section-title">10. Изменения в договоре</h2>
+                        <p class="agreement-text">
+                            10.1. Мы сохраняем за собой возможность обновлять эту Политику конфиденциальности и при необходимости вносить в нее коррективы (см пункт 6.1.4). Все обновления к данной Политике конфиденциальности вступают в силу сразу после их публикации на веб-странице по адресу - <a href="https://www.ishupodrygyilidryga.fun/privacy" class="content-link" target="_blank" rel="noopener noreferrer">https://www.ishupodrygyilidryga.fun/privacy</a>.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
