@@ -20,12 +20,16 @@
             --shadow-color: rgba(0, 0, 0, 0.4);
             --header-height: 70px;
             --menu-border-radius: 15px;
+            --scrollbar-track: rgba(255, 255, 255, 0.05);
+            --scrollbar-thumb: rgba(136, 136, 136, 0.5);
+            --scrollbar-thumb-hover: rgba(136, 136, 136, 0.7);
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Убираем подсветку при тапе на мобильных */
         }
         
         html {
@@ -48,6 +52,22 @@
             -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
+            -webkit-user-select: none; /* Запрещаем выделение текста на iOS */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; /* Запрещаем выделение текста */
+        }
+        
+        /* Разрешаем выделение текста только в текстовых блоках */
+        .channel-description,
+        .channel-text,
+        .info-text,
+        .button-description,
+        .subtitle {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         
         /* Скрываем скроллбар во всех браузерах */
@@ -62,16 +82,6 @@
             -ms-overflow-style: none;
         }
         
-        /* Убираем все скроллбары для меню */
-        .nav-list::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .nav-list {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
         /* ===== Header & Navigation ===== */
         .header {
             position: fixed;
@@ -79,9 +89,8 @@
             left: 0;
             width: 100%;
             height: var(--header-height);
-            z-index: 1000;
+            z-index: 3000;
             background-color: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
             padding: 10px 0;
         }
@@ -102,17 +111,23 @@
         }
         
         .logo {
-            font-size: 2rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
+            justify-content: center;
             cursor: pointer;
             z-index: 1002;
-            position: relative;
             user-select: none;
-            padding: 8px 0;
+            padding: 0;
+            width: 60px;
+            height: 50px;
         }
         
         .logo:hover {
@@ -120,8 +135,39 @@
         }
         
         .logo i {
-            margin-right: 10px;
             font-size: 1.8rem;
+        }
+        
+        /* Telegram Icon in Header */
+        .telegram-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            z-index: 1002;
+            -webkit-touch-callout: none; /* Убираем контекстное меню на iOS */
+        }
+        
+        .telegram-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .telegram-icon i {
+            font-size: 1.3rem;
         }
         
         /* Menu Toggle Button */
@@ -140,6 +186,35 @@
             z-index: 1002;
             position: relative;
             top: 2px;
+            border: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none; /* Убираем контекстное меню на iOS */
+        }
+        
+        /* Убираем стандартные стили для кнопок на мобильных */
+        button, 
+        .menu-toggle,
+        .dropdown-toggle,
+        .button-link,
+        .nav-link,
+        .dropdown-item {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Стили для активного состояния (нажатия) на мобильных */
+        .menu-toggle:active,
+        .dropdown-toggle:active,
+        .button-link:active,
+        .nav-link:active,
+        .dropdown-item:active,
+        .telegram-icon:active {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            transition: background-color 0.1s;
         }
         
         /* Main Menu */
@@ -165,6 +240,33 @@
             list-style: none;
         }
         
+        /* Стили для скроллбара меню */
+        .nav-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .nav-list::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        
+        .nav-list::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+            border: 2px solid var(--bg-secondary);
+        }
+        
+        .nav-list::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+        
+        /* Для Firefox */
+        .nav-list {
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        }
+        
         .nav-list.active {
             display: flex;
         }
@@ -178,8 +280,48 @@
             border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
         }
         
-        .nav-item:last-child .nav-link {
+        /* Footer in menu */
+        .nav-footer {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
             border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
+            flex-shrink: 0;
+        }
+        
+        .nav-footer-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .nav-footer-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-footer-link:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+        
+        .nav-footer-year {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        /* Для последнего элемента перед футером */
+        .nav-item:last-child .nav-link {
+            border-radius: 0;
         }
         
         .nav-link {
@@ -191,10 +333,15 @@
             border: none;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             width: 100%;
             background-color: transparent;
             position: relative;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+            flex-shrink: 0;
         }
         
         .nav-link i {
@@ -206,27 +353,40 @@
         
         .link-text {
             flex-grow: 1;
+            text-align: left;
         }
         
-        /* Special menu item */
-        .nav-item-special .nav-link {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-        }
-        
-        /* Dropdown Menu */
+        /* Dropdown Menu - цвет такой же как у основного меню */
         .dropdown-menu {
             width: 100%;
-            background-color: rgba(26, 26, 26, 0.95);
-            border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
+            background-color: var(--bg-secondary);
             padding: 0;
             margin: 0;
             display: none;
             overflow: hidden;
+            flex-shrink: 0;
         }
         
         .dropdown.active .dropdown-menu {
             display: block;
+        }
+        
+        /* Для Tgstat - скрываем закругления */
+        .nav-item.dropdown:nth-last-child(3) .nav-link {
+            border-radius: 0;
+        }
+        
+        .nav-item.dropdown:nth-last-child(3) .dropdown-menu {
+            border-radius: 0;
+        }
+        
+        /* Для "Стать Админом" (последний пункт) - убираем закругления */
+        .nav-item.dropdown:nth-last-child(2) .nav-link {
+            border-radius: 0;
+        }
+        
+        .nav-item.dropdown:nth-last-child(2) .dropdown-menu {
+            border-radius: 0;
         }
         
         .dropdown-item {
@@ -237,6 +397,16 @@
             text-decoration: none;
             position: relative;
             min-height: 48px;
+            justify-content: flex-start;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        
+        .dropdown-item:last-child {
+            border-radius: 0;
         }
         
         /* Diamond bullet for dropdown items */
@@ -255,6 +425,7 @@
         .dropdown-item-text {
             flex: 1;
             padding-left: 8px;
+            text-align: left;
         }
         
         .dropdown-item::after {
@@ -273,12 +444,26 @@
             border-right: 2px solid currentColor;
             border-bottom: 2px solid currentColor;
             transform: rotate(45deg);
-            margin-left: 8px;
+            margin-left: 12px;
             flex-shrink: 0;
         }
         
         .dropdown.active .dropdown-toggle::after {
             transform: rotate(-135deg);
+        }
+        
+        /* Для консистентности добавим одинаковые hover эффекты */
+        .nav-link:hover, 
+        .nav-link.active,
+        .dropdown.active .dropdown-toggle {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+        
+        /* Dropdown items - такой же эффект при наведении как у обычных пунктов */
+        .dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
         }
         
         /* ===== Main Content ===== */
@@ -396,6 +581,10 @@
             font-size: 0.95rem;
             border: 1px solid var(--border-color);
             margin-top: auto;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
         }
         
         .link-icon {
@@ -453,60 +642,6 @@
             box-shadow: 0 4px 15px rgba(153, 153, 153, 0.3);
         }
         
-        /* ===== Footer ===== */
-        .footer {
-            background-color: var(--bg-secondary);
-            padding: 60px 0 40px;
-            border-top: 1px solid var(--border-color);
-            flex-shrink: 0;
-            border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-        
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--accent-gradient);
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .footer-logo {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-        
-        .footer-text {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .copyright {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 5px;
-        }
-        
         /* ===== Decorative Elements ===== */
         .decorative-bg {
             position: fixed;
@@ -522,25 +657,13 @@
                 radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
         }
         
-        .footer-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(136, 136, 136, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(153, 153, 153, 0.05) 0%, transparent 50%);
-            z-index: 0;
-        }
-        
         /* Menu Overlay */
         .menu-overlay {
             position: fixed;
-            top: 0;
+            top: var(--header-height);
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% - var(--header-height));
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
             display: none;
@@ -566,10 +689,6 @@
                 max-height: 80vh;
             }
             
-            .footer {
-                padding: 40px 0 30px;
-            }
-            
             .channel-description {
                 padding: 30px;
             }
@@ -583,6 +702,11 @@
             .nav-list {
                 max-height: 75vh;
                 top: calc(var(--header-height) + 10px);
+            }
+            
+            /* Уменьшаем скроллбар на мобильных */
+            .nav-list::-webkit-scrollbar {
+                width: 6px;
             }
             
             .container {
@@ -639,18 +763,6 @@
                 gap: 20px;
             }
             
-            .footer {
-                padding: 30px 0 20px;
-            }
-            
-            .footer-logo {
-                font-size: 2.2rem;
-            }
-            
-            .copyright {
-                font-size: 1rem;
-            }
-            
             .menu-toggle {
                 padding: 10px 20px;
                 font-size: 0.9rem;
@@ -668,6 +780,37 @@
             .dropdown-item::before {
                 left: 24px;
             }
+            
+            /* Telegram icon on small mobile */
+            .telegram-icon {
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .telegram-icon i {
+                font-size: 1.1rem;
+            }
+            
+            /* Логотип для мобильных */
+            .logo {
+                width: 50px;
+                height: 45px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }
+            
+            .logo i {
+                font-size: 1.6rem;
+            }
+            
+            .nav-footer {
+                padding: 15px;
+            }
+            
+            .nav-footer-text {
+                font-size: 0.85rem;
+            }
         }
         
         /* Очень маленькие экраны */
@@ -677,12 +820,18 @@
                 top: calc(var(--header-height) + 5px);
             }
             
-            .footer {
-                padding: 25px 0 15px;
-            }
-            
             .channel-description {
                 padding: 15px;
+            }
+            
+            .telegram-icon {
+                right: 8px;
+                width: 38px;
+                height: 38px;
+            }
+            
+            .telegram-icon i {
+                font-size: 1rem;
             }
         }
         
@@ -707,17 +856,15 @@
                 border-color: rgba(255, 255, 255, 0.2);
             }
             
-            .nav-link:hover, .nav-link.active {
+            .nav-link:hover, 
+            .nav-link.active,
+            .dropdown.active .dropdown-toggle {
                 background-color: rgba(255, 255, 255, 0.08);
                 color: var(--text-primary);
             }
             
-            .nav-item-special .nav-link:hover {
-                background: rgba(255, 255, 255, 0.1);
-            }
-            
             .dropdown-item:hover {
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: rgba(255, 255, 255, 0.08);
                 color: var(--text-primary);
             }
             
@@ -730,10 +877,21 @@
                 color: var(--text-primary);
             }
             
+            .telegram-icon:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
             .inline-link:hover {
                 color: var(--text-primary);
                 border-bottom: 1px solid var(--text-primary);
                 background: rgba(255, 255, 255, 0.05);
+            }
+            
+            /* Эффект при наведении на скроллбар */
+            .nav-list::-webkit-scrollbar-thumb:hover {
+                background: var(--scrollbar-thumb-hover);
             }
         }
     </style>
@@ -749,16 +907,21 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="main-nav">
+                <!-- Telegram Icon -->
+                <a href="https://t.me/ishupodrygyilidryga" class="telegram-icon" target="_blank" rel="noopener noreferrer" title="Перейти в Telegram канал">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                
                 <!-- Logo as link to home page -->
                 <a href="https://ishupodrygyilidryga.fun" class="logo" id="logo" title="Перейти на главную страницу">
-                    <i class="fas fa-users"></i> IIPD
+                    <i class="fas fa-users"></i>
                 </a>
                 
                 <!-- Menu Toggle -->
-                <div class="menu-toggle" id="menu-toggle">
+                <button class="menu-toggle" id="menu-toggle">
                     <i class="fas fa-bars"></i>
                     <span>Меню</span>
-                </div>
+                </button>
                 
                 <!-- Navigation Menu -->
                 <ul class="nav-list" id="nav-list">
@@ -778,7 +941,7 @@
                         </a>
                     </li>
                     
-                    <li class="nav-item nav-item-special">
+                    <li class="nav-item">
                         <a href="https://t.me/ankety_bot" class="nav-link" target="_blank" rel="noopener noreferrer">
                             <span class="link-text">
                                 <i class="fas fa-robot"></i> Бот для анкет
@@ -794,12 +957,13 @@
                         </a>
                     </li>
                     
+                    <!-- Tgstat с подменю -->
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+                        <button class="nav-link dropdown-toggle">
                             <span class="link-text">
                                 <i class="fas fa-chart-line"></i> Tgstat
                             </span>
-                        </a>
+                        </button>
                         <div class="dropdown-menu">
                             <a href="https://uk.tgstat.com/channel/@ishupodrygyilidryga" class="dropdown-item" target="_blank" rel="noopener noreferrer">
                                 <span class="dropdown-item-text">iipd</span>
@@ -810,12 +974,13 @@
                         </div>
                     </li>
                     
+                    <!-- Стать Админом с подменю -->
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+                        <button class="nav-link dropdown-toggle">
                             <span class="link-text">
                                 <i class="fas fa-user-shield"></i> Стать Админом
                             </span>
-                        </a>
+                        </button>
                         <div class="dropdown-menu">
                             <a href="https://t.me/info_ishupodrygyilidryga/27" class="dropdown-item" target="_blank" rel="noopener noreferrer">
                                 <span class="dropdown-item-text">По Анкетам</span>
@@ -824,6 +989,15 @@
                                 <span class="dropdown-item-text">По Аватаркам</span>
                             </a>
                         </div>
+                    </li>
+                    
+                    <!-- Footer in menu -->
+                    <li class="nav-footer">
+                        <p class="nav-footer-text">
+                            Ищу интернет подругу/друга (WEB) © 
+                            <a href="https://ishupodrygyilidryga.fun" class="nav-footer-link" target="_blank" rel="noopener noreferrer">ishupodrygyilidryga.fun</a>
+                        </p>
+                        <p class="nav-footer-year">2024</p>
                     </li>
                 </ul>
             </nav>
@@ -949,20 +1123,6 @@
             </div>
         </div>
     </main>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-bg"></div>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">IIPD</div>
-                <div class="footer-text">
-                    <div class="copyright">© 2026 IIPD - Ищу интернет подругу/друга.</div>
-                    <div class="copyright">Канал, созданный для людей, которые хотят найти новых друзей и общаться с интересными людьми в интернете.</div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // Оптимизированный JavaScript без анимаций
@@ -981,6 +1141,12 @@
             
             // State
             let isMenuOpen = false;
+            
+            // Функция для предотвращения выделения текста при долгом нажатии
+            const preventTextSelection = function(e) {
+                e.preventDefault();
+                return false;
+            };
             
             // Menu Functions
             const menu = {
@@ -1099,6 +1265,39 @@
                         }, 1000);
                     });
                 });
+                
+                // Предотвращаем выделение текста при долгом нажатии на кнопки
+                const interactiveElements = document.querySelectorAll(
+                    'button, .menu-toggle, .dropdown-toggle, .button-link, .nav-link, .dropdown-item, .telegram-icon'
+                );
+                
+                interactiveElements.forEach(el => {
+                    // Предотвращаем контекстное меню (долгое нажатие)
+                    el.addEventListener('contextmenu', preventTextSelection);
+                    
+                    // Предотвращаем выделение при долгом тапе
+                    el.addEventListener('selectstart', preventTextSelection);
+                    el.addEventListener('mousedown', preventTextSelection);
+                    
+                    // Для iOS
+                    el.addEventListener('touchstart', function(e) {
+                        // Небольшая задержка для предотвращения выделения
+                        if (e.touches.length > 1) {
+                            e.preventDefault();
+                        }
+                    }, { passive: false });
+                });
+                
+                // Добавляем активное состояние для мобильных устройств
+                interactiveElements.forEach(el => {
+                    el.addEventListener('touchstart', function() {
+                        this.classList.add('active-touch');
+                    });
+                    
+                    el.addEventListener('touchend', function() {
+                        this.classList.remove('active-touch');
+                    });
+                });
             };
             
             // Initialize
@@ -1114,6 +1313,46 @@
                 dom.dropdownToggles.forEach(toggle => {
                     toggle.setAttribute('aria-expanded', 'false');
                     toggle.setAttribute('aria-haspopup', 'true');
+                });
+                
+                // Устанавливаем текущий год в футер
+                const currentYear = new Date().getFullYear();
+                const yearElement = document.querySelector('.nav-footer-year');
+                if (yearElement) {
+                    yearElement.textContent = currentYear;
+                }
+                
+                // Добавляем плавный скролл для меню
+                dom.navList.addEventListener('wheel', function(e) {
+                    // Плавный скролл для колесика мыши
+                    this.scrollTop += e.deltaY * 0.5;
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Добавляем инерционный скролл для тач-устройств
+                let startY = 0;
+                let scrollTop = 0;
+                let isScrolling = false;
+                
+                dom.navList.addEventListener('touchstart', function(e) {
+                    if (e.touches.length === 1) {
+                        startY = e.touches[0].pageY;
+                        scrollTop = this.scrollTop;
+                        isScrolling = true;
+                    }
+                });
+                
+                dom.navList.addEventListener('touchmove', function(e) {
+                    if (!isScrolling || e.touches.length !== 1) return;
+                    
+                    e.preventDefault();
+                    const y = e.touches[0].pageY;
+                    const walk = (y - startY) * 2; // Умножаем для более быстрого скролла
+                    this.scrollTop = scrollTop - walk;
+                });
+                
+                dom.navList.addEventListener('touchend', function() {
+                    isScrolling = false;
                 });
             };
             
