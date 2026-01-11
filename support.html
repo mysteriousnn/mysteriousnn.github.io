@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IIPD - Поддержка</title>
+    <title>Поддержка / Ответы | Ищу интернет подругу/друга</title>
     <link rel="icon" href="iipdPin.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -20,12 +20,16 @@
             --shadow-color: rgba(0, 0, 0, 0.4);
             --header-height: 70px;
             --menu-border-radius: 15px;
+            --scrollbar-track: rgba(255, 255, 255, 0.05);
+            --scrollbar-thumb: rgba(136, 136, 136, 0.5);
+            --scrollbar-thumb-hover: rgba(136, 136, 136, 0.7);
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         html {
@@ -48,6 +52,22 @@
             -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Разрешаем выделение текста только в текстовых блоках */
+        .content-text,
+        .info-text,
+        .requirement-item,
+        .main-content p,
+        .main-content li {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         
         /* Скрываем скроллбар во всех браузерах */
@@ -62,16 +82,6 @@
             -ms-overflow-style: none;
         }
         
-        /* Убираем все скроллбары для меню */
-        .nav-list::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .nav-list {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
         /* ===== Header & Navigation ===== */
         .header {
             position: fixed;
@@ -79,9 +89,8 @@
             left: 0;
             width: 100%;
             height: var(--header-height);
-            z-index: 1000;
+            z-index: 3000;
             background-color: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
             padding: 10px 0;
         }
@@ -102,17 +111,23 @@
         }
         
         .logo {
-            font-size: 2rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
+            justify-content: center;
             cursor: pointer;
             z-index: 1002;
-            position: relative;
             user-select: none;
-            padding: 8px 0;
+            padding: 0;
+            width: 60px;
+            height: 50px;
         }
         
         .logo:hover {
@@ -120,8 +135,39 @@
         }
         
         .logo i {
-            margin-right: 10px;
             font-size: 1.8rem;
+        }
+        
+        /* Telegram Icon in Header */
+        .telegram-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            z-index: 1002;
+            -webkit-touch-callout: none;
+        }
+        
+        .telegram-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .telegram-icon i {
+            font-size: 1.3rem;
         }
         
         /* Menu Toggle Button */
@@ -140,6 +186,35 @@
             z-index: 1002;
             position: relative;
             top: 2px;
+            border: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+        
+        /* Убираем стандартные стили для кнопок на мобильных */
+        button, 
+        .menu-toggle,
+        .dropdown-toggle,
+        .button-link,
+        .nav-link,
+        .dropdown-item {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Стили для активного состояния (нажатия) на мобильных */
+        .menu-toggle:active,
+        .dropdown-toggle:active,
+        .button-link:active,
+        .nav-link:active,
+        .dropdown-item:active,
+        .telegram-icon:active {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            transition: background-color 0.1s;
         }
         
         /* Main Menu */
@@ -165,6 +240,33 @@
             list-style: none;
         }
         
+        /* Стили для скроллбара меню */
+        .nav-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .nav-list::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        
+        .nav-list::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+            border: 2px solid var(--bg-secondary);
+        }
+        
+        .nav-list::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+        
+        /* Для Firefox */
+        .nav-list {
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        }
+        
         .nav-list.active {
             display: flex;
         }
@@ -178,8 +280,48 @@
             border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
         }
         
-        .nav-item:last-child .nav-link {
+        /* Footer in menu */
+        .nav-footer {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
             border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
+            flex-shrink: 0;
+        }
+        
+        .nav-footer-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .nav-footer-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-footer-link:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+        
+        .nav-footer-year {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        /* Для последнего элемента перед футером */
+        .nav-item:last-child .nav-link {
+            border-radius: 0;
         }
         
         .nav-link {
@@ -191,10 +333,15 @@
             border: none;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             width: 100%;
             background-color: transparent;
             position: relative;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+            flex-shrink: 0;
         }
         
         .nav-link i {
@@ -206,27 +353,40 @@
         
         .link-text {
             flex-grow: 1;
-        }
-        
-        /* Special menu item */
-        .nav-item-special .nav-link {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
+            text-align: left;
         }
         
         /* Dropdown Menu */
         .dropdown-menu {
             width: 100%;
-            background-color: rgba(26, 26, 26, 0.95);
-            border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
+            background-color: var(--bg-secondary);
             padding: 0;
             margin: 0;
             display: none;
             overflow: hidden;
+            flex-shrink: 0;
         }
         
         .dropdown.active .dropdown-menu {
             display: block;
+        }
+        
+        /* Для Tgstat - скрываем закругления */
+        .nav-item.dropdown:nth-last-child(3) .nav-link {
+            border-radius: 0;
+        }
+        
+        .nav-item.dropdown:nth-last-child(3) .dropdown-menu {
+            border-radius: 0;
+        }
+        
+        /* Для "Стать Админом" - убираем закругления */
+        .nav-item.dropdown:nth-last-child(2) .nav-link {
+            border-radius: 0;
+        }
+        
+        .nav-item.dropdown:nth-last-child(2) .dropdown-menu {
+            border-radius: 0;
         }
         
         .dropdown-item {
@@ -237,6 +397,16 @@
             text-decoration: none;
             position: relative;
             min-height: 48px;
+            justify-content: flex-start;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        
+        .dropdown-item:last-child {
+            border-radius: 0;
         }
         
         /* Diamond bullet for dropdown items */
@@ -255,6 +425,7 @@
         .dropdown-item-text {
             flex: 1;
             padding-left: 8px;
+            text-align: left;
         }
         
         .dropdown-item::after {
@@ -273,7 +444,7 @@
             border-right: 2px solid currentColor;
             border-bottom: 2px solid currentColor;
             transform: rotate(45deg);
-            margin-left: 8px;
+            margin-left: 12px;
             flex-shrink: 0;
         }
         
@@ -281,9 +452,23 @@
             transform: rotate(-135deg);
         }
         
+        /* Для консистентности добавим одинаковые hover эффекты */
+        .nav-link:hover, 
+        .nav-link.active,
+        .dropdown.active .dropdown-toggle {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+        
+        /* Dropdown items - такой же эффект при наведении как у обычных пунктов */
+        .dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+        
         /* ===== Main Content ===== */
         .content {
-            padding: 20px 0;
+            padding: 40px 0;
             flex: 1 0 auto;
             width: 100%;
         }
@@ -292,51 +477,63 @@
         .page-header {
             background-color: var(--bg-secondary);
             border-radius: var(--menu-border-radius);
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
             border: 1px solid var(--border-color);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
         
         .page-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             color: var(--text-primary);
             text-align: center;
+            position: relative;
+            padding-bottom: 20px;
         }
         
-        .last-edited {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 5px;
-            text-align: center;
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 3px;
         }
         
-        /* Single Content Block */
-        .content-block {
+        /* Main Content Styles */
+        .main-content {
             background-color: var(--bg-secondary);
             border-radius: var(--menu-border-radius);
             padding: 40px;
-            margin-bottom: 30px;
             border: 1px solid var(--border-color);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            line-height: 1.7;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+        }
+        
+        .content-section:last-child {
+            margin-bottom: 0;
         }
         
         .section-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            margin: 30px 0 15px 0;
+            margin-bottom: 20px;
             color: var(--text-primary);
-        }
-        
-        .section-title:first-child {
-            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .content-text {
-            font-size: 1.05rem;
-            line-height: 1.6;
+            font-size: 1.1rem;
             margin-bottom: 20px;
             color: var(--text-secondary);
         }
@@ -345,113 +542,96 @@
             margin-bottom: 0;
         }
         
-        /* Стили для списков без цифр и маркеров */
-        .simple-list {
-            margin: 15px 0 20px 0;
+        /* Instructions List */
+        .instructions-list {
+            list-style-type: none;
+            margin: 25px 0;
+        }
+        
+        .instruction-item {
+            position: relative;
+            padding: 15px 0 15px 40px;
             color: var(--text-secondary);
-            padding-left: 0;
-            list-style: none;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .simple-list li {
-            margin-bottom: 10px;
-            line-height: 1.5;
-            padding-left: 0;
+        .instruction-item:last-child {
+            border-bottom: none;
         }
         
-        /* Стили для ссылок внутри текста */
-        .inline-link {
-            color: #aaa;
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px dotted rgba(170, 170, 170, 0.5);
-            transition: all 0.2s ease;
-            padding: 0 2px;
-            position: relative;
-        }
-        
-        .inline-link:hover {
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .inline-link::after {
-            content: ' ↗';
-            font-size: 0.9em;
-            opacity: 0.7;
-        }
-        
-        /* Telegram Bot Link Styles */
-        .telegram-link {
-            color: #aaa;
-            text-decoration: none;
-            font-weight: 500;
-            border-bottom: 1px dotted rgba(170, 170, 170, 0.5);
-        }
-        
-        /* Стиль для ссылок поддержки */
-        .support-link {
-            color: #aaa;
-            text-decoration: underline;
-            font-weight: 600;
-        }
-        
-        /* ===== Footer ===== */
-        .footer {
-            background-color: var(--bg-secondary);
-            padding: 60px 0 40px;
-            border-top: 1px solid var(--border-color);
-            flex-shrink: 0;
-            border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-        
-        .footer::before {
-            content: '';
+        .instruction-item:before {
+            content: counter(list-item);
+            counter-increment: list-item;
             position: absolute;
-            top: 0;
             left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--accent-gradient);
-        }
-        
-        .footer-content {
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: #888;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            position: relative;
-            z-index: 1;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--bg-secondary);
         }
         
-        .footer-logo {
-            font-size: 2.8rem;
-            font-weight: 700;
+        /* Link Styling */
+        .content-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 0 2px;
+        }
+        
+        .content-link:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+        
+        /* Important Notes */
+        .important-note {
+            background-color: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .important-note-title {
+            font-weight: 600;
+            color: #ffc107;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        /* FAQ Item */
+        .faq-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 10px;
-        }
-        
-        .footer-text {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .copyright {
             font-size: 1.1rem;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 5px;
         }
         
-        /* ===== Decorative Elements ===== */
+        /* Decorative Elements */
         .decorative-bg {
             position: fixed;
             top: 0;
@@ -466,25 +646,13 @@
                 radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
         }
         
-        .footer-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(136, 136, 136, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(153, 153, 153, 0.05) 0%, transparent 50%);
-            z-index: 0;
-        }
-        
         /* Menu Overlay */
         .menu-overlay {
             position: fixed;
-            top: 0;
+            top: var(--header-height);
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% - var(--header-height));
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
             display: none;
@@ -510,23 +678,50 @@
                 max-height: 80vh;
             }
             
-            .footer {
-                padding: 40px 0 30px;
+            .page-header {
+                padding: 30px;
+                margin-bottom: 30px;
             }
             
-            .content-block {
+            .main-content {
                 padding: 30px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .nav-footer {
+                padding: 15px;
+            }
+            
+            .nav-footer-text {
+                font-size: 0.85rem;
+            }
+            
+            .important-note {
+                padding: 15px;
             }
         }
         
         @media (max-width: 480px) {
             .content {
-                padding: 20px 0;
+                padding: 30px 0;
             }
             
             .nav-list {
                 max-height: 75vh;
                 top: calc(var(--header-height) + 10px);
+            }
+            
+            /* Уменьшаем скроллбар на мобильных */
+            .nav-list::-webkit-scrollbar {
+                width: 6px;
             }
             
             .container {
@@ -539,17 +734,17 @@
             }
             
             .page-title {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
+                margin-bottom: 15px;
             }
             
-            .content-block {
+            .main-content {
                 padding: 20px;
-                margin-bottom: 20px;
             }
             
             .section-title {
-                font-size: 1.2rem;
-                margin: 25px 0 12px 0;
+                font-size: 1.3rem;
+                margin-bottom: 15px;
             }
             
             .content-text {
@@ -557,16 +752,15 @@
                 margin-bottom: 15px;
             }
             
-            .footer {
-                padding: 30px 0 20px;
-            }
-            
-            .footer-logo {
-                font-size: 2.2rem;
-            }
-            
-            .copyright {
+            .instruction-item {
+                padding: 12px 0 12px 30px;
                 font-size: 1rem;
+            }
+            
+            .instruction-item:before {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
             }
             
             .menu-toggle {
@@ -586,32 +780,69 @@
             .dropdown-item::before {
                 left: 24px;
             }
+            
+            .telegram-icon {
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .telegram-icon i {
+                font-size: 1.1rem;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 45px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }
+            
+            .logo i {
+                font-size: 1.6rem;
+            }
+            
+            .nav-footer {
+                padding: 12px;
+                gap: 10px;
+            }
+            
+            .nav-footer-text {
+                font-size: 0.8rem;
+            }
+            
+            .nav-footer-year {
+                font-size: 0.75rem;
+            }
+            
+            .important-note {
+                padding: 12px;
+            }
         }
         
-        /* Очень маленькие экраны */
         @media (max-width: 380px) and (max-height: 800px) {
             .nav-list {
                 max-height: 70vh;
                 top: calc(var(--header-height) + 5px);
             }
             
-            .footer {
-                padding: 25px 0 15px;
+            .telegram-icon {
+                right: 8px;
+                width: 38px;
+                height: 38px;
             }
             
-            .content-block {
-                padding: 15px;
+            .telegram-icon i {
+                font-size: 1rem;
             }
         }
         
-        /* Для горизонтальной ориентации */
         @media (max-height: 500px) {
             .nav-list {
                 max-height: 65vh;
             }
         }
         
-        /* Large screens */
         @media (min-width: 1400px) {
             .container {
                 max-width: 1300px;
@@ -625,32 +856,37 @@
                 border-color: rgba(255, 255, 255, 0.2);
             }
             
-            .nav-link:hover, .nav-link.active {
+            .nav-link:hover, 
+            .nav-link.active,
+            .dropdown.active .dropdown-toggle {
                 background-color: rgba(255, 255, 255, 0.08);
                 color: var(--text-primary);
             }
             
-            .nav-item-special .nav-link:hover {
-                background: rgba(255, 255, 255, 0.1);
-            }
-            
             .dropdown-item:hover {
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: rgba(255, 255, 255, 0.08);
                 color: var(--text-primary);
             }
             
-            .inline-link:hover {
+            .telegram-icon:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .content-link:hover {
                 color: var(--text-primary);
                 border-bottom: 1px solid var(--text-primary);
-                background: rgba(255, 255, 255, 0.05);
             }
             
-            .telegram-link:hover {
+            .nav-footer-link:hover {
                 color: var(--text-primary);
+                border-bottom: 1px solid var(--text-primary);
             }
             
-            .support-link:hover {
-                color: var(--text-primary);
+            /* Эффект при наведении на скроллбар */
+            .nav-list::-webkit-scrollbar-thumb:hover {
+                background: var(--scrollbar-thumb-hover);
             }
         }
     </style>
@@ -666,21 +902,26 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="main-nav">
+                <!-- Telegram Icon -->
+                <a href="https://t.me/ishupodrygyilidryga" class="telegram-icon" target="_blank" rel="noopener noreferrer" title="Перейти в Telegram канал">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                
                 <!-- Logo as link to home page -->
-                <a href="https://mysteriousnn.github.io/iipd/" class="logo" id="logo" title="Перейти на главную страницу">
-                    <i class="fas fa-users"></i> IIPD
+                <a href="https://ishupodrygyilidryga.fun" class="logo" id="logo" title="Перейти на главную страницу">
+                    <i class="fas fa-users"></i>
                 </a>
                 
                 <!-- Menu Toggle -->
-                <div class="menu-toggle" id="menu-toggle">
+                <button class="menu-toggle" id="menu-toggle">
                     <i class="fas fa-bars"></i>
                     <span>Меню</span>
-                </div>
+                </button>
                 
                 <!-- Navigation Menu -->
                 <ul class="nav-list" id="nav-list">
                     <li class="nav-item">
-                        <a href="https://mysteriousnn.github.io/iipd/" class="nav-link">
+                        <a href="https://ishupodrygyilidryga.fun" class="nav-link">
                             <span class="link-text">
                                 <i class="fas fa-home"></i> Главная
                             </span>
@@ -695,7 +936,7 @@
                         </a>
                     </li>
                     
-                    <li class="nav-item nav-item-special">
+                    <li class="nav-item">
                         <a href="https://t.me/ankety_bot" class="nav-link" target="_blank" rel="noopener noreferrer">
                             <span class="link-text">
                                 <i class="fas fa-robot"></i> Бот для анкет
@@ -711,20 +952,13 @@
                         </a>
                     </li>
                     
-                    <li class="nav-item">
-                        <a href="rules.html" class="nav-link">
-                            <span class="link-text">
-                                <i class="fas fa-scroll"></i> Правила
-                            </span>
-                        </a>
-                    </li>
-                    
+                    <!-- Tgstat с подменю -->
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+                        <button class="nav-link dropdown-toggle">
                             <span class="link-text">
                                 <i class="fas fa-chart-line"></i> Tgstat
                             </span>
-                        </a>
+                        </button>
                         <div class="dropdown-menu">
                             <a href="https://uk.tgstat.com/channel/@ishupodrygyilidryga" class="dropdown-item" target="_blank" rel="noopener noreferrer">
                                 <span class="dropdown-item-text">iipd</span>
@@ -735,12 +969,13 @@
                         </div>
                     </li>
                     
+                    <!-- Стать Админом с подменю -->
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" aria-expanded="false">
+                        <button class="nav-link dropdown-toggle">
                             <span class="link-text">
                                 <i class="fas fa-user-shield"></i> Стать Админом
                             </span>
-                        </a>
+                        </button>
                         <div class="dropdown-menu">
                             <a href="https://t.me/info_ishupodrygyilidryga/27" class="dropdown-item" target="_blank" rel="noopener noreferrer">
                                 <span class="dropdown-item-text">По Анкетам</span>
@@ -750,6 +985,15 @@
                             </a>
                         </div>
                     </li>
+                    
+                    <!-- Footer in menu -->
+                    <li class="nav-footer">
+                        <p class="nav-footer-text">
+                            Ищу интернет подругу/друга (WEB) © 
+                            <a href="https://ishupodrygyilidryga.fun" class="nav-footer-link" target="_blank" rel="noopener noreferrer">ishupodrygyilidryga.fun</a>
+                        </p>
+                        <p class="nav-footer-year">2024</p>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -758,123 +1002,122 @@
     <!-- Main Content -->
     <main class="content">
         <div class="container">
-            <!-- Page Header -->
             <div class="page-header">
                 <h1 class="page-title">Поддержка / Ответы</h1>
-                <div class="last-edited">Последнее редактирование - 24.08.2025 в 22:24 (МСК)</div>
             </div>
             
-            <!-- Single Content Block -->
-            <div class="content-block">
-                <!-- Отмена публикации анкеты -->
-                <h2 class="section-title">Отмена публикации анкеты</h2>
-                <p class="content-text">
-                    Согласно нашим условиям пункта 6. "Права и ответственность сторон" - 6.2. "Права и ответственность Пользователя". 6.2.5:
-                </p>
-                <p class="content-text">
-                    Пользователь в праве обратиться за отменой публикации анкеты, до момента её выхода на канал.
-                </p>
+            <div class="main-content">
+                <div class="content-section">
+                    <h2 class="section-title">Отмена публикации анкеты</h2>
+                    <p class="content-text">
+                        Согласно нашим условиям пункта 6. "Права и ответственность сторон" - 6.2. "Права и ответственность Пользователя". 6.2.5:
+                    </p>
+                    <div class="important-note">
+                        <div class="important-note-title">6.2.5 Право на отмену публикации</div>
+                        <p class="content-text">
+                            Пользователь вправе обратиться за отменой публикации анкеты, до момента её выхода на канал.
+                        </p>
+                    </div>
+                    
+                    <h3 class="section-title" style="font-size: 1.4rem; margin-top: 30px;">Как это работает?</h3>
+                    <p class="content-text">
+                        Если ваша анкета еще не опубликована на канале, вы можете обратиться в поддержку с запросом на отмену публикации. Для этого вам необходимо:
+                    </p>
+                </div>
                 
-                <!-- Как это работает? -->
-                <h2 class="section-title">Как это работает?</h2>
-                <p class="content-text">
-                    Если ваша анкета еще не опубликована на канале, вы можете обратиться в поддержку с запросом на отмену публикации. Для этого вам необходимо:
-                </p>
+                <div class="content-section">
+                    <h2 class="section-title">Шаги для отмены публикации</h2>
+                    <ol class="instructions-list" style="counter-reset: list-item;">
+                        <li class="instruction-item">Направить запрос в поддержку.</li>
+                        <li class="instruction-item">Включить в запрос четкую просьбу об отмене публикации.</li>
+                        <li class="instruction-item">Указать номер вашей анкеты.</li>
+                    </ol>
+                </div>
                 
-                <!-- Шаги для отмены публикации -->
-                <h2 class="section-title">Шаги для отмены публикации:</h2>
-                <ul class="simple-list">
-                    <li>1. Направить запрос в поддержку.</li>
-                    <li>2. Включить в запрос четкую просьбу об отмене публикации.</li>
-                    <li>3. Указать номер вашей анкеты.</li>
-                </ul>
+                <div class="content-section">
+                    <h2 class="section-title">Важные моменты</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Время рассмотрения запроса:</div>
+                        <p class="content-text">Учтите, что ваша просьба об отмене публикации может потребовать некоторого времени для обработки.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Публикация анкеты во время рассмотрения:</div>
+                        <p class="content-text">Если в момент, когда ваша заявка рассматривается, анкета уже была опубликована, она останется на канале и не будет удалена. Поэтому важно отправлять запрос как можно раньше.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Право администрации:</div>
+                        <p class="content-text">Администрация оставляет за собой право отказать в отмене публикации анкеты. Это решение может быть принято по различным причинам. Также Администрация оставляет за собой право не раскрывать причину отказа.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Проверка на соответствие правилам:</div>
+                        <p class="content-text">Пожалуйста, помните, что обращение с просьбой об отмене публикации не освобождает вашу анкету от проверки на наличие нарушений. Если будут выявлены какие-либо нарушения правил, ограничения всё равно будут выданы.</p>
+                    </div>
+                    
+                    <h3 class="section-title" style="font-size: 1.4rem; margin-top: 30px;">Что этот пункт означает?</h3>
+                    <p class="content-text">
+                        Этот пункт не отменяет и не изменяет существующие правила, касающиеся удаления анкет с канала. Он лишь предоставляет возможность отменить публикацию анкеты до её выхода на канал. Если анкета уже опубликована, она останется доступной для подписчиков.
+                    </p>
+                </div>
                 
-                <!-- Важные моменты -->
-                <h2 class="section-title">Важные моменты</h2>
-                <p class="content-text">
-                    <strong>Время рассмотрения запроса:</strong><br>
-                    Учтите, что ваша просьба об отмене публикации может потребовать некоторого времени для обработки.
-                </p>
-                <p class="content-text">
-                    <strong>Публикация анкеты во время рассмотрения:</strong><br>
-                    Если в момент, когда ваша заявка рассматривается, анкета уже была опубликована, она останется на канале и не будет удалена. Поэтому важно отправлять запрос как можно раньше.
-                </p>
-                <p class="content-text">
-                    <strong>Право администрации:</strong><br>
-                    Администрация оставляет за собой право отказать в отмене публикации анкеты. Это решение может быть принято по различным причинам. Также Администрация оставляет за собой право не раскрывать причину отказа.
-                </p>
-                <p class="content-text">
-                    <strong>Проверка на соответствие правилам:</strong><br>
-                    Пожалуйста, помните, что обращение с просьбой об отмене публикации не освобождает вашу анкету от проверки на наличие нарушений. Если будут выявлены какие-либо нарушения правил, ограничения всё равно будут выданы.
-                </p>
+                <div class="content-section">
+                    <h2 class="section-title">Ожидание публикации</h2>
+                    <div class="important-note">
+                        <div class="important-note-title">Если ваша анкета не опубликована в течение 10 минут</div>
+                        <p class="content-text">
+                            Не спешите писать в поддержку. Ожидание публикации может занимать несколько дней.
+                        </p>
+                        <p class="content-text" style="margin-top: 10px;">
+                            • Все анкеты публикуются вручную живыми Админами. Бот не осуществляет автоматическую публикацию.
+                        </p>
+                    </div>
+                </div>
                 
-                <!-- Что этот пункт означает? -->
-                <h2 class="section-title">Что этот пункт означает?</h2>
-                <p class="content-text">
-                    Этот пункт не отменяет и не изменяет существующие правила, касающиеся удаления анкет с канала. Он лишь предоставляет возможность отменить публикацию анкеты до её выхода на канал. Если анкета уже опубликована, она останется доступной для подписчиков.
-                </p>
+                <div class="content-section">
+                    <h2 class="section-title">Часто задаваемые вопросы</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Удаление анкеты</div>
+                        <p class="content-text">
+                            <strong>Анкеты с канала не удаляются</strong> - это указано в наших условиях, с которыми вы должны ознакомиться перед отправкой анкеты.
+                        </p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Изменение анкеты</div>
+                        <p class="content-text">
+                            Изменению подлежат только опубликованные анкеты. Анкету, которую вы отправили в бота, изменить невозможно. Если ваша анкета еще не опубликована на канале, то вы можете запросить отмену её публикации в поддержке.
+                        </p>
+                        <div class="important-note" style="margin-top: 15px;">
+                            <div class="important-note-title">Важно</div>
+                            <p class="content-text">Перепроверяйте написанное несколько раз перед отправкой</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Почему анкета не публикуется более 5 дней и т.д.</div>
+                        <p class="content-text">
+                            Скорее всего, в вашей анкете отсутствует ваш Юзернейм. Согласно новым правилам, Админы игнорируют анкеты без указания Юзернейм`а.
+                        </p>
+                        <p class="content-text" style="margin-top: 10px;">
+                            Еще одна причина - указание в анкете акцента на поиск интернет-отношений. Такие анкеты не публикуются на канале.
+                        </p>
+                    </div>
+                </div>
                 
-                <!-- Ожидание публикации -->
-                <h2 class="section-title">Ожидание публикации</h2>
-                <p class="content-text">
-                    <strong>Если ваша анкета не опубликована в течение 10 минут</strong>
-                </p>
-                <p class="content-text">
-                    Не спешите писать в поддержку. Ожидание публикации может занимать несколько дней.
-                </p>
-                <ul class="simple-list">
-                    <li>• Все анкеты публикуются вручную живыми Админами. Бот не осуществляет автоматическую публикацию.</li>
-                </ul>
-                
-                <!-- Удаление анкеты -->
-                <h2 class="section-title">Удаление анкеты</h2>
-                <p class="content-text">
-                    Анкеты с канала не удаляются
-                </p>
-                <p class="content-text">
-                    Это указано в наших условиях с которыми вы должны ознакомиться перед отправкой анкеты.
-                </p>
-                
-                <!-- Изменение анкеты -->
-                <h2 class="section-title">Изменение анкеты</h2>
-                <p class="content-text">
-                    Изменению подлежат только опубликованные анкеты. Анкету, которую вы отправили в бота, изменить невозможно. Если ваша анкета еще не опубликована на канале, то вы можете запросить отмену её публикации в поддержке.
-                </p>
-                <p class="content-text">
-                    Перепроверяйте написанное несколько раз перед отправкой
-                </p>
-                
-                <!-- Почему анкета не публикуется более 5 дней и т.д -->
-                <h2 class="section-title">Почему анкета не публикуется более 5 дней и т.д</h2>
-                <p class="content-text">
-                    Скорее всего, в вашей анкете отсутствует ваш Юзернейм. Согласно новым правилам, Админы игнорируют анкеты без указания Юзернейм`а.
-                </p>
-                <p class="content-text">
-                    Еще одна причина - указание в анкете акцента на поиск интернет-отношений. Такие анкеты не публикуются на канале.
-                </p>
-
-                <!-- Бот поддержки -->
-                <h2 class="section-title">Бот поддержки</h2>
-                <p class="content-text">
-                    Не нашли ответа на свой вопрос? Обращайтесь в бота поддержки - <a href="https://t.me/helpforsilencebot" class="support-link" target="_blank" rel="noopener noreferrer">@helpforsilencebot</a>.
-                </p>
-            </div>
-        </div>
-    </main>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-bg"></div>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">IIPD</div>
-                <div class="footer-text">
-                    <div class="copyright">© 2026 IIPD - Ищу интернет подругу/друга.</div>
-                    <div class="copyright">Канал, созданный для людей, которые хотят найти новых друзей и общаться с интересными людьми в интернете.</div>
+                <div class="content-section">
+                    <h2 class="section-title">Бот поддержки</h2>
+                    <p class="content-text">
+                        Не нашли ответа на свой вопрос? Обращайтесь в бота поддержки - 
+                        <a href="https://t.me/helpforsilencebot" class="content-link" target="_blank" rel="noopener noreferrer">@helpforsilencebot</a>.
+                    </p>
                 </div>
             </div>
         </div>
-    </footer>
+    </main>
 
     <script>
         // Оптимизированный JavaScript без анимаций
@@ -893,6 +1136,12 @@
             
             // State
             let isMenuOpen = false;
+            
+            // Функция для предотвращения выделения текста при долгом нажатии
+            const preventTextSelection = function(e) {
+                e.preventDefault();
+                return false;
+            };
             
             // Menu Functions
             const menu = {
@@ -1011,6 +1260,39 @@
                         }, 1000);
                     });
                 });
+                
+                // Предотвращаем выделение текста при долгом нажатии на кнопки
+                const interactiveElements = document.querySelectorAll(
+                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon'
+                );
+                
+                interactiveElements.forEach(el => {
+                    // Предотвращаем контекстное меню (долгое нажатие)
+                    el.addEventListener('contextmenu', preventTextSelection);
+                    
+                    // Предотвращаем выделение при долгом тапе
+                    el.addEventListener('selectstart', preventTextSelection);
+                    el.addEventListener('mousedown', preventTextSelection);
+                    
+                    // Для iOS
+                    el.addEventListener('touchstart', function(e) {
+                        // Небольшая задержка для предотвращения выделения
+                        if (e.touches.length > 1) {
+                            e.preventDefault();
+                        }
+                    }, { passive: false });
+                });
+                
+                // Добавляем активное состояние для мобильных устройств
+                interactiveElements.forEach(el => {
+                    el.addEventListener('touchstart', function() {
+                        this.classList.add('active-touch');
+                    });
+                    
+                    el.addEventListener('touchend', function() {
+                        this.classList.remove('active-touch');
+                    });
+                });
             };
             
             // Initialize
@@ -1026,6 +1308,46 @@
                 dom.dropdownToggles.forEach(toggle => {
                     toggle.setAttribute('aria-expanded', 'false');
                     toggle.setAttribute('aria-haspopup', 'true');
+                });
+                
+                // Устанавливаем текущий год в футер
+                const currentYear = new Date().getFullYear();
+                const yearElement = document.querySelector('.nav-footer-year');
+                if (yearElement) {
+                    yearElement.textContent = currentYear;
+                }
+                
+                // Добавляем плавный скролл для меню
+                dom.navList.addEventListener('wheel', function(e) {
+                    // Плавный скролл для колесика мыши
+                    this.scrollTop += e.deltaY * 0.5;
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Добавляем инерционный скролл для тач-устройств
+                let startY = 0;
+                let scrollTop = 0;
+                let isScrolling = false;
+                
+                dom.navList.addEventListener('touchstart', function(e) {
+                    if (e.touches.length === 1) {
+                        startY = e.touches[0].pageY;
+                        scrollTop = this.scrollTop;
+                        isScrolling = true;
+                    }
+                });
+                
+                dom.navList.addEventListener('touchmove', function(e) {
+                    if (!isScrolling || e.touches.length !== 1) return;
+                    
+                    e.preventDefault();
+                    const y = e.touches[0].pageY;
+                    const walk = (y - startY) * 2; // Умножаем для более быстрого скролла
+                    this.scrollTop = scrollTop - walk;
+                });
+                
+                dom.navList.addEventListener('touchend', function() {
+                    isScrolling = false;
                 });
             };
             
