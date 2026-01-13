@@ -70,7 +70,8 @@
         .main-content li,
         .table-description,
         .table-cell,
-        .level-detail-text {
+        .level-detail-text,
+        .requirement-item {
             -webkit-user-select: text;
             -moz-user-select: text;
             -ms-user-select: text;
@@ -475,7 +476,7 @@
         
         /* ===== Main Content ===== */
         .content {
-            padding: 20px 0 40px;
+            padding: 40px 0;
             flex: 1 0 auto;
             width: 100%;
         }
@@ -543,7 +544,6 @@
             font-size: 1.1rem;
             margin-bottom: 20px;
             color: var(--text-secondary);
-            text-align: left;
         }
         
         .content-text:last-child {
@@ -1024,6 +1024,52 @@
             background: var(--red-color);
         }
         
+        /* Requirements List (из первого кода) */
+        .requirements-list {
+            list-style-type: none;
+            margin: 25px 0;
+        }
+        
+        .requirement-item {
+            position: relative;
+            padding: 15px 0 15px 40px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .requirement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .requirement-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 22px;
+            width: 12px;
+            height: 12px;
+            background: #888;
+            transform: rotate(45deg);
+            border-radius: 2px;
+        }
+        
+        /* Link Styling (из первого кода) */
+        .content-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 0 2px;
+        }
+        
+        .content-link:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+        
         /* Decorative Elements */
         .decorative-bg {
             position: fixed;
@@ -1056,7 +1102,32 @@
             display: block;
         }
         
+        /* Изменение цвета выделения текста */
+        ::selection {
+            background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
+            color: #ffffff; /* Цвет текста при выделении */
+        }
+
+        /* Для Firefox */
+        ::-moz-selection {
+            background-color: rgba(136, 136, 136, 0.4);
+            color: #ffffff;
+        }
+
+        /* Для WebKit браузеров (Chrome, Safari, Edge) */
+        ::-webkit-selection {
+            background-color: rgba(136, 136, 136, 0.4);
+            color: #ffffff;
+        }
+        
         /* ===== Media Queries ===== */
+        @media (min-width: 769px) {
+            .nav-list {
+                width: 400px;
+                max-width: 400px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .nav-list {
                 width: calc(100% - 40px);
@@ -1080,6 +1151,14 @@
             
             .section-title {
                 font-size: 1.4rem;
+            }
+            
+            .nav-footer {
+                padding: 15px;
+            }
+            
+            .nav-footer-text {
+                font-size: 0.85rem;
             }
             
             .load-level-section {
@@ -1132,11 +1211,26 @@
             .rules-list {
                 margin: 15px 0;
             }
+            
+            .requirements-list {
+                margin: 20px 0;
+            }
+            
+            .requirement-item {
+                padding: 12px 0 12px 30px;
+                font-size: 1rem;
+            }
+            
+            .requirement-item:before {
+                top: 18px;
+                width: 10px;
+                height: 10px;
+            }
         }
         
         @media (max-width: 480px) {
             .content {
-                padding: 20px 0 30px;
+                padding: 30px 0;
             }
             
             .nav-list {
@@ -1357,23 +1451,91 @@
             .nav-footer-year {
                 font-size: 0.75rem;
             }
-            /* Изменение цвета выделения текста */
-::selection {
-    background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
-    color: #ffffff; /* Цвет текста при выделении */
-}
-
-/* Для Firefox */
-::-moz-selection {
-    background-color: rgba(136, 136, 136, 0.4);
-    color: #ffffff;
-}
-
-/* Для WebKit браузеров (Chrome, Safari, Edge) */
-::-webkit-selection {
-    background-color: rgba(136, 136, 136, 0.4);
-    color: #ffffff;
-}
+            
+            .requirements-list {
+                margin: 20px 0;
+            }
+            
+            .requirement-item {
+                padding: 10px 0 10px 25px;
+                font-size: 0.95rem;
+            }
+            
+            .requirement-item:before {
+                top: 15px;
+                width: 8px;
+                height: 8px;
+            }
+        }
+        
+        @media (max-width: 380px) and (max-height: 800px) {
+            .nav-list {
+                max-height: 70vh;
+                top: calc(var(--header-height) + 5px);
+            }
+            
+            .telegram-icon {
+                right: 8px;
+                width: 38px;
+                height: 38px;
+            }
+            
+            .telegram-icon i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-height: 500px) {
+            .nav-list {
+                max-height: 65vh;
+            }
+        }
+        
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1300px;
+            }
+        }
+        
+        /* Improved hover states for better UX */
+        @media (hover: hover) {
+            .menu-toggle:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .nav-link:hover, 
+            .nav-link.active,
+            .dropdown.active .dropdown-toggle {
+                background-color: rgba(255, 255, 255, 0.08);
+                color: var(--text-primary);
+            }
+            
+            .dropdown-item:hover {
+                background-color: rgba(255, 255, 255, 0.08);
+                color: var(--text-primary);
+            }
+            
+            .telegram-icon:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .content-link:hover {
+                color: var(--text-primary);
+                border-bottom: 1px solid var(--text-primary);
+            }
+            
+            .nav-footer-link:hover {
+                color: var(--text-primary);
+                border-bottom: 1px solid var(--text-primary);
+            }
+            
+            /* Эффект при наведении на скроллбар */
+            .nav-list::-webkit-scrollbar-thumb:hover {
+                background: var(--scrollbar-thumb-hover);
+            }
         }
     </style>
 </head>
@@ -1722,7 +1884,7 @@
     </main>
 
     <script>
-        // Упрощенный JavaScript
+        // Оптимизированный JavaScript без анимаций
         (function() {
             'use strict';
             
@@ -1739,7 +1901,7 @@
             // State
             let isMenuOpen = false;
             
-            // Function to prevent text selection
+            // Функция для предотвращения выделения текста при долгом нажатии
             const preventTextSelection = function(e) {
                 e.preventDefault();
                 return false;
