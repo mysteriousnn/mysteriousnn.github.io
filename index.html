@@ -29,7 +29,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Убираем подсветку при тапе на мобильных */
+            -webkit-tap-highlight-color: transparent;
         }
         
         html {
@@ -52,13 +52,12 @@
             -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
-            -webkit-user-select: none; /* Запрещаем выделение текста на iOS */
+            -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            user-select: none; /* Запрещаем выделение текста */
+            user-select: none;
         }
         
-        /* Разрешаем выделение текста только в текстовых блоках */
         .channel-description,
         .channel-text,
         .info-text,
@@ -70,7 +69,6 @@
             user-select: text;
         }
         
-        /* Скрываем скроллбар во всех браузерах */
         body::-webkit-scrollbar {
             width: 0;
             height: 0;
@@ -138,7 +136,6 @@
             font-size: 1.8rem;
         }
         
-        /* Telegram Icon in Header */
         .telegram-icon {
             position: absolute;
             right: 20px;
@@ -157,7 +154,7 @@
             transition: all 0.2s ease;
             text-decoration: none;
             z-index: 1002;
-            -webkit-touch-callout: none; /* Убираем контекстное меню на iOS */
+            -webkit-touch-callout: none;
         }
         
         .telegram-icon:hover {
@@ -170,7 +167,6 @@
             font-size: 1.3rem;
         }
         
-        /* Menu Toggle Button */
         .menu-toggle {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
@@ -189,10 +185,9 @@
             border: none;
             outline: none;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none; /* Убираем контекстное меню на iOS */
+            -webkit-touch-callout: none;
         }
         
-        /* Убираем стандартные стили для кнопок на мобильных */
         button, 
         .menu-toggle,
         .dropdown-toggle,
@@ -206,7 +201,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* Стили для активного состояния (нажатия) на мобильных */
         .menu-toggle:active,
         .dropdown-toggle:active,
         .button-link:active,
@@ -217,7 +211,6 @@
             transition: background-color 0.1s;
         }
         
-        /* Main Menu */
         .nav-list {
             display: none;
             flex-direction: column;
@@ -240,7 +233,6 @@
             list-style: none;
         }
         
-        /* Стили для скроллбара меню */
         .nav-list::-webkit-scrollbar {
             width: 8px;
         }
@@ -261,7 +253,6 @@
             background: var(--scrollbar-thumb-hover);
         }
         
-        /* Для Firefox */
         .nav-list {
             scrollbar-width: thin;
             scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
@@ -280,7 +271,6 @@
             border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
         }
         
-        /* Footer in menu */
         .nav-footer {
             background-color: rgba(0, 0, 0, 0.2);
             padding: 20px;
@@ -319,7 +309,6 @@
             margin-top: 5px;
         }
         
-        /* Для последнего элемента перед футером */
         .nav-item:last-child .nav-link {
             border-radius: 0;
         }
@@ -356,7 +345,6 @@
             text-align: left;
         }
         
-        /* Dropdown Menu - цвет такой же как у основного меню */
         .dropdown-menu {
             width: 100%;
             background-color: var(--bg-secondary);
@@ -371,7 +359,6 @@
             display: block;
         }
         
-        /* Для Tgstat - скрываем закругления */
         .nav-item.dropdown:nth-last-child(3) .nav-link {
             border-radius: 0;
         }
@@ -380,7 +367,6 @@
             border-radius: 0;
         }
         
-        /* Для "Стать Админом" (последний пункт) - убираем закругления */
         .nav-item.dropdown:nth-last-child(2) .nav-link {
             border-radius: 0;
         }
@@ -409,7 +395,6 @@
             border-radius: 0;
         }
         
-        /* Diamond bullet for dropdown items */
         .dropdown-item::before {
             content: '';
             position: absolute;
@@ -435,7 +420,6 @@
             margin-left: auto;
         }
         
-        /* Dropdown arrow (diamond shape) */
         .dropdown-toggle::after {
             content: '';
             display: inline-block;
@@ -452,7 +436,6 @@
             transform: rotate(-135deg);
         }
         
-        /* Для консистентности добавим одинаковые hover эффекты */
         .nav-link:hover, 
         .nav-link.active,
         .dropdown.active .dropdown-toggle {
@@ -460,7 +443,6 @@
             color: var(--text-primary);
         }
         
-        /* Dropdown items - такой же эффект при наведении как у обычных пунктов */
         .dropdown-item:hover {
             background-color: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
@@ -468,7 +450,7 @@
         
         /* ===== Main Content ===== */
         .content {
-            padding: 20px 0;
+            padding: 20px 0 40px 0; /* Увеличено снизу для отступа от конца страницы */
             flex: 1 0 auto;
             width: 100%;
         }
@@ -515,7 +497,260 @@
             border: 1px solid var(--border-color);
         }
         
-        /* Cards Grid */
+        /* ===== LOAD LEVEL SECTION ===== */
+        .load-level-section {
+            position: relative;
+            background-color: var(--bg-secondary);
+            border-radius: var(--menu-border-radius);
+            padding: 35px 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        /* Level-specific styles with new colors */
+        .load-level-section.red-level {
+            border-left: 5px solid #c45c5a;
+            --level-color: #c45c5a;
+            --level-bg: linear-gradient(135deg, rgba(196, 92, 90, 0.1), rgba(196, 92, 90, 0.05));
+        }
+
+        .load-level-section.yellow-level {
+            border-left: 5px solid #ecc33c;
+            --level-color: #ecc33c;
+            --level-bg: linear-gradient(135deg, rgba(236, 195, 60, 0.1), rgba(236, 195, 60, 0.05));
+        }
+
+        .load-level-section.green-level {
+            border-left: 5px solid #a6bb7c;
+            --level-color: #a6bb7c;
+            --level-bg: linear-gradient(135deg, rgba(166, 187, 124, 0.1), rgba(166, 187, 124, 0.05));
+        }
+
+        /* Цвета для сегментов шкалы с новыми цветами */
+        .scale-segment.red {
+            background: linear-gradient(90deg, 
+                rgba(196, 92, 90, 0.15), 
+                rgba(196, 92, 90, 0.25),
+                rgba(196, 92, 90, 0.35));
+        }
+
+        .scale-segment.yellow {
+            background: linear-gradient(90deg, 
+                rgba(236, 195, 60, 0.15), 
+                rgba(236, 195, 60, 0.25),
+                rgba(236, 195, 60, 0.35));
+        }
+
+        .scale-segment.green {
+            background: linear-gradient(90deg, 
+                rgba(166, 187, 124, 0.15), 
+                rgba(166, 187, 124, 0.25),
+                rgba(166, 187, 124, 0.35));
+        }
+
+        /* Простые круги с новыми цветами */
+        .red-level .level-indicator {
+            background: #c45c5a;
+        }
+
+        .yellow-level .level-indicator {
+            background: #ecc33c;
+        }
+
+        .green-level .level-indicator {
+            background: #a6bb7c;
+        }
+
+        /* Белые иконки для хорошей видимости */
+        .red-level .indicator-icon,
+        .yellow-level .indicator-icon,
+        .green-level .indicator-icon {
+            color: #ffffff;
+        }
+
+        /* Приглушенные цвета для текста текущего уровня с новыми цветами */
+        .red-level .current-level {
+            background: rgba(196, 92, 90, 0.1);
+            border: 1px solid #c45c5a;
+            color: #f0d6d6;
+        }
+
+        .yellow-level .current-level {
+            background: rgba(236, 195, 60, 0.1);
+            border: 1px solid #ecc33c;
+            color: #f8f0d8;
+        }
+
+        .green-level .current-level {
+            background: rgba(166, 187, 124, 0.1);
+            border: 1px solid #a6bb7c;
+            color: #e8eedb;
+        }
+        
+        /* УДАЛЕНО: Glow effect */
+        
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .level-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .level-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--level-bg);
+            border-radius: 10px;
+            font-size: 1.4rem;
+            color: var(--level-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .current-level {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 10px 25px;
+            background: var(--level-bg);
+            border: 1px solid var(--level-color);
+            color: var(--level-color);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .current-level i {
+            font-size: 1.2rem;
+        }
+        
+        /* Level scale */
+        .level-scale-container {
+            position: relative;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 45px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .level-scale-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 1;
+        }
+        
+        .scale-segment {
+            flex: 1;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Active indicator */
+        .level-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--level-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            box-shadow: none;
+        }
+        
+        .indicator-icon {
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: none;
+            z-index: 2;
+            position: relative;
+        }
+        
+        /* Level description */
+        .level-description {
+            background: var(--level-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .level-description-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--level-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .level-description-title i {
+            font-size: 1.2rem;
+        }
+        
+        .level-description-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        
+        .level-description-text strong {
+            color: var(--level-color);
+            font-weight: 700;
+        }
+        
+        /* Info button */
+        .level-info-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 3;
+        }
+        
+        /* Стиль для кнопки в секции загруженности (без иконки слева) */
+        .level-info-button .button-link {
+            justify-content: space-between; /* Текст слева, стрелка справа */
+            padding: 14px 20px;
+        }
+        
+        /* Убираем отступ у текста, так как иконки нет */
+        .level-info-button .button-link span:first-child {
+            margin-left: 0;
+        }
+        
+        /* ===== Cards Grid ===== */
         .buttons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
@@ -536,7 +771,6 @@
             height: 100%;
         }
         
-        /* Icons */
         .button-icon-container {
             display: flex;
             align-items: center;
@@ -567,7 +801,7 @@
         }
         
         .button-link {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
@@ -582,9 +816,19 @@
             border: 1px solid var(--border-color);
             margin-top: auto;
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
+            transition: background-color 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* ОБЯЗАТЕЛЬНО: делаем активное состояние видимым */
+        .button-link:active {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(1px);
+        }
+        
+        .button-link:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
         
         .link-icon {
@@ -597,6 +841,7 @@
             padding: 30px;
             border-radius: var(--menu-border-radius);
             margin-top: 40px;
+            margin-bottom: 40px;
             border-left: 4px solid #888;
         }
         
@@ -623,8 +868,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
             gap: 25px;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            margin-top: 0;
+            margin-bottom: 0;
         }
         
         /* Animated Icons */
@@ -657,7 +902,6 @@
                 radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
         }
         
-        /* Menu Overlay */
         .menu-overlay {
             position: fixed;
             top: var(--header-height);
@@ -692,11 +936,42 @@
             .channel-description {
                 padding: 30px;
             }
+            
+            .load-level-section {
+                padding: 25px 20px;
+            }
+            
+            .level-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .current-level {
+                align-self: flex-start;
+            }
+            
+            .level-title {
+                font-size: 1.6rem;
+            }
+            
+            .level-indicator {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .indicator-icon {
+                font-size: 1.5rem;
+            }
+            
+            .level-scale-container {
+                height: 80px;
+            }
         }
         
         @media (max-width: 480px) {
             .content {
-                padding: 20px 0;
+                padding: 20px 0 30px 0;
             }
             
             .nav-list {
@@ -704,7 +979,6 @@
                 top: calc(var(--header-height) + 10px);
             }
             
-            /* Уменьшаем скроллбар на мобильных */
             .nav-list::-webkit-scrollbar {
                 width: 6px;
             }
@@ -733,6 +1007,51 @@
                 margin-bottom: 30px;
             }
             
+            .load-level-section {
+                padding: 20px 15px;
+                margin-bottom: 30px;
+            }
+            
+            .level-title {
+                font-size: 1.4rem;
+            }
+            
+            .level-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+            
+            .current-level {
+                font-size: 1rem;
+                padding: 8px 20px;
+            }
+            
+            .level-scale-container {
+                height: 70px;
+            }
+            
+            .level-indicator {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .indicator-icon {
+                font-size: 1.4rem;
+            }
+            
+            .level-description {
+                padding: 20px;
+            }
+            
+            .level-description-title {
+                font-size: 1.2rem;
+            }
+            
+            .button-link {
+                padding: 12px 16px;
+            }
+            
             .button-card {
                 padding: 18px;
             }
@@ -748,18 +1067,13 @@
                 font-size: 1.2rem;
             }
             
-            .button-link {
-                padding: 12px 16px;
-            }
-            
             .info-section {
                 padding: 20px;
                 margin-top: 30px;
+                margin-bottom: 30px;
             }
             
             .additional-grid {
-                margin-top: 30px;
-                margin-bottom: 30px;
                 gap: 20px;
             }
             
@@ -781,7 +1095,6 @@
                 left: 24px;
             }
             
-            /* Telegram icon on small mobile */
             .telegram-icon {
                 right: 10px;
                 width: 40px;
@@ -792,7 +1105,6 @@
                 font-size: 1.1rem;
             }
             
-            /* Логотип для мобильных */
             .logo {
                 width: 50px;
                 height: 45px;
@@ -813,7 +1125,6 @@
             }
         }
         
-        /* Очень маленькие экраны */
         @media (max-width: 380px) and (max-height: 800px) {
             .nav-list {
                 max-height: 70vh;
@@ -833,16 +1144,31 @@
             .telegram-icon i {
                 font-size: 1rem;
             }
+            
+            .load-level-section {
+                padding: 15px;
+            }
+            
+            .level-scale-container {
+                height: 65px;
+            }
+            
+            .level-indicator {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .indicator-icon {
+                font-size: 1.3rem;
+            }
         }
         
-        /* Для горизонтальной ориентации */
         @media (max-height: 500px) {
             .nav-list {
                 max-height: 65vh;
             }
         }
         
-        /* Large screens */
         @media (min-width: 1400px) {
             .container {
                 max-width: 1300px;
@@ -868,11 +1194,6 @@
                 color: var(--text-primary);
             }
             
-            .button-link:hover {
-                background: rgba(255, 255, 255, 0.1);
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-            
             .support-link:hover {
                 color: var(--text-primary);
             }
@@ -882,18 +1203,24 @@
                 color: var(--text-primary);
                 border-color: rgba(255, 255, 255, 0.2);
             }
-            
-            .inline-link:hover {
-                color: var(--text-primary);
-                border-bottom: 1px solid var(--text-primary);
-                background: rgba(255, 255, 255, 0.05);
-            }
-            
-            /* Эффект при наведении на скроллбар */
-            .nav-list::-webkit-scrollbar-thumb:hover {
-                background: var(--scrollbar-thumb-hover);
-            }
         }
+        /* Изменение цвета выделения текста */
+::selection {
+    background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
+    color: #ffffff; /* Цвет текста при выделении */
+}
+
+/* Для Firefox */
+::-moz-selection {
+    background-color: rgba(136, 136, 136, 0.4);
+    color: #ffffff;
+}
+
+/* Для WebKit браузеров (Chrome, Safari, Edge) */
+::-webkit-selection {
+    background-color: rgba(136, 136, 136, 0.4);
+    color: #ffffff;
+}
     </style>
 </head>
 <body>
@@ -1012,10 +1339,58 @@
                 <p class="channel-text">Это канал, созданный для людей, которые хотят найти новых друзей и общаться с интересными людьми в интернете.</p>
                 <p class="channel-text">Здесь вы сможете найти единомышленников, обсудить разные темы, поделиться своими мыслями и эмоциями, а также получить поддержку и советы от других участников.</p>
                 <p class="channel-text">Мы призываем к уважению и дружелюбному общению, чтобы каждый мог почувствовать себя комфортно и понимаемым.</p>
-                <p class="channel-text">Присоединяйтесь к нам и найдите своего идеального интернет друга или подругу!</p>
+                <p class="channel-text">Присоединяйтесь к нас и найдите своего идеального интернет друга или подругу!</p>
             </div>
             
             <p class="subtitle">Вся необходимая информация о работе бота, правилах и часто задаваемые вопросы</p>
+            
+            <!-- Load Level Section -->
+            <section class="load-level-section red-level" id="load-level">
+                <div class="level-header">
+                    <h2 class="level-title">
+                        <span class="level-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </span>
+                        Шкала загруженности анкет
+                    </h2>
+                    <div class="current-level">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="current-level-text">Красный уровень</span>
+                    </div>
+                </div>
+                
+                <div class="level-scale-container">
+                    <div class="level-scale-bg">
+                        <div class="scale-segment red"></div>
+                        <div class="scale-segment yellow"></div>
+                        <div class="scale-segment green"></div>
+                    </div>
+                    
+                    <div class="level-indicator" id="level-indicator">
+                        <div class="indicator-icon">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="level-description">
+                    <h3 class="level-description-title">
+                        <i class="fas fa-clock"></i>
+                        <span id="level-description-title">Красный уровень загруженности</span>
+                    </h3>
+                    <p class="level-description-text" id="level-description-text">
+                        <strong>Ожидание публикации анкеты - больше одного дня.</strong> 
+                        В данный момент у нас очень высокий поток анкет. Из-за большого количества заявок обработка занимает больше времени. Пожалуйста, проявите терпение - ваша анкета будет обязательно обработана!
+                    </p>
+                </div>
+                
+                <div class="level-info-button">
+                    <a href="https://ishupodrygyilidryga.fun/iipd/status" class="button-link">
+                        <span>Что такое уровни загруженности?</span>
+                        <span class="link-icon">→</span>
+                    </a>
+                </div>
+            </section>
             
             <div class="buttons-grid">
                 <div class="button-card">
@@ -1125,7 +1500,6 @@
     </main>
 
     <script>
-        // Оптимизированный JavaScript без анимаций
         (function() {
             'use strict';
             
@@ -1136,13 +1510,82 @@
                 menuOverlay: document.getElementById('menu-overlay'),
                 body: document.body,
                 dropdowns: document.querySelectorAll('.dropdown'),
-                dropdownToggles: document.querySelectorAll('.dropdown-toggle')
+                dropdownToggles: document.querySelectorAll('.dropdown-toggle'),
+                // Load level elements
+                loadLevelSection: document.getElementById('load-level'),
+                levelIndicator: document.getElementById('level-indicator'),
+                currentLevelText: document.getElementById('current-level-text'),
+                levelDescriptionTitle: document.getElementById('level-description-title'),
+                levelDescriptionText: document.getElementById('level-description-text')
             };
             
             // State
             let isMenuOpen = false;
             
-            // Функция для предотвращения выделения текста при долгом нажатии
+            // Load Level Configuration
+            const loadLevels = {
+                red: {
+                    title: "Красный уровень загруженности",
+                    levelText: "Красный уровень",
+                    description: "Ожидание публикации анкеты - больше одного дня.",
+                    details: "В данный момент у нас очень высокий поток анкет. Из-за большого количества заявок обработка занимает больше времени. Пожалуйста, проявите терпение - ваша анкета будет обязательно обработана!",
+                    indicatorPosition: 16.6,
+                    icon: "fa-exclamation",
+                    currentLevelIcon: "fa-exclamation-triangle"
+                },
+                yellow: {
+                    title: "Жёлтый уровень загруженности",
+                    levelText: "Жёлтый уровень",
+                    description: "Ожидание публикации анкеты - больше одного дня / в течении дня.",
+                    details: "Загруженность анкет средняя. Ваша анкета будет обработана в течение дня. Обращаем внимание, что время обработки может варьироваться в зависимости от времени суток.",
+                    indicatorPosition: 50,
+                    icon: "fa-exclamation-circle",
+                    currentLevelIcon: "fa-exclamation-circle"
+                },
+                green: {
+                    title: "Зелёный уровень загруженности",
+                    levelText: "Зелёный уровень",
+                    description: "Ожидание публикации анкеты - в день создания.",
+                    details: "Низкая загруженность анкет. Ваша анкета будет обработана в день создания. Это оптимальное время для отправки анкеты!",
+                    indicatorPosition: 83.4,
+                    icon: "fa-check-circle",
+                    currentLevelIcon: "fa-check-circle"
+                }
+            };
+            
+            // Current load level (change this to switch levels)
+            let currentLoadLevel = "red";
+            
+            // Function to set load level
+            function setLoadLevel(level) {
+                if (!loadLevels[level]) return;
+                
+                currentLoadLevel = level;
+                const levelData = loadLevels[level];
+                
+                // Update section class
+                dom.loadLevelSection.className = "load-level-section " + level + "-level";
+                
+                // Update indicator position
+                dom.levelIndicator.style.left = levelData.indicatorPosition + "%";
+                
+                // Update current level text
+                dom.currentLevelText.textContent = levelData.levelText;
+                
+                // Update description
+                dom.levelDescriptionTitle.textContent = levelData.title;
+                dom.levelDescriptionText.innerHTML = `<strong>${levelData.description}</strong> ${levelData.details}`;
+                
+                // Update indicator icon
+                const indicatorIcon = dom.levelIndicator.querySelector('.indicator-icon i');
+                indicatorIcon.className = "fas " + levelData.icon;
+                
+                // Update current level icon
+                const currentLevelIcon = document.querySelector('.current-level i');
+                currentLevelIcon.className = "fas " + levelData.currentLevelIcon;
+            }
+            
+            // Function to prevent text selection
             const preventTextSelection = function(e) {
                 e.preventDefault();
                 return false;
@@ -1190,10 +1633,8 @@
                 toggleDropdown: function(dropdown) {
                     const isActive = dropdown.classList.contains('active');
                     
-                    // Close all other dropdowns
                     this.closeAllDropdowns();
                     
-                    // Toggle current dropdown
                     if (!isActive) {
                         dropdown.classList.add('active');
                         const toggle = dropdown.querySelector('.dropdown-toggle');
@@ -1234,7 +1675,7 @@
                     });
                 });
                 
-                // Закрытие меню при клике в любом месте кроме самого меню
+                // Close menu when clicking outside
                 document.addEventListener('click', function(e) {
                     if (isMenuOpen && 
                         !e.target.closest('.nav-list') && 
@@ -1250,7 +1691,7 @@
                     }
                 });
                 
-                // Prevent multiple clicks
+                // Prevent multiple clicks on links
                 const links = document.querySelectorAll('a');
                 links.forEach(link => {
                     link.addEventListener('click', function(e) {
@@ -1266,29 +1707,24 @@
                     });
                 });
                 
-                // Предотвращаем выделение текста при долгом нажатии на кнопки
+                // Prevent text selection on interactive elements
                 const interactiveElements = document.querySelectorAll(
                     'button, .menu-toggle, .dropdown-toggle, .button-link, .nav-link, .dropdown-item, .telegram-icon'
                 );
                 
                 interactiveElements.forEach(el => {
-                    // Предотвращаем контекстное меню (долгое нажатие)
                     el.addEventListener('contextmenu', preventTextSelection);
-                    
-                    // Предотвращаем выделение при долгом тапе
                     el.addEventListener('selectstart', preventTextSelection);
                     el.addEventListener('mousedown', preventTextSelection);
                     
-                    // Для iOS
                     el.addEventListener('touchstart', function(e) {
-                        // Небольшая задержка для предотвращения выделения
                         if (e.touches.length > 1) {
                             e.preventDefault();
                         }
                     }, { passive: false });
                 });
                 
-                // Добавляем активное состояние для мобильных устройств
+                // Add active touch state for mobile
                 interactiveElements.forEach(el => {
                     el.addEventListener('touchstart', function() {
                         this.classList.add('active-touch');
@@ -1296,6 +1732,17 @@
                     
                     el.addEventListener('touchend', function() {
                         this.classList.remove('active-touch');
+                    });
+                });
+                
+                // Явно добавляем обработчик для активного состояния кнопок
+                document.querySelectorAll('.button-link').forEach(button => {
+                    button.addEventListener('touchstart', function() {
+                        this.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                    });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.backgroundColor = '';
                     });
                 });
             };
@@ -1315,21 +1762,23 @@
                     toggle.setAttribute('aria-haspopup', 'true');
                 });
                 
-                // Устанавливаем текущий год в футер
+                // Set current year in footer
                 const currentYear = new Date().getFullYear();
                 const yearElement = document.querySelector('.nav-footer-year');
                 if (yearElement) {
                     yearElement.textContent = currentYear;
                 }
                 
-                // Добавляем плавный скролл для меню
+                // Initialize load level
+                setLoadLevel(currentLoadLevel);
+                
+                // Add smooth scroll for menu
                 dom.navList.addEventListener('wheel', function(e) {
-                    // Плавный скролл для колесика мыши
                     this.scrollTop += e.deltaY * 0.5;
                     e.preventDefault();
                 }, { passive: false });
                 
-                // Добавляем инерционный скролл для тач-устройств
+                // Add inertial scroll for touch devices
                 let startY = 0;
                 let scrollTop = 0;
                 let isScrolling = false;
@@ -1347,7 +1796,7 @@
                     
                     e.preventDefault();
                     const y = e.touches[0].pageY;
-                    const walk = (y - startY) * 2; // Умножаем для более быстрого скролла
+                    const walk = (y - startY) * 2;
                     this.scrollTop = scrollTop - walk;
                 });
                 
