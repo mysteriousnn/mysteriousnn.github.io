@@ -23,8 +23,6 @@
             --scrollbar-track: rgba(255, 255, 255, 0.05);
             --scrollbar-thumb: rgba(136, 136, 136, 0.5);
             --scrollbar-thumb-hover: rgba(136, 136, 136, 0.7);
-            
-            /* Новые цвета для уровней загруженности */
             --green-color: #a6bb7c;
             --yellow-color: #ecc33c;
             --red-color: #c45c5a;
@@ -68,9 +66,7 @@
         .info-text,
         .requirement-item,
         .main-content p,
-        .main-content li,
-        .level-description-text,
-        .detail-content {
+        .main-content li {
             -webkit-user-select: text;
             -moz-user-select: text;
             -ms-user-select: text;
@@ -473,137 +469,15 @@
             color: var(--text-primary);
         }
         
-        /* ===== Main Content ===== */
-        .content {
-            padding: 40px 0;
-            flex: 1 0 auto;
-            width: 100%;
-        }
-        
-        /* Page Header */
-        .page-header {
-            background-color: var(--bg-secondary);
-            border-radius: var(--menu-border-radius);
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .page-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: var(--text-primary);
-            text-align: center;
-            position: relative;
-            padding-bottom: 20px;
-        }
-        
-        .page-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--accent-gradient);
-            border-radius: 3px;
-        }
-        
-        /* Main Content Styles */
-        .main-content {
-            background-color: var(--bg-secondary);
-            border-radius: var(--menu-border-radius);
-            padding: 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            line-height: 1.7;
-        }
-        
-        .content-section {
-            margin-bottom: 40px;
-        }
-        
-        .content-section:last-child {
-            margin-bottom: 0;
-        }
-        
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .content-text {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            color: var(--text-secondary);
-        }
-        
-        .content-text:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Requirements List */
-        .requirements-list {
-            list-style-type: none;
-            margin: 25px 0;
-        }
-        
-        .requirement-item {
-            position: relative;
-            padding: 15px 0 15px 40px;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .requirement-item:last-child {
-            border-bottom: none;
-        }
-        
-        .requirement-item:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 22px;
-            width: 12px;
-            height: 12px;
-            background: #888;
-            transform: rotate(45deg);
-            border-radius: 2px;
-        }
-        
-        /* Link Styling */
-        .content-link {
-            color: #aaa;
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px solid transparent;
-            transition: all 0.2s ease;
-            display: inline-block;
-            padding: 0 2px;
-        }
-        
-        .content-link:hover {
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--text-primary);
-        }
-        
         /* ===== LOAD LEVEL SECTION ===== */
         .load-level-section {
             position: relative;
             background-color: var(--bg-secondary);
             border-radius: var(--menu-border-radius);
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 40px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
             overflow: hidden;
         }
 
@@ -924,114 +798,128 @@
             background: linear-gradient(135deg, rgba(196, 92, 90, 0.1), rgba(196, 92, 90, 0.05));
         }
         
-        .detail-title {
-            font-size: 1.5rem;
+        /* ===== Main Content ===== */
+        .content {
+            padding: 40px 0;
+            flex: 1 0 auto;
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: var(--bg-secondary);
+            border-radius: var(--menu-border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-title {
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .detail-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            font-size: 1.4rem;
-        }
-
-        .green .detail-icon {
-            color: var(--green-color);
-        }
-
-        .yellow .detail-icon {
-            color: var(--yellow-color);
-        }
-
-        .red .detail-icon {
-            color: var(--red-color);
-        }
-
-        .detail-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .detail-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .detail-indicator, .detail-status {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .detail-indicator i, .detail-status i {
-            font-size: 0.8rem;
-        }
-
-        .detail-content {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .detail-content p {
-            margin-bottom: 15px;
-        }
-
-        .detail-content ul {
-            list-style-type: none;
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        .detail-content li {
+            text-align: center;
             position: relative;
-            padding-left: 25px;
-            margin-bottom: 10px;
+            padding-bottom: 20px;
         }
-
-        .detail-content li:before {
+        
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 3px;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            background-color: var(--bg-secondary);
+            border-radius: var(--menu-border-radius);
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            line-height: 1.7;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+        }
+        
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .content-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .content-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Requirements List */
+        .requirements-list {
+            list-style-type: none;
+            margin: 25px 0;
+        }
+        
+        .requirement-item {
+            position: relative;
+            padding: 15px 0 15px 40px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .requirement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .requirement-item:before {
             content: '';
             position: absolute;
             left: 0;
-            top: 10px;
-            width: 8px;
-            height: 8px;
-            background: currentColor;
+            top: 22px;
+            width: 12px;
+            height: 12px;
+            background: #888;
             transform: rotate(45deg);
-            border-radius: 1px;
+            border-radius: 2px;
         }
-
-        .detail-content strong {
+        
+        /* Link Styling */
+        .content-link {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+            display: inline-block;
+            padding: 0 2px;
+        }
+        
+        .content-link:hover {
             color: var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
         }
-
-        .green .detail-content strong {
-            color: var(--green-color);
-        }
-
-        .yellow .detail-content strong {
-            color: var(--yellow-color);
-        }
-
-        .red .detail-content strong {
-            color: var(--red-color);
-        }
-
+        
         /* Decorative Elements */
         .decorative-bg {
             position: fixed;
@@ -1086,6 +974,12 @@
             
             .main-content {
                 padding: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .load-level-section {
+                padding: 30px;
+                margin-bottom: 30px;
             }
             
             .page-title {
@@ -1095,23 +989,6 @@
             
             .section-title {
                 font-size: 1.4rem;
-            }
-            
-            .load-level-section {
-                padding: 20px;
-            }
-            
-            .level-title {
-                font-size: 1.5rem;
-            }
-            
-            .level-details {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .level-detail-card {
-                padding: 20px;
             }
             
             .nav-footer {
@@ -1147,13 +1024,19 @@
                 margin-bottom: 20px;
             }
             
+            .main-content {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .load-level-section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
             .page-title {
                 font-size: 1.5rem;
                 margin-bottom: 15px;
-            }
-            
-            .main-content {
-                padding: 20px;
             }
             
             .section-title {
@@ -1164,60 +1047,6 @@
             .content-text {
                 font-size: 1rem;
                 margin-bottom: 15px;
-            }
-            
-            .load-level-section {
-                padding: 15px;
-            }
-            
-            .level-title {
-                font-size: 1.3rem;
-            }
-            
-            .level-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1.2rem;
-            }
-            
-            .current-level {
-                font-size: 1rem;
-                padding: 8px 20px;
-            }
-            
-            .level-scale-container {
-                height: 70px;
-            }
-            
-            .level-indicator {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .indicator-icon {
-                font-size: 1.5rem;
-            }
-            
-            .level-description {
-                padding: 20px;
-            }
-            
-            .level-description-title {
-                font-size: 1.1rem;
-            }
-            
-            .level-description-text {
-                font-size: 0.95rem;
-            }
-            
-            .detail-title {
-                font-size: 1.3rem;
-            }
-            
-            .detail-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1.2rem;
             }
             
             .requirement-item {
@@ -1281,6 +1110,45 @@
             
             .nav-footer-year {
                 font-size: 0.75rem;
+            }
+            
+            /* Адаптация шкалы загруженности для мобильных */
+            .level-title {
+                font-size: 1.5rem;
+            }
+            
+            .level-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+            
+            .level-scale-container {
+                height: 70px;
+                border-radius: 35px;
+            }
+            
+            .level-indicator {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .indicator-icon {
+                font-size: 1.4rem;
+            }
+            
+            .level-description {
+                padding: 20px;
+            }
+            
+            .level-details {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-top: 30px;
+            }
+            
+            .level-detail-card {
+                padding: 20px;
             }
         }
         
@@ -1470,147 +1338,136 @@
                 <h1 class="page-title">Загруженность сервиса</h1>
             </div>
             
-            <div class="main-content">
-                <!-- Полная шкала загруженности -->
-                <section class="load-level-section green-level" id="load-level">
-                    <div class="level-header">
-                        <h2 class="level-title">
-                            <span class="level-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </span>
-                            Шкала загруженности анкет
-                        </h2>
+            <!-- Шкала загруженности -->
+            <section class="load-level-section green-level" id="load-level">
+                <div class="level-header">
+                    <h2 class="level-title">
+                        <span class="level-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </span>
+                        Шкала загруженности анкет
+                    </h2>
+                </div>
+                
+                <!-- Добавлен контейнер для текста текущего уровня и шкалы -->
+                <div class="current-level-container">
+                    <div class="current-level-label">Текущий уровень загруженности:</div>
+                    <div class="current-level" id="current-level">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="current-level-text">Зеленый уровень</span>
+                    </div>
+                </div>
+                
+                <div class="level-scale-container">
+                    <div class="level-scale-bg">
+                        <div class="scale-segment red"></div>
+                        <div class="scale-segment yellow"></div>
+                        <div class="scale-segment green"></div>
                     </div>
                     
-                    <!-- Добавлен контейнер для текста текущего уровня и шкалы -->
-                    <div class="current-level-container">
-                        <div class="current-level-label">Текущий уровень загруженности:</div>
-                        <div class="current-level" id="current-level">
-                            <i class="fas fa-check-circle"></i>
-                            <span id="current-level-text">Зеленый уровень</span>
+                    <div class="level-indicator" id="level-indicator">
+                        <div class="indicator-icon">
+                            <i class="fas fa-check"></i>
                         </div>
                     </div>
+                </div>
+                
+                <div class="level-description">
+                    <h3 class="level-description-title">
+                        <i class="fas fa-clock"></i>
+                        <span id="level-description-title">Зеленый уровень загруженности</span>
+                    </h3>
+                    <p class="level-description-text" id="level-description-text">
+                        <strong>Оптимальный режим работы. Индикатор: Зеленый / Статус: «Работаем в штатном режиме»</strong><br><br>
+                        Сервис работает в нормальном, плановом режиме. Очередь на модерацию минимальна или отсутствует. Все анкеты обрабатываются оперативно в рамках одного рабочего дня.<br><br>
+                        Ключевой параметр: Ожидание публикации анкеты — в день создания.<br><br>
+                        Что это значит на практике:<br>
+                        • Анкета, отправленная утром, будет опубликована днем или вечером того же дня.<br>
+                        • Анкета, отправленная вечером, будет опубликована либо до конца рабочего дня, либо следующее утро.<br>
+                        • Высокая скорость обратной связи.<br>
+                        • Идеальное время для срочных публикаций.<br><br>
+                        Причины состояния: Стабильная нагрузка, достаточное количество администраторов, отсутствие технических сбоев или пиков активности.<br><br>
+                        Рекомендации пользователям: Лучшее время для создания и отправки анкет. Можно планировать публикации на ближайшие дни.
+                    </p>
+                </div>
+                
+                <!-- Строка с анимацией "статус может обновиться" - новый дизайн -->
+                <div class="updating-status">
+                    <span class="updating-text">Статус может обновиться в любой момент</span>
+                    <div class="updating-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Основной контент с описанием всех уровней -->
+            <div class="main-content">
+                <div class="content-section">
+                    <h2 class="section-title">Все уровни загруженности</h2>
+                    <p class="content-text">
+                        Ниже представлены все уровни загруженности сервиса с подробными описаниями и рекомендациями для пользователей.
+                    </p>
                     
-                    <div class="level-scale-container">
-                        <div class="level-scale-bg">
-                            <div class="scale-segment red"></div>
-                            <div class="scale-segment yellow"></div>
-                            <div class="scale-segment green"></div>
+                    <div class="level-details">
+                        <div class="level-detail-card green">
+                            <h3 class="section-title" style="color: var(--green-color); font-size: 1.4rem; border-bottom: none; padding-bottom: 0;">
+                                <i class="fas fa-check-circle" style="color: var(--green-color);"></i> Зеленый уровень
+                            </h3>
+                            <p class="content-text">
+                                <strong>Оптимальный режим работы. Индикатор: Зеленый / Статус: «Работаем в штатном режиме»</strong><br><br>
+                                Сервис работает в нормальном, плановом режиме. Очередь на модерацию минимальна или отсутствует. Все анкеты обрабатываются оперативно в рамках одного рабочего дня.<br><br>
+                                Ключевой параметр: Ожидание публикации анкеты — в день создания.<br><br>
+                                Что это значит на практике:<br>
+                                • Анкета, отправленная утром, будет опубликована днем или вечером того же дня.<br>
+                                • Анкета, отправленная вечером, будет опубликована либо до конца рабочего дня, либо следующее утро.<br>
+                                • Высокая скорость обратной связи.<br>
+                                • Идеальное время для срочных публикаций.<br><br>
+                                Причины состояния: Стабильная нагрузка, достаточное количество администраторов, отсутствие технических сбоев или пиков активности.<br><br>
+                                Рекомендации пользователям: Лучшее время для создания и отправки анкет. Можно планировать публикации на ближайшие дни.
+                            </p>
                         </div>
                         
-                        <div class="level-indicator" id="level-indicator">
-                            <div class="indicator-icon">
-                                <i class="fas fa-check"></i>
-                            </div>
+                        <div class="level-detail-card yellow">
+                            <h3 class="section-title" style="color: var(--yellow-color); font-size: 1.4rem; border-bottom: none; padding-bottom: 0;">
+                                <i class="fas fa-exclamation-triangle" style="color: var(--yellow-color);"></i> Желтый уровень
+                            </h3>
+                            <p class="content-text">
+                                <strong>Повышенная нагрузка. Индикатор: Желтый / Статус: «Повышенная нагрузка»</strong><br><br>
+                                На сервисе наблюдается увеличение количества входящих заявок. Очередь на модерацию растет, что приводит к увеличению времени обработки. Система справляется, но работает с напряжением.<br><br>
+                                Ключевой параметр: Ожидание публикации анкеты — в течение дня или больше одного дня.<br><br>
+                                Что это значит на практике:<br>
+                                • С высокой вероятностью публикация произойдет в течение следующих 24-48/50 часов.<br>
+                                • Возможны небольшие задержки, но процесс остается предсказуемым.<br>
+                                • Команда модераторов работает в усиленном режиме, чтобы сократить очередь.<br>
+                                • Обновления статуса происходят регулярно, но с некоторой задержкой.<br><br>
+                                Причины состояния: Сезонный всплеск активности, небольшой недосмотр в штате админов, выходные дни с повышенным трафиком.<br><br>
+                                Рекомендации пользователям: Отправляйте анкеты заранее, если вам важны конкретные сроки. Не стоит рассчитывать на моментальную публикацию в течение часа. Проявите терпение и следите за обновлениями статуса.
+                            </p>
                         </div>
-                    </div>
-                    
-                    <div class="level-description">
-                        <h3 class="level-description-title">
-                            <i class="fas fa-clock"></i>
-                            <span id="level-description-title">Зеленый уровень загруженности</span>
-                        </h3>
-                        <p class="level-description-text" id="level-description-text">
-                            <strong>Ожидание публикации анкеты - в день создания.</strong>
-                            Сервис работает в нормальном, плановом режиме. Очередь на модерацию минимальна или отсутствует. Все анкеты обрабатываются оперативно в рамках одного рабочего дня.
-                        </p>
-                    </div>
-                    
-                    <!-- Строка с анимацией "статус может обновиться" - новый дизайн -->
-                    <div class="updating-status">
-                        <span class="updating-text">Статус может обновиться в любой момент</span>
-                        <div class="updating-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Level Details -->
-                <div class="level-details">
-                    <!-- Зеленый уровень -->
-                    <div class="level-detail-card green">
-                        <h3 class="detail-title">
-                            <span class="detail-icon"><i class="fas fa-check-circle"></i></span>
-                            Зеленый уровень загруженности
-                        </h3>
-                        <div class="detail-subtitle">Оптимальный режим работы</div>
-                        <div class="detail-meta">
-                            <span class="detail-indicator">Индикатор: Зеленый</span>
-                            <span class="detail-status">Статус: «Работаем в штатном режиме»</span>
-                        </div>
-                        <div class="detail-content">
-                            <p>Сервис работает в нормальном, плановом режиме. Очередь на модерацию минимальна или отсутствует. Все анкеты обрабатываются оперативно в рамках одного рабочего дня.</p>
-                            <p><strong>Ключевой параметр:</strong> Ожидание публикации анкеты — в день создания.</p>
-                            <p><strong>Что это значит на практике:</strong></p>
-                            <ul>
-                                <li>Анкета, отправленная утром, будет опубликована днем или вечером того же дня.</li>
-                                <li>Анкета, отправленная вечером, будет опубликована либо до конца рабочего дня, либо следующее утро.</li>
-                                <li>Высокая скорость обратной связи.</li>
-                                <li>Идеальное время для срочных публикаций.</li>
-                            </ul>
-                            <p><strong>Причины состояния:</strong> Стабильная нагрузка, достаточное количество администраторов, отсутствие технических сбоев или пиков активности.</p>
-                            <p><strong>Рекомендации пользователям:</strong> Лучшее время для создания и отправки анкет. Можно планировать публикации на ближайшие дни.</p>
-                        </div>
-                    </div>
-
-                    <!-- Желтый уровень -->
-                    <div class="level-detail-card yellow">
-                        <h3 class="detail-title">
-                            <span class="detail-icon"><i class="fas fa-exclamation-triangle"></i></span>
-                            Желтый уровень загруженности
-                        </h3>
-                        <div class="detail-subtitle">Повышенная нагрузка</div>
-                        <div class="detail-meta">
-                            <span class="detail-indicator"><i class="fas fa-circle"></i> Индикатор: Желтый</span>
-                            <span class="detail-status"><i class="fas fa-info-circle"></i> Статус: «Повышенная нагрузка»</span>
-                        </div>
-                        <div class="detail-content">
-                            <p>На сервисе наблюдается увеличение количества входящих заявок. Очередь на модерацию растет, что приводит к увеличению времени обработки. Система справляется, но работает с напряжением.</p>
-                            <p><strong>Ключевой параметр:</strong> Ожидание публикации анкеты — в течение дня или больше одного дня.</p>
-                            <p><strong>Что это значит на практике:</strong></p>
-                            <ul>
-                                <li>С высокой вероятностью публикация произойдет в течение следующих 24-48/50 часов.</li>
-                                <li>Возможны небольшие задержки, но процесс остается предсказуемым.</li>
-                                <li>Команда модераторов работает в усиленном режиме, чтобы сократить очередь.</li>
-                                <li>Обновления статуса происходят регулярно, но с некоторой задержкой.</li>
-                            </ul>
-                            <p><strong>Причины состояния:</strong> Сезонный всплеск активности, небольшой недосмотр в штате админов, выходные дни с повышенным трафиком.</p>
-                            <p><strong>Рекомендации пользователям:</strong> Отправляйте анкеты заранее, если вам важны конкретные сроки. Не стоит рассчитывать на моментальную публикацию в течение часа. Проявите терпение и следите за обновлениями статуса.</p>
-                        </div>
-                    </div>
-
-                    <!-- Красный уровень -->
-                    <div class="level-detail-card red">
-                        <h3 class="detail-title">
-                            <span class="detail-icon"><i class="fas fa-times-circle"></i></span>
-                            Красный уровень загруженности
-                        </h3>
-                        <div class="detail-subtitle">Критическая нагрузка</div>
-                        <div class="detail-meta">
-                            <span class="detail-indicator"><i class="fas fa-circle"></i> Индикатор: Красный</span>
-                            <span class="detail-status"><i class="fas fa-info-circle"></i> Статус: «Высокая нагрузка»</span>
-                        </div>
-                        <div class="detail-content">
-                            <p>Сервис испытывает пиковую нагрузку. Очередь на модерацию очень большая, что приводит к значительным задержкам. Команда работает на пределе возможностей, чтобы обработать все заявки.</p>
-                            <p><strong>Ключевой параметр:</strong> Ожидание публикации анкеты — больше 2-5 дней.</p>
-                            <p><strong>Что это значит на практике:</strong></p>
-                            <ul>
-                                <li>Не стоит ожидать публикации в день создания — минимальный срок ожидания 2-3 дня.</li>
-                                <li>Среднее время ожидания может составить от 1.5 до 3 и более дней в зависимости от объема очереди.</li>
-                                <li>Приоритет отдается анкетам, которые находятся в очереди дольше всего.</li>
-                                <li>Возможны временные задержки в ответах на запросы о статусе анкет.</li>
-                            </ul>
-                            <p><strong>Причины состояния:</strong> Массовый приток новых пользователей, праздники или выходные дни с экстремально высоким трафиком, сезонные всплески активности (начало учебного года, праздничные периоды).</p>
-                            <p><strong>Рекомендации пользователям:</strong></p>
-                            <ul>
-                                <li>Отправляйте анкеты значительно заранее до нужной вам даты публикации — минимум за 4-7 дней.</li>
-                                <li>Отнеситесь с пониманием к задержкам — команда уже работает над их уменьшением и делает все возможное.</li>
-                                <li>Пожалуйста, не дублируйте отправку анкет — это только увеличивает очередь и замедляет процесс.</li>
-                                <li>Следите за обновлениями статуса в специальном разделе или канале с уведомлениями.</li>
-                            </ul>
-                            <p><strong>Дополнительная информация:</strong> В такие периоды команда часто увеличивает количество модераторов или перераспределяет ресурсы. Статус "красный уровень" является временным, и как только очередь будет сокращена до приемлемого уровня, система вернется к желтому или зеленому статусу.</p>
+                        
+                        <div class="level-detail-card red">
+                            <h3 class="section-title" style="color: var(--red-color); font-size: 1.4rem; border-bottom: none; padding-bottom: 0;">
+                                <i class="fas fa-exclamation-circle" style="color: var(--red-color);"></i> Красный уровень
+                            </h3>
+                            <p class="content-text">
+                                <strong>Критическая нагрузка. Индикатор: Красный / Статус: «Высокая нагрузка»</strong><br><br>
+                                Сервис испытывает пиковую нагрузку. Очередь на модерацию очень большая, что приводит к значительным задержкам. Команда работает на пределе возможностей, чтобы обработать все заявки.<br><br>
+                                Ключевой параметр: Ожидание публикации анкеты — больше 2-5 дней.<br><br>
+                                Что это значит на практике:<br>
+                                • Не стоит ожидать публикации в день создания — минимальный срок ожидания 2-3 дня.<br>
+                                • Среднее время ожидания может составить от 1.5 до 3 и более дней в зависимости от объема очереди.<br>
+                                • Приоритет отдается анкетам, которые находятся в очереди дольше всего.<br>
+                                • Возможны временные задержки в ответах на запросы о статусе анкет.<br><br>
+                                Причины состояния: Массовый приток новых пользователей, праздники или выходные дни с экстремально высоким трафиком, сезонные всплески активности (начало учебного года, праздничные периоды).<br><br>
+                                Рекомендации пользователям:<br>
+                                • Отправляйте анкеты значительно заранее до нужной вам даты публикации — минимум за 4-7 дней.<br>
+                                • Отнеситесь с пониманием к задержкам — команда уже работает над их уменьшением и делает все возможное.<br>
+                                • Пожалуйста, не дублируйте отправку анкет — это только увеличивает очередь и замедляет процесс.<br>
+                                • Следите за обновлениями статуса в специальном разделе или канале с уведомлениями.<br><br>
+                                Дополнительная информация: В такие периоды команда часто увеличивает количество модераторов или перераспределяет ресурсы. Статус "красный уровень" является временным, и как только очередь будет сокращена до приемлемого уровня, система вернется к желтому или зеленому статусу.
+                            </p>
                         </div>
                     </div>
                 </div>
