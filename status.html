@@ -799,11 +799,11 @@
         }
         
         /* ===== Main Content ===== */
-.content {
-    padding: 40px 0 40px 0; /* Добавлен нижний отступ */
-    flex: 1 0 auto;
-    width: 100%;
-}
+        .content {
+            padding: 20px 0 40px 0; /* ВАЖНО: добавлен padding-bottom 40px */
+            flex: 1 0 auto;
+            width: 100%;
+        }
         
         /* Page Header */
         .page-header {
@@ -974,7 +974,6 @@
             
             .main-content {
                 padding: 30px;
-                margin-bottom: 30px;
             }
             
             .load-level-section {
@@ -1002,12 +1001,8 @@
         
         @media (max-width: 480px) {
             .content {
-                padding: 20px 0 30px 0;
+                padding: 20px 0 30px 0; /* На мобильных: 30px снизу */
             }
-            @media (max-width: 768px) {
-    .content {
-        padding: 30px 0;
-    }
             
             .nav-list {
                 max-height: 75vh;
@@ -1030,7 +1025,6 @@
             
             .main-content {
                 padding: 20px;
-                margin-bottom: 20px;
             }
             
             .load-level-section {
@@ -1401,7 +1395,7 @@
         </h3>
         <p class="level-description-text" id="level-description-text">
             <strong>Ожидание публикации анкеты - больше одного дня.</strong> 
-            В данный момент у нас очень высокий поток анкет. Из-за большого количества заявок обработка занимает больше времени. Пожалуйста, проявите терпение - ваша анкета будет обязательно обработана!
+            В данный момент у нас очень высокий поток анкет. Из7за большого количества заявок обработка занимает больше времени. Пожалуйста, проявите терпение - ваша анкета будет обязательно обработана!
         </p>
     </div>
     
