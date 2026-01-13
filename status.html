@@ -1339,68 +1339,61 @@
             </div>
             
             <!-- Шкала загруженности -->
-            <section class="load-level-section red-level" id="load-level">
-                <div class="level-header">
-                    <h2 class="level-title">
-                        <span class="level-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </span>
-                        Шкала загруженности анкет
-                    </h2>
-                </div>
-                
-                <!-- Добавлен контейнер для текста текущего уровня и шкалы -->
-                <div class="current-level-container">
-                    <div class="current-level-label">Текущий уровень загруженности:</div>
-                    <div class="current-level" id="current-level">
-                        <i class="fas fa-check-circle"></i>
-                        <span id="current-level-text">Зеленый уровень</span>
-                    </div>
-                </div>
-                
-                <div class="level-scale-container">
-                    <div class="level-scale-bg">
-                        <div class="scale-segment red"></div>
-                        <div class="scale-segment yellow"></div>
-                        <div class="scale-segment green"></div>
-                    </div>
-                    
-                    <div class="level-indicator" id="level-indicator">
-                        <div class="indicator-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="level-description">
-                    <h3 class="level-description-title">
-                        <i class="fas fa-clock"></i>
-                        <span id="level-description-title">Зеленый уровень загруженности</span>
-                    </h3>
-                    <p class="level-description-text" id="level-description-text">
-                        <strong>Оптимальный режим работы. Индикатор: Зеленый / Статус: «Работаем в штатном режиме»</strong><br><br>
-                        Сервис работает в нормальном, плановом режиме. Очередь на модерацию минимальна или отсутствует. Все анкеты обрабатываются оперативно в рамках одного рабочего дня.<br><br>
-                        Ключевой параметр: Ожидание публикации анкеты — в день создания.<br><br>
-                        Что это значит на практике:<br>
-                        • Анкета, отправленная утром, будет опубликована днем или вечером того же дня.<br>
-                        • Анкета, отправленная вечером, будет опубликована либо до конца рабочего дня, либо следующее утро.<br>
-                        • Высокая скорость обратной связи.<br>
-                        • Идеальное время для срочных публикаций.<br><br>
-                        Причины состояния: Стабильная нагрузка, достаточное количество администраторов, отсутствие технических сбоев или пиков активности.<br><br>
-                        Рекомендации пользователям: Лучшее время для создания и отправки анкет. Можно планировать публикации на ближайшие дни.
-                    </p>
-                </div>
-                
-                <!-- Строка с анимацией "статус может обновиться" - новый дизайн -->
-                <div class="updating-status">
-                    <span class="updating-text">Статус может обновиться в любой момент</span>
-                    <div class="updating-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-            </section>
+<!-- Шкала загруженности -->
+<section class="load-level-section red-level" id="load-level">
+    <div class="level-header">
+        <h2 class="level-title">
+            <span class="level-icon">
+                <i class="fas fa-chart-line"></i>
+            </span>
+            Шкала загруженности анкет
+        </h2>
+    </div>
+    
+    <!-- Добавлен контейнер для текста текущего уровня и шкалы -->
+    <div class="current-level-container">
+        <div class="current-level-label">Текущий уровень загруженности:</div>
+        <div class="current-level" id="current-level">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="current-level-text">Красный уровень</span>
+        </div>
+    </div>
+    
+    <div class="level-scale-container">
+        <div class="level-scale-bg">
+            <div class="scale-segment red"></div>
+            <div class="scale-segment yellow"></div>
+            <div class="scale-segment green"></div>
+        </div>
+        
+        <div class="level-indicator" id="level-indicator">
+            <div class="indicator-icon">
+                <i class="fas fa-exclamation"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="level-description">
+        <h3 class="level-description-title">
+            <i class="fas fa-clock"></i>
+            <span id="level-description-title">Красный уровень загруженности</span>
+        </h3>
+        <p class="level-description-text" id="level-description-text">
+            <strong>Ожидание публикации анкеты - больше одного дня.</strong> 
+            В данный момент у нас очень высокий поток анкет. Из-за большого количества заявок обработка занимает больше времени. Пожалуйста, проявите терпение - ваша анкета будет обязательно обработана!
+        </p>
+    </div>
+    
+    <!-- Строка с анимацией "статус может обновиться" - новый дизайн -->
+    <div class="updating-status">
+        <span class="updating-text">Статус может обновиться в любой момент</span>
+        <div class="updating-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+  </section>
             
             <!-- Основной контент с описанием всех уровней -->
             <div class="main-content">
