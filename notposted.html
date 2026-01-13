@@ -884,6 +884,22 @@
             .nav-list::-webkit-scrollbar-thumb:hover {
                 background: var(--scrollbar-thumb-hover);
             }
+            /* Изменение цвета выделения текста */
+::selection {
+    background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
+    color: #ffffff; /* Цвет текста при выделении */
+}
+
+/* Для Firefox */
+::-moz-selection {
+    background-color: rgba(136, 136, 136, 0.4);
+    color: #ffffff;
+}
+
+/* Для WebKit браузеров (Chrome, Safari, Edge) */
+::-webkit-selection {
+    background-color: rgba(136, 136, 136, 0.4);
+    color: #ffffff;
         }
     </style>
 </head>
