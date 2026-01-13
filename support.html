@@ -467,10 +467,10 @@
         }
         
         /* ===== Main Content ===== */
-        .content {
-            padding: 40px 0;
-            flex: 1 0 auto;
-            width: 100%;
+.content {
+    padding: 20px 0 40px 0;
+    flex: 1 0 auto;
+    width: 100%;
         }
         
         /* Page Header */
@@ -709,9 +709,9 @@
             }
         }
         
-        @media (max-width: 480px) {
-            .content {
-                padding: 30px 0;
+@media (max-width: 480px) {
+    .content {
+        padding: 20px 0 30px 0;
             }
             
             .nav-list {
@@ -888,6 +888,22 @@
             .nav-list::-webkit-scrollbar-thumb:hover {
                 background: var(--scrollbar-thumb-hover);
             }
+            /* Изменение цвета выделения текста */
+::selection {
+    background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
+    color: #ffffff; /* Цвет текста при выделении */
+}
+
+/* Для Firefox */
+::-moz-selection {
+    background-color: rgba(136, 136, 136, 0.4);
+    color: #ffffff;
+}
+
+/* Для WebKit браузеров (Chrome, Safari, Edge) */
+::-webkit-selection {
+    background-color: rgba(136, 136, 136, 0.4);
+    color: #ffffff;
         }
     </style>
 </head>
