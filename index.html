@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HKF6P1HJ9Q');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ищу интернет подругу/друга (WEB)</title>
@@ -1803,7 +1811,88 @@
                 dom.navList.addEventListener('touchend', function() {
                     isScrolling = false;
                 });
-            };
+            // === ВСТАВЬТЕ КОД ОТСЛЕЖИВАНИЯ КНОПОК ЗДЕСЬ ===
+// Отслеживание кликов по кнопкам для Google Analytics
+function initButtonTracking() {
+    // Отслеживание всех основных кнопок
+    document.querySelectorAll('.button-link').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const buttonText = this.querySelector('span:first-child')?.textContent || this.textContent;
+            const buttonUrl = this.href || 'no-url';
+            
+            gtag('event', 'button_click', {
+                'event_category': 'engagement',
+                'event_label': buttonText.trim(),
+                'link_url': buttonUrl
+            });
+        });
+    });
+    
+    // Отслеживание ссылок в навигации
+    document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const linkText = this.querySelector('.link-text')?.textContent || this.textContent;
+            
+            gtag('event', 'navigation_click', {
+                'event_category': 'navigation',
+                'event_label': linkText.trim(),
+                'link_url': this.href || 'no-url'
+            });
+        });
+    });
+    
+    // Отслеживание ссылок в dropdown
+    document.querySelectorAll('.dropdown-item').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const linkText = this.querySelector('.dropdown-item-text')?.textContent || this.textContent;
+            
+            gtag('event', 'dropdown_click', {
+                'event_category': 'navigation',
+                'event_label': linkText.trim(),
+                'link_url': this.href || 'no-url'
+            });
+        });
+    });
+    
+    // Отслеживание Telegram иконки
+    const telegramIcon = document.querySelector('.telegram-icon');
+    if (telegramIcon) {
+        telegramIcon.addEventListener('click', function(e) {
+            gtag('event', 'telegram_click', {
+                'event_category': 'social',
+                'event_label': 'Telegram Icon'
+            });
+        });
+    }
+    
+    // Отслеживание кликов по логотипу
+    const logo = document.getElementById('logo');
+    if (logo) {
+        logo.addEventListener('click', function(e) {
+            gtag('event', 'logo_click', {
+                'event_category': 'navigation',
+                'event_label': 'Logo Home'
+            });
+        });
+    }
+    
+    // Отслеживание открытия меню
+    const menuToggle = document.getElementById('menu-toggle');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function(e) {
+            const menuState = document.getElementById('nav-list').classList.contains('active') ? 'closed' : 'opened';
+            
+            gtag('event', 'menu_toggle', {
+                'event_category': 'ui_interaction',
+                'event_label': `Menu ${menuState}`
+            });
+        });
+    }
+}
+
+// Вызовите функцию в конце init()
+initButtonTracking();
+                } // <-- Эта скобка закрывает функцию init()
             
             // Start when DOM is ready
             if (document.readyState === 'loading') {
