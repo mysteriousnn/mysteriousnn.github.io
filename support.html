@@ -554,6 +554,7 @@
             color: var(--text-secondary);
             font-size: 1.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            counter-increment: list-item;
         }
         
         .instruction-item:last-child {
@@ -562,7 +563,6 @@
         
         .instruction-item:before {
             content: counter(list-item);
-            counter-increment: list-item;
             position: absolute;
             left: 0;
             top: 50%;
