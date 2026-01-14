@@ -595,10 +595,13 @@
             border-bottom: 1px solid var(--text-primary);
         }
         
-        /* Important Notes */
+/* Important Notes - ФИОЛЕТОВЫЙ ВАРИАНТ */
 .important-note {
     background-color: rgba(111, 66, 193, 0.1);
     border-left: 4px solid #6f42c1;
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 0 8px 8px 0;
 }
 
 .important-note-title {
@@ -606,6 +609,16 @@
     color: #6f42c1;
     margin-bottom: 10px;
     font-size: 1.1rem;
+}
+
+.important-note .content-text {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+}
+
+.important-note .content-text:last-child {
+    margin-bottom: 0;
 }
         
         /* FAQ Item */
