@@ -17,6 +17,7 @@
     <style>
         /* ===== CSS Reset & Base Styles ===== */
         :root {
+            /* Темная тема (по умолчанию) */
             --bg-primary: #1a1a1a;
             --bg-secondary: #262626;
             --bg-accent: rgba(38, 38, 38, 0.98);
@@ -31,6 +32,30 @@
             --scrollbar-track: rgba(255, 255, 255, 0.05);
             --scrollbar-thumb: rgba(136, 136, 136, 0.5);
             --scrollbar-thumb-hover: rgba(136, 136, 136, 0.7);
+            --theme-toggle-color: #ffffff;
+            --theme-toggle-bg: rgba(255, 255, 255, 0.05);
+        }
+        
+        .light-theme {
+            /* Светлая тема */
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-accent: rgba(255, 255, 255, 0.98);
+            --text-primary: #1a1a1a;
+            --text-secondary: rgba(26, 26, 26, 0.85);
+            --accent-gradient: linear-gradient(135deg, #666, #888);
+            --accent-orange: linear-gradient(135deg, #777, #999);
+            --border-color: rgba(0, 0, 0, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --scrollbar-track: rgba(0, 0, 0, 0.05);
+            --scrollbar-thumb: rgba(136, 136, 136, 0.3);
+            --scrollbar-thumb-hover: rgba(136, 136, 136, 0.5);
+            --theme-toggle-color: #1a1a1a;
+            --theme-toggle-bg: rgba(0, 0, 0, 0.08);
+            /* Усиленная контрастность для кнопки меню */
+            --menu-button-bg: rgba(0, 0, 0, 0.12);
+            --menu-button-border: rgba(0, 0, 0, 0.18);
+            --menu-button-text: #1a1a1a;
         }
         
         * {
@@ -64,6 +89,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .channel-description,
@@ -99,6 +125,12 @@
             background-color: rgba(26, 26, 26, 0.95);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
             padding: 10px 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .header {
+            background-color: rgba(245, 245, 247, 0.95);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
         }
         
         .container {
@@ -116,32 +148,100 @@
             height: 100%;
         }
         
+        /* УПРОЩЕННЫЙ ЛОГОТИП - как в других файлах */
         .logo {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
             z-index: 1002;
             user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             padding: 0;
-            width: 60px;
-            height: 50px;
         }
         
         .logo:hover {
             opacity: 0.8;
         }
         
-        .logo i {
+        .logo-icon {
             font-size: 1.8rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        
+        .logo-text {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        
+        .light-theme .logo-icon,
+        .light-theme .logo-text {
+            color: var(--text-primary);
+        }
+        
+        /* Кнопка переключения темы */
+        .theme-toggle {
+            position: absolute;
+            right: 80px; /* Увеличено расстояние от правого края */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: var(--theme-toggle-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-toggle-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 1002;
+            -webkit-touch-callout: none;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .light-theme .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 0, 0, 0.25);
+        }
+        
+        .theme-toggle i {
+            font-size: 1.2rem;
+        }
+        
+        /* Иконка луны для темной темы */
+        .theme-toggle .fa-moon {
+            display: block;
+        }
+        
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+        
+        /* В светлой теме показываем солнце, скрываем луну */
+        .light-theme .theme-toggle .fa-moon {
+            display: none;
+        }
+        
+        .light-theme .theme-toggle .fa-sun {
+            display: block;
         }
         
         .telegram-icon {
@@ -171,6 +271,17 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
         
+        .light-theme .telegram-icon {
+            background: rgba(0, 0, 0, 0.05);
+            color: rgba(26, 26, 26, 0.85);
+        }
+        
+        .light-theme .telegram-icon:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+        
         .telegram-icon i {
             font-size: 1.3rem;
         }
@@ -194,6 +305,15 @@
             outline: none;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Усиленная видимость кнопки меню в светлой теме */
+        .light-theme .menu-toggle {
+            background-color: var(--menu-button-bg);
+            border-color: var(--menu-button-border);
+            color: var(--menu-button-text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
         
         button, 
@@ -214,9 +334,20 @@
         .button-link:active,
         .nav-link:active,
         .dropdown-item:active,
-        .telegram-icon:active {
+        .telegram-icon:active,
+        .theme-toggle:active {
             background-color: rgba(255, 255, 255, 0.15) !important;
             transition: background-color 0.1s;
+        }
+        
+        .light-theme .menu-toggle:active,
+        .light-theme .dropdown-toggle:active,
+        .light-theme .button-link:active,
+        .light-theme .nav-link:active,
+        .light-theme .dropdown-item:active,
+        .light-theme .telegram-icon:active,
+        .light-theme .theme-toggle:active {
+            background-color: rgba(0, 0, 0, 0.15) !important;
         }
         
         .nav-list {
@@ -239,6 +370,11 @@
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
             list-style: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .nav-list {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
         
         .nav-list::-webkit-scrollbar {
@@ -289,6 +425,11 @@
             gap: 15px;
             border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
             flex-shrink: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .nav-footer {
+            background-color: rgba(0, 0, 0, 0.05);
         }
         
         .nav-footer-text {
@@ -317,6 +458,10 @@
             margin-top: 5px;
         }
         
+        .light-theme .nav-footer-year {
+            color: rgba(26, 26, 26, 0.6);
+        }
+        
         .nav-item:last-child .nav-link {
             border-radius: 0;
         }
@@ -339,6 +484,7 @@
             -webkit-touch-callout: none;
             user-select: none;
             flex-shrink: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .nav-link i {
@@ -361,6 +507,7 @@
             display: none;
             overflow: hidden;
             flex-shrink: 0;
+            transition: background-color 0.3s ease;
         }
         
         .dropdown.active .dropdown-menu {
@@ -397,6 +544,7 @@
             -webkit-touch-callout: none;
             user-select: none;
             flex-shrink: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .dropdown-item:last-child {
@@ -413,6 +561,7 @@
             height: 8px;
             background: #888;
             flex-shrink: 0;
+            transition: background-color 0.3s ease;
         }
         
         .dropdown-item-text {
@@ -426,6 +575,7 @@
             color: #888;
             font-weight: bold;
             margin-left: auto;
+            transition: color 0.3s ease;
         }
         
         .dropdown-toggle::after {
@@ -438,6 +588,7 @@
             transform: rotate(45deg);
             margin-left: 12px;
             flex-shrink: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
         
         .dropdown.active .dropdown-toggle::after {
@@ -451,9 +602,19 @@
             color: var(--text-primary);
         }
         
+        .light-theme .nav-link:hover, 
+        .light-theme .nav-link.active,
+        .light-theme .dropdown.active .dropdown-toggle {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+        
         .dropdown-item:hover {
             background-color: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
+        }
+        
+        .light-theme .dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.08);
         }
         
         /* ===== Main Content ===== */
@@ -471,6 +632,11 @@
             margin-bottom: 30px;
             border: 1px solid var(--border-color);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .channel-description {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         .channel-title {
@@ -479,6 +645,7 @@
             margin-bottom: 15px;
             color: var(--text-primary);
             text-align: center;
+            transition: color 0.3s ease;
         }
         
         .channel-text {
@@ -487,6 +654,7 @@
             margin-bottom: 15px;
             text-align: center;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
         
         .channel-text:last-child {
@@ -503,6 +671,7 @@
             padding: 20px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
         
         /* ===== LOAD LEVEL SECTION ===== */
@@ -515,6 +684,11 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
             overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .load-level-section {
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
         }
 
         /* Level-specific styles with new colors */
@@ -582,19 +756,19 @@
         .red-level .current-level {
             background: rgba(196, 92, 90, 0.1);
             border: 1px solid #c45c5a;
-            color: #f0d6d6;
+            color: #c45c5a;
         }
 
         .yellow-level .current-level {
             background: rgba(236, 195, 60, 0.1);
             border: 1px solid #ecc33c;
-            color: #f8f0d8;
+            color: #ecc33c;
         }
 
         .green-level .current-level {
             background: rgba(166, 187, 124, 0.1);
             border: 1px solid #a6bb7c;
-            color: #e8eedb;
+            color: #a6bb7c;
         }
         
         /* УДАЛЕНО: Glow effect */
@@ -617,6 +791,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: color 0.3s ease;
         }
         
         .level-icon {
@@ -643,6 +818,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
         
         .current-level i {
@@ -660,6 +836,11 @@
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .level-scale-container {
+            background: rgba(0, 0, 0, 0.05);
         }
         
         .level-scale-bg {
@@ -711,6 +892,11 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
+            transition: border-color 0.3s ease;
+        }
+        
+        .light-theme .level-description {
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .level-description-title {
@@ -731,6 +917,7 @@
             font-size: 1.05rem;
             line-height: 1.6;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
         
         .level-description-text strong {
@@ -777,6 +964,11 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .button-card {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         .button-icon-container {
@@ -798,6 +990,7 @@
             font-weight: 600;
             margin-bottom: 12px;
             color: var(--text-primary);
+            transition: color 0.3s ease;
         }
         
         .button-description {
@@ -806,6 +999,7 @@
             margin-bottom: 20px;
             line-height: 1.5;
             flex-grow: 1;
+            transition: color 0.3s ease;
         }
         
         .button-link {
@@ -824,9 +1018,14 @@
             border: 1px solid var(--border-color);
             margin-top: auto;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 2;
+        }
+        
+        .light-theme .button-link {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-primary);
         }
         
         /* ОБЯЗАТЕЛЬНО: делаем активное состояние видимым */
@@ -835,8 +1034,16 @@
             transform: translateY(1px);
         }
         
+        .light-theme .button-link:active {
+            background-color: rgba(0, 0, 0, 0.15) !important;
+        }
+        
         .button-link:hover {
             background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .button-link:hover {
+            background: rgba(0, 0, 0, 0.1);
         }
         
         .link-icon {
@@ -851,24 +1058,41 @@
             margin-top: 40px;
             margin-bottom: 40px;
             border-left: 4px solid #888;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .info-section {
+            background: rgba(0, 0, 0, 0.03);
+            border-left: 4px solid #666;
         }
         
         .info-title {
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: var(--text-primary);
+            transition: color 0.3s ease;
         }
         
         .info-text {
             font-size: 1rem;
             line-height: 1.6;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
         
         .support-link {
             color: #aaa;
             text-decoration: underline;
             font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .light-theme .support-link {
+            color: #666;
+        }
+        
+        .support-link:hover {
+            color: var(--text-primary);
         }
         
         /* Additional Grid */
@@ -908,6 +1132,14 @@
             background: 
                 radial-gradient(circle at 20% 30%, #888 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
+            transition: opacity 0.3s ease;
+        }
+        
+        .light-theme .decorative-bg {
+            opacity: 0.03;
+            background: 
+                radial-gradient(circle at 20% 30%, #aaa 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #bbb 0%, transparent 50%);
         }
         
         .menu-overlay {
@@ -939,6 +1171,19 @@
                 width: calc(100% - 40px);
                 max-width: calc(100% - 40px);
                 max-height: 80vh;
+            }
+            
+            /* Адаптация логотипа для планшетов */
+            .logo {
+                gap: 8px;
+            }
+            
+            .logo-icon {
+                font-size: 1.6rem;
+            }
+            
+            .logo-text {
+                font-size: 1.6rem;
             }
             
             .channel-description {
@@ -975,6 +1220,11 @@
             .level-scale-container {
                 height: 80px;
             }
+            
+            /* Адаптация кнопки темы для планшетов */
+            .theme-toggle {
+                right: 70px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -985,6 +1235,22 @@
             .nav-list {
                 max-height: 75vh;
                 top: calc(var(--header-height) + 10px);
+            }
+            
+            /* Адаптация логотипа для мобильных */
+            .logo {
+                gap: 6px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }
+            
+            .logo-icon {
+                font-size: 1.4rem;
+            }
+            
+            .logo-text {
+                font-size: 1.4rem;
+                letter-spacing: 0;
             }
             
             .nav-list::-webkit-scrollbar {
@@ -1103,8 +1369,15 @@
                 left: 24px;
             }
             
+            /* ИСПРАВЛЕНИЕ: Значительно увеличены отступы между кнопками */
             .telegram-icon {
-                right: 10px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .theme-toggle {
+                right: 70px; /* Значительно увеличено расстояние - 60px между центрами кнопок */
                 width: 40px;
                 height: 40px;
             }
@@ -1113,15 +1386,8 @@
                 font-size: 1.1rem;
             }
             
-            .logo {
-                width: 50px;
-                height: 45px;
-                left: 50%;
-                transform: translateX(-50%) translateY(-50%);
-            }
-            
-            .logo i {
-                font-size: 1.6rem;
+            .theme-toggle i {
+                font-size: 1.1rem;
             }
             
             .nav-footer {
@@ -1139,18 +1405,48 @@
                 top: calc(var(--header-height) + 5px);
             }
             
+            /* Дальнейшая адаптация логотипа */
+            .logo {
+                gap: 5px;
+            }
+            
+            .logo-icon {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
             .channel-description {
                 padding: 15px;
             }
             
+            /* Дополнительная адаптация для очень маленьких экранов */
             .telegram-icon {
-                right: 8px;
+                right: 12px;
+                width: 38px;
+                height: 38px;
+            }
+            
+            .theme-toggle {
+                right: 67px; /* Увеличен отступ */
                 width: 38px;
                 height: 38px;
             }
             
             .telegram-icon i {
                 font-size: 1rem;
+            }
+            
+            .theme-toggle i {
+                font-size: 1rem;
+            }
+            
+            /* Сдвигаем кнопку меню левее, чтобы освободить место */
+            .menu-toggle {
+                padding: 8px 16px;
+                font-size: 0.85rem;
             }
             
             .load-level-section {
@@ -1168,6 +1464,42 @@
             
             .indicator-icon {
                 font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            /* Дополнительные корректировки для очень узких экранов */
+            .logo {
+                gap: 4px;
+            }
+            
+            .logo-icon {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .telegram-icon {
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .theme-toggle {
+                right: 65px; /* Увеличен отступ */
+                width: 36px;
+                height: 36px;
+            }
+            
+            .menu-toggle {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+            
+            .container {
+                padding: 0 12px;
             }
         }
         
@@ -1190,6 +1522,12 @@
                 border-color: rgba(255, 255, 255, 0.2);
             }
             
+            .light-theme .menu-toggle:hover {
+                background-color: rgba(0, 0, 0, 0.15);
+                border-color: rgba(0, 0, 0, 0.25);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            }
+            
             .nav-link:hover, 
             .nav-link.active,
             .dropdown.active .dropdown-toggle {
@@ -1197,9 +1535,19 @@
                 color: var(--text-primary);
             }
             
+            .light-theme .nav-link:hover,
+            .light-theme .nav-link.active,
+            .light-theme .dropdown.active .dropdown-toggle {
+                background-color: rgba(0, 0, 0, 0.08);
+            }
+            
             .dropdown-item:hover {
                 background-color: rgba(255, 255, 255, 0.08);
                 color: var(--text-primary);
+            }
+            
+            .light-theme .dropdown-item:hover {
+                background-color: rgba(0, 0, 0, 0.08);
             }
             
             .support-link:hover {
@@ -1211,24 +1559,56 @@
                 color: var(--text-primary);
                 border-color: rgba(255, 255, 255, 0.2);
             }
+            
+            .light-theme .telegram-icon:hover {
+                background: rgba(0, 0, 0, 0.1);
+                border-color: rgba(0, 0, 0, 0.2);
+            }
+            
+            .theme-toggle:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .light-theme .theme-toggle:hover {
+                background: rgba(0, 0, 0, 0.15);
+                border-color: rgba(0, 0, 0, 0.25);
+            }
         }
+        
         /* Изменение цвета выделения текста */
-::selection {
-    background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
-    color: #ffffff; /* Цвет текста при выделении */
-}
+        ::selection {
+            background-color: rgba(136, 136, 136, 0.4); /* Основной цвет */
+            color: #ffffff; /* Цвет текста при выделении */
+        }
 
-/* Для Firefox */
-::-moz-selection {
-    background-color: rgba(136, 136, 136, 0.4);
-    color: #ffffff;
-}
+        /* Для Firefox */
+        ::-moz-selection {
+            background-color: rgba(136, 136, 136, 0.4);
+            color: #ffffff;
+        }
 
-/* Для WebKit браузеров (Chrome, Safari, Edge) */
-::-webkit-selection {
-    background-color: rgba(136, 136, 136, 0.4);
-    color: #ffffff;
-}
+        /* Для WebKit браузеров (Chrome, Safari, Edge) */
+        ::-webkit-selection {
+            background-color: rgba(136, 136, 136, 0.4);
+            color: #ffffff;
+        }
+        
+        .light-theme ::selection {
+            background-color: rgba(136, 136, 136, 0.3);
+            color: #1a1a1a;
+        }
+        
+        .light-theme ::-moz-selection {
+            background-color: rgba(136, 136, 136, 0.3);
+            color: #1a1a1a;
+        }
+        
+        .light-theme ::-webkit-selection {
+            background-color: rgba(136, 136, 136, 0.3);
+            color: #1a1a1a;
+        }
     </style>
 </head>
 <body>
@@ -1242,14 +1622,21 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="main-nav">
+                <!-- Кнопка переключения темы -->
+                <button class="theme-toggle" id="theme-toggle" title="Переключить тему">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                
                 <!-- Telegram Icon -->
                 <a href="https://t.me/ishupodrygyilidryga" class="telegram-icon" target="_blank" rel="noopener noreferrer" title="Перейти в Telegram канал">
                     <i class="fab fa-telegram"></i>
                 </a>
                 
-                <!-- Logo as link to home page -->
+                <!-- УПРОЩЕННЫЙ ЛОГОТИП - как в других файлах -->
                 <a href="https://ishupodrygyilidryga.fun" class="logo" id="logo" title="Перейти на главную страницу">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users logo-icon"></i>
+                    <span class="logo-text">iipd</span>
                 </a>
                 
                 <!-- Menu Toggle -->
@@ -1387,7 +1774,7 @@
                         <span id="level-description-title">Красный уровень загруженности</span>
                     </h3>
                     <p class="level-description-text" id="level-description-text">
-                        <strong>Ожидание публикации анкеты - больше одного дня.</strong> 
+                        <strong>Ожидание публикации анкеты - больше одного день.</strong> 
                         В данный момент у нас очень высокий поток анкет. Из-за большого количества заявок обработка занимает больше времени. Пожалуйста, проявите терпение - ваша анкета будет обязательно обработана!
                     </p>
                 </div>
@@ -1400,6 +1787,7 @@
                 </div>
             </section>
             
+            <!-- Основные блоки -->
             <div class="buttons-grid">
                 <div class="button-card">
                     <div class="button-icon-container">
@@ -1460,13 +1848,28 @@
                         <span class="link-icon">→</span>
                     </a>
                 </div>
+                
+                <!-- Блок "Наши статьи и другой материал" в основном ряду -->
+                <div class="button-card">
+                    <div class="button-icon-container">
+                        <i class="fas fa-newspaper button-icon"></i>
+                    </div>
+                    <h2 class="button-title">Наши статьи и другой материал</h2>
+                    <p class="button-description">Здесь мы делимся интересными статьями, исследованиями и материалами на различные темы.</p>
+                    <a href="https://ishupodrygyilidryga.fun/articles" class="button-link">
+                        <span>Ознакомиться</span>
+                        <span class="link-icon">→</span>
+                    </a>
+                </div>
             </div>
             
+            <!-- Важная информация -->
             <div class="info-section">
                 <h2 class="info-title">Важная информация</h2>
                 <p class="info-text">Все ссылки ведут на официальные страницы с актуальной информацией. Если у вас возникли проблемы с доступом или вы обнаружили неработающую ссылку, пожалуйста, сообщите об этом в <a href="https://t.me/helpforsilencebot" class="support-link" target="_blank" rel="noopener noreferrer">поддержку</a>.</p>
             </div>
             
+            <!-- Дополнительные блоки -->
             <div class="additional-grid">
                 <div class="button-card">
                     <div class="animated-icon">
@@ -1519,6 +1922,7 @@
                 body: document.body,
                 dropdowns: document.querySelectorAll('.dropdown'),
                 dropdownToggles: document.querySelectorAll('.dropdown-toggle'),
+                themeToggle: document.getElementById('theme-toggle'),
                 // Load level elements
                 loadLevelSection: document.getElementById('load-level'),
                 levelIndicator: document.getElementById('level-indicator'),
@@ -1529,6 +1933,39 @@
             
             // State
             let isMenuOpen = false;
+            let isLightTheme = false;
+            
+            // Function to apply theme consistently
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    dom.body.classList.add('light-theme');
+                    isLightTheme = true;
+                } else {
+                    dom.body.classList.remove('light-theme');
+                    isLightTheme = false;
+                }
+            }
+            
+            // Initialize theme from localStorage or default
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                isLightTheme = true;
+                dom.body.classList.add('light-theme');
+            } else {
+                isLightTheme = false;
+                dom.body.classList.remove('light-theme');
+                // Сохраняем темную тему как значение по умолчанию
+                if (!savedTheme) {
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+            
+            // Listen for theme changes from other tabs
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'theme') {
+                    applyTheme(e.newValue);
+                }
+            });
             
             // Load Level Configuration
             const loadLevels = {
@@ -1661,6 +2098,21 @@
                     menu.toggle();
                 });
                 
+                // Theme toggle
+                dom.themeToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    const newTheme = isLightTheme ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    
+                    // Отправка события в Google Analytics
+                    gtag('event', 'theme_toggle', {
+                        'event_category': 'ui_interaction',
+                        'event_label': newTheme === 'light' ? 'Light Theme' : 'Dark Theme'
+                    });
+                });
+                
                 // Dropdown toggles
                 dom.dropdownToggles.forEach(toggle => {
                     toggle.addEventListener('click', function(e) {
@@ -1717,7 +2169,7 @@
                 
                 // Prevent text selection on interactive elements
                 const interactiveElements = document.querySelectorAll(
-                    'button, .menu-toggle, .dropdown-toggle, .button-link, .nav-link, .dropdown-item, .telegram-icon'
+                    'button, .menu-toggle, .dropdown-toggle, .button-link, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle'
                 );
                 
                 interactiveElements.forEach(el => {
@@ -1763,6 +2215,7 @@
                 // Set accessibility attributes
                 dom.menuToggle.setAttribute('aria-expanded', 'false');
                 dom.menuToggle.setAttribute('aria-label', 'Открыть меню навигации');
+                dom.themeToggle.setAttribute('aria-label', 'Переключить тему');
                 
                 // Add aria-labels to dropdown toggles
                 dom.dropdownToggles.forEach(toggle => {
@@ -1811,88 +2264,87 @@
                 dom.navList.addEventListener('touchend', function() {
                     isScrolling = false;
                 });
-            // === ВСТАВЬТЕ КОД ОТСЛЕЖИВАНИЯ КНОПОК ЗДЕСЬ ===
-// Отслеживание кликов по кнопкам для Google Analytics
-function initButtonTracking() {
-    // Отслеживание всех основных кнопок
-    document.querySelectorAll('.button-link').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const buttonText = this.querySelector('span:first-child')?.textContent || this.textContent;
-            const buttonUrl = this.href || 'no-url';
-            
-            gtag('event', 'button_click', {
-                'event_category': 'engagement',
-                'event_label': buttonText.trim(),
-                'link_url': buttonUrl
-            });
-        });
-    });
-    
-    // Отслеживание ссылок в навигации
-    document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const linkText = this.querySelector('.link-text')?.textContent || this.textContent;
-            
-            gtag('event', 'navigation_click', {
-                'event_category': 'navigation',
-                'event_label': linkText.trim(),
-                'link_url': this.href || 'no-url'
-            });
-        });
-    });
-    
-    // Отслеживание ссылок в dropdown
-    document.querySelectorAll('.dropdown-item').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const linkText = this.querySelector('.dropdown-item-text')?.textContent || this.textContent;
-            
-            gtag('event', 'dropdown_click', {
-                'event_category': 'navigation',
-                'event_label': linkText.trim(),
-                'link_url': this.href || 'no-url'
-            });
-        });
-    });
-    
-    // Отслеживание Telegram иконки
-    const telegramIcon = document.querySelector('.telegram-icon');
-    if (telegramIcon) {
-        telegramIcon.addEventListener('click', function(e) {
-            gtag('event', 'telegram_click', {
-                'event_category': 'social',
-                'event_label': 'Telegram Icon'
-            });
-        });
-    }
-    
-    // Отслеживание кликов по логотипу
-    const logo = document.getElementById('logo');
-    if (logo) {
-        logo.addEventListener('click', function(e) {
-            gtag('event', 'logo_click', {
-                'event_category': 'navigation',
-                'event_label': 'Logo Home'
-            });
-        });
-    }
-    
-    // Отслеживание открытия меню
-    const menuToggle = document.getElementById('menu-toggle');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function(e) {
-            const menuState = document.getElementById('nav-list').classList.contains('active') ? 'closed' : 'opened';
-            
-            gtag('event', 'menu_toggle', {
-                'event_category': 'ui_interaction',
-                'event_label': `Menu ${menuState}`
-            });
-        });
-    }
-}
-
-// Вызовите функцию в конце init()
-initButtonTracking();
+                
+                // Отслеживание кликов по кнопкам для Google Analytics
+                function initButtonTracking() {
+                    // Отслеживание всех основных кнопок
+                    document.querySelectorAll('.button-link').forEach(button => {
+                        button.addEventListener('click', function(e) {
+                            const buttonText = this.querySelector('span:first-child')?.textContent || this.textContent;
+                            const buttonUrl = this.href || 'no-url';
+                            
+                            gtag('event', 'button_click', {
+                                'event_category': 'engagement',
+                                'event_label': buttonText.trim(),
+                                'link_url': buttonUrl
+                            });
+                        });
+                    });
+                    
+                    // Отслеживание ссылок в навигации
+                    document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            const linkText = this.querySelector('.link-text')?.textContent || this.textContent;
+                            
+                            gtag('event', 'navigation_click', {
+                                'event_category': 'navigation',
+                                'event_label': linkText.trim(),
+                                'link_url': this.href || 'no-url'
+                            });
+                        });
+                    });
+                    
+                    // Отслеживание ссылок в dropdown
+                    document.querySelectorAll('.dropdown-item').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            const linkText = this.querySelector('.dropdown-item-text')?.textContent || this.textContent;
+                            
+                            gtag('event', 'dropdown_click', {
+                                'event_category': 'navigation',
+                                'event_label': linkText.trim(),
+                                'link_url': this.href || 'no-url'
+                            });
+                        });
+                    });
+                    
+                    // Отслеживание Telegram иконки
+                    const telegramIcon = document.querySelector('.telegram-icon');
+                    if (telegramIcon) {
+                        telegramIcon.addEventListener('click', function(e) {
+                            gtag('event', 'telegram_click', {
+                                'event_category': 'social',
+                                'event_label': 'Telegram Icon'
+                            });
+                        });
+                    }
+                    
+                    // Отслеживание кликов по логотипу
+                    const logo = document.getElementById('logo');
+                    if (logo) {
+                        logo.addEventListener('click', function(e) {
+                            gtag('event', 'logo_click', {
+                                'event_category': 'navigation',
+                                'event_label': 'Logo Home'
+                            });
+                        });
+                    }
+                    
+                    // Отслеживание открытия меню
+                    const menuToggle = document.getElementById('menu-toggle');
+                    if (menuToggle) {
+                        menuToggle.addEventListener('click', function(e) {
+                            const menuState = document.getElementById('nav-list').classList.contains('active') ? 'closed' : 'opened';
+                            
+                            gtag('event', 'menu_toggle', {
+                                'event_category': 'ui_interaction',
+                                'event_label': `Menu ${menuState}`
+                            });
+                        });
+                    }
                 }
+                
+                initButtonTracking();
+            }
             
             // Start when DOM is ready
             if (document.readyState === 'loading') {
