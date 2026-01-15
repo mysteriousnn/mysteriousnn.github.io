@@ -9,6 +9,7 @@
     <style>
         /* ===== CSS Reset & Base Styles ===== */
         :root {
+            /* Темная тема (по умолчанию) */
             --bg-primary: #1a1a1a;
             --bg-secondary: #262626;
             --bg-accent: rgba(38, 38, 38, 0.98);
@@ -27,6 +28,30 @@
             --button-primary: rgba(255, 255, 255, 0.05);
             --button-hover: rgba(255, 255, 255, 0.1);
             --button-active: rgba(255, 255, 255, 0.15);
+            --theme-toggle-color: #ffffff;
+            --theme-toggle-bg: rgba(255, 255, 255, 0.05);
+        }
+        
+        .light-theme {
+            /* Светлая тема */
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-accent: rgba(255, 255, 255, 0.98);
+            --text-primary: #1a1a1a;
+            --text-secondary: rgba(26, 26, 26, 0.85);
+            --accent-gradient: linear-gradient(135deg, #666, #888);
+            --accent-orange: linear-gradient(135deg, #777, #999);
+            --border-color: rgba(0, 0, 0, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --scrollbar-track: rgba(0, 0, 0, 0.05);
+            --scrollbar-thumb: rgba(136, 136, 136, 0.3);
+            --scrollbar-thumb-hover: rgba(136, 136, 136, 0.5);
+            --theme-toggle-color: #1a1a1a;
+            --theme-toggle-bg: rgba(0, 0, 0, 0.08);
+            /* Усиленная контрастность для кнопки меню */
+            --menu-button-bg: rgba(0, 0, 0, 0.12);
+            --menu-button-border: rgba(0, 0, 0, 0.18);
+            --menu-button-text: #1a1a1a;
         }
         
         * {
@@ -60,6 +85,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         /* Разрешаем выделение текста только в текстовых блоках */
@@ -102,6 +128,12 @@
             background-color: rgba(26, 26, 26, 0.95);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
             padding: 10px 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .header {
+            background-color: rgba(245, 245, 247, 0.95);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
         }
         
         .container {
@@ -119,32 +151,100 @@
             height: 100%;
         }
         
+        /* УПРОЩЕННЫЙ ЛОГОТИП - как в первом файле */
         .logo {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
             z-index: 1002;
             user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             padding: 0;
-            width: 60px;
-            height: 50px;
         }
         
         .logo:hover {
             opacity: 0.8;
         }
         
-        .logo i {
+        .logo-icon {
             font-size: 1.8rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        
+        .logo-text {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        
+        .light-theme .logo-icon,
+        .light-theme .logo-text {
+            color: var(--text-primary);
+        }
+        
+        /* Кнопка переключения темы */
+        .theme-toggle {
+            position: absolute;
+            right: 80px; /* Увеличено расстояние от правого края */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: var(--theme-toggle-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-toggle-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 1002;
+            -webkit-touch-callout: none;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .light-theme .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 0, 0, 0.25);
+        }
+        
+        .theme-toggle i {
+            font-size: 1.2rem;
+        }
+        
+        /* Иконка луны для темной темы */
+        .theme-toggle .fa-moon {
+            display: block;
+        }
+        
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+        
+        /* В светлой теме показываем солнце, скрываем луну */
+        .light-theme .theme-toggle .fa-moon {
+            display: none;
+        }
+        
+        .light-theme .theme-toggle .fa-sun {
+            display: block;
         }
         
         /* Telegram Icon in Header */
@@ -175,6 +275,17 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
         
+        .light-theme .telegram-icon {
+            background: rgba(0, 0, 0, 0.05);
+            color: rgba(26, 26, 26, 0.85);
+        }
+        
+        .light-theme .telegram-icon:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+        
         .telegram-icon i {
             font-size: 1.3rem;
         }
@@ -199,6 +310,15 @@
             outline: none;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Усиленная видимость кнопки меню в светлой теме */
+        .light-theme .menu-toggle {
+            background-color: var(--menu-button-bg);
+            border-color: var(--menu-button-border);
+            color: var(--menu-button-text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
         
         /* Убираем стандартные стили для кнопок на мобильных */
@@ -207,7 +327,9 @@
         .dropdown-toggle,
         .button-link,
         .nav-link,
-        .dropdown-item {
+        .dropdown-item,
+        .telegram-icon,
+        .theme-toggle {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
@@ -221,9 +343,20 @@
         .button-link:active,
         .nav-link:active,
         .dropdown-item:active,
-        .telegram-icon:active {
+        .telegram-icon:active,
+        .theme-toggle:active {
             background-color: rgba(255, 255, 255, 0.15) !important;
             transition: background-color 0.1s;
+        }
+        
+        .light-theme .menu-toggle:active,
+        .light-theme .dropdown-toggle:active,
+        .light-theme .button-link:active,
+        .light-theme .nav-link:active,
+        .light-theme .dropdown-item:active,
+        .light-theme .telegram-icon:active,
+        .light-theme .theme-toggle:active {
+            background-color: rgba(0, 0, 0, 0.15) !important;
         }
         
         /* Main Menu */
@@ -247,6 +380,11 @@
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
             list-style: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .nav-list {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
         
         /* Стили для скроллбара меню */
@@ -300,6 +438,11 @@
             gap: 15px;
             border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
             flex-shrink: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .nav-footer {
+            background-color: rgba(0, 0, 0, 0.05);
         }
         
         .nav-footer-text {
@@ -307,6 +450,7 @@
             color: var(--text-secondary);
             text-align: center;
             line-height: 1.5;
+            transition: color 0.3s ease;
         }
         
         .nav-footer-link {
@@ -326,6 +470,11 @@
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.85rem;
             margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .light-theme .nav-footer-year {
+            color: rgba(26, 26, 26, 0.6);
         }
         
         /* Для последнего элемента перед футером */
@@ -351,6 +500,7 @@
             -webkit-touch-callout: none;
             user-select: none;
             flex-shrink: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .nav-link i {
@@ -374,6 +524,7 @@
             display: none;
             overflow: hidden;
             flex-shrink: 0;
+            transition: background-color 0.3s ease;
         }
         
         .dropdown.active .dropdown-menu {
@@ -412,6 +563,7 @@
             -webkit-touch-callout: none;
             user-select: none;
             flex-shrink: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .dropdown-item:last-child {
@@ -429,6 +581,7 @@
             height: 8px;
             background: #888;
             flex-shrink: 0;
+            transition: background-color 0.3s ease;
         }
         
         .dropdown-item-text {
@@ -442,6 +595,7 @@
             color: #888;
             font-weight: bold;
             margin-left: auto;
+            transition: color 0.3s ease;
         }
         
         /* Dropdown arrow (diamond shape) */
@@ -455,6 +609,7 @@
             transform: rotate(45deg);
             margin-left: 12px;
             flex-shrink: 0;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
         
         .dropdown.active .dropdown-toggle::after {
@@ -469,10 +624,20 @@
             color: var(--text-primary);
         }
         
+        .light-theme .nav-link:hover,
+        .light-theme .nav-link.active,
+        .light-theme .dropdown.active .dropdown-toggle {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+        
         /* Dropdown items - такой же эффект при наведении как у обычных пунктов */
         .dropdown-item:hover {
             background-color: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
+        }
+        
+        .light-theme .dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.08);
         }
         
         /* ===== Main Content ===== */
@@ -492,6 +657,11 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .page-header {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         .page-header::before {
@@ -514,6 +684,7 @@
             position: relative;
             z-index: 1;
             line-height: 1.3;
+            transition: color 0.3s ease;
         }
         
         .page-subtitle {
@@ -524,6 +695,7 @@
             font-weight: 400;
             position: relative;
             z-index: 1;
+            transition: color 0.3s ease;
         }
         
         /* Author Block */
@@ -538,6 +710,11 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .author-block {
+            background-color: rgba(255, 255, 255, 0.8);
         }
         
         .author-info {
@@ -552,6 +729,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: color 0.3s ease;
         }
         
         .author-name i {
@@ -571,6 +749,7 @@
             gap: 12px;
             color: var(--text-secondary);
             font-size: 1.05rem;
+            transition: color 0.3s ease;
         }
         
         .author-detail i {
@@ -582,22 +761,25 @@
         /* Author Buttons Container */
         .author-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 18px;
+            justify-content: center; /* Центрируем кнопку по горизонтали */
+            align-items: center; /* Центрируем кнопку по вертикали */
             width: 100%;
+            margin-top: 10px;
         }
         
-        /* Button Link Styling (like on main page) */
+        /* Button Link Styling (like on main page) - теперь одна кнопка по центру */
         .author-buttons .button-link {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            width: 100%;
+            width: auto; /* Автоматическая ширина */
+            min-width: 250px; /* Минимальная ширина */
+            max-width: 400px; /* Максимальная ширина */
             background: var(--button-primary);
             color: white;
             text-decoration: none;
-            padding: 16px 24px;
+            padding: 16px 32px;
             border-radius: 50px;
             font-weight: 600;
             font-size: 1rem;
@@ -606,17 +788,32 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 2;
+            text-align: center;
+        }
+        
+        .light-theme .author-buttons .button-link {
+            color: var(--text-primary);
+            background: rgba(0, 0, 0, 0.05);
         }
         
         /* Special style for "В меню статей" button */
-        .author-buttons .menu-articles-button {
+        .author-buttons .button-link {
             background: linear-gradient(135deg, rgba(136, 136, 136, 0.15), rgba(170, 170, 170, 0.25));
             border: 1px solid rgba(136, 136, 136, 0.3);
+        }
+        
+        .light-theme .author-buttons .button-link {
+            background: linear-gradient(135deg, rgba(136, 136, 136, 0.1), rgba(170, 170, 170, 0.2));
+            border: 1px solid rgba(136, 136, 136, 0.2);
         }
         
         /* Active state for mobile */
         .author-buttons .button-link:active {
             background-color: var(--button-active) !important;
+        }
+        
+        .light-theme .author-buttons .button-link:active {
+            background-color: rgba(0, 0, 0, 0.15) !important;
         }
         
         /* Link icon */
@@ -633,6 +830,11 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             line-height: 1.7;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .main-content {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         .content-section {
@@ -651,16 +853,12 @@
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
             position: relative;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
         
+        /* Убрано подчеркивание после заголовков */
         .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: var(--accent-gradient);
+            content: none; /* Удаляем линию под заголовками */
         }
         
         /* Article Content */
@@ -685,12 +883,18 @@
             border-left: 4px solid var(--accent-color);
             margin-bottom: 30px;
             font-style: italic;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .article-intro {
+            background-color: rgba(0, 0, 0, 0.05);
         }
         
         .content-text {
             font-size: 1.1rem;
             margin-bottom: 20px;
             color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
         
         .content-text:last-child {
@@ -709,6 +913,11 @@
             color: var(--text-secondary);
             font-size: 1.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .article-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .article-item:last-child {
@@ -735,6 +944,11 @@
             margin: 40px 0;
             border-left: 4px solid var(--accent-color);
             position: relative;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .personal-opinion {
+            background-color: rgba(136, 136, 136, 0.05);
         }
         
         .opinion-title {
@@ -745,6 +959,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: color 0.3s ease;
         }
         
         .opinion-title i {
@@ -758,6 +973,11 @@
             padding: 30px;
             margin-top: 40px;
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .light-theme .conclusion {
+            background-color: rgba(255, 255, 255, 0.8);
         }
         
         .conclusion-title {
@@ -766,6 +986,7 @@
             color: var(--text-primary);
             margin-bottom: 20px;
             text-align: center;
+            transition: color 0.3s ease;
         }
         
         /* Link Styling */
@@ -777,6 +998,10 @@
             transition: all 0.2s ease;
             display: inline-block;
             padding: 0 2px;
+        }
+        
+        .light-theme .content-link {
+            color: #666;
         }
         
         .content-link:hover {
@@ -797,6 +1022,14 @@
             background: 
                 radial-gradient(circle at 20% 30%, #888 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
+            transition: opacity 0.3s ease;
+        }
+        
+        .light-theme .decorative-bg {
+            opacity: 0.03;
+            background: 
+                radial-gradient(circle at 20% 30%, #aaa 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #bbb 0%, transparent 50%);
         }
         
         /* Menu Overlay */
@@ -837,11 +1070,8 @@
                 width: 300px;
                 min-width: 300px;
                 max-width: 300px;
-            }
-            
-            /* На ПК тоже оставляем кнопки друг под другом */
-            .author-buttons {
-                flex-direction: column;
+                justify-content: center; /* Центрируем кнопку */
+                margin-top: 0;
             }
         }
         
@@ -850,6 +1080,18 @@
                 width: calc(100% - 40px);
                 max-width: calc(100% - 40px);
                 max-height: 80vh;
+            }
+            
+            .logo {
+                gap: 8px;
+            }
+            
+            .logo-icon {
+                font-size: 1.6rem;
+            }
+            
+            .logo-text {
+                font-size: 1.6rem;
             }
             
             .page-header {
@@ -877,6 +1119,7 @@
             
             .author-buttons {
                 width: 100%;
+                justify-content: center; /* Центрируем кнопку */
             }
             
             .section-title {
@@ -889,6 +1132,11 @@
             
             .nav-footer-text {
                 font-size: 0.85rem;
+            }
+            
+            /* Адаптация кнопки темы для планшетов */
+            .theme-toggle {
+                right: 70px;
             }
         }
         
@@ -952,8 +1200,9 @@
             }
             
             .author-buttons .button-link {
-                padding: 14px 20px;
+                padding: 14px 24px;
                 font-size: 0.95rem;
+                min-width: 200px; /* Уменьшенная минимальная ширина для мобильных */
             }
             
             .article-item {
@@ -986,7 +1235,13 @@
             }
             
             .telegram-icon {
-                right: 10px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .theme-toggle {
+                right: 70px; /* Значительно увеличено расстояние - 60px между центрами кнопок */
                 width: 40px;
                 height: 40px;
             }
@@ -995,15 +1250,23 @@
                 font-size: 1.1rem;
             }
             
+            .theme-toggle i {
+                font-size: 1.1rem;
+            }
+            
             .logo {
-                width: 50px;
-                height: 45px;
+                gap: 6px;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
             }
             
-            .logo i {
-                font-size: 1.6rem;
+            .logo-icon {
+                font-size: 1.4rem;
+            }
+            
+            .logo-text {
+                font-size: 1.4rem;
+                letter-spacing: 0;
             }
             
             .nav-footer {
@@ -1036,13 +1299,91 @@
             }
             
             .telegram-icon {
-                right: 8px;
+                right: 12px;
+                width: 38px;
+                height: 38px;
+            }
+            
+            .theme-toggle {
+                right: 67px; /* Увеличен отступ */
                 width: 38px;
                 height: 38px;
             }
             
             .telegram-icon i {
                 font-size: 1rem;
+            }
+            
+            .theme-toggle i {
+                font-size: 1rem;
+            }
+            
+            /* Дальнейшая адаптация логотипа */
+            .logo {
+                gap: 5px;
+            }
+            
+            .logo-icon {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            /* Сдвигаем кнопку меню левее, чтобы освободить место */
+            .menu-toggle {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            /* Еще меньше кнопка на очень маленьких экранах */
+            .author-buttons .button-link {
+                min-width: 180px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            /* Дополнительные корректировки для очень узких экранов */
+            .logo {
+                gap: 4px;
+            }
+            
+            .logo-icon {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .telegram-icon {
+                right: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .theme-toggle {
+                right: 65px; /* Увеличен отступ */
+                width: 36px;
+                height: 36px;
+            }
+            
+            .menu-toggle {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+            
+            .container {
+                padding: 0 12px;
+            }
+            
+            .author-buttons .button-link {
+                min-width: 160px;
+                padding: 10px 18px;
+                font-size: 0.85rem;
             }
         }
         
@@ -1065,6 +1406,12 @@
                 border-color: rgba(255, 255, 255, 0.2);
             }
             
+            .light-theme .menu-toggle:hover {
+                background-color: rgba(0, 0, 0, 0.15);
+                border-color: rgba(0, 0, 0, 0.25);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            }
+            
             .nav-link:hover, 
             .nav-link.active,
             .dropdown.active .dropdown-toggle {
@@ -1072,15 +1419,41 @@
                 color: var(--text-primary);
             }
             
+            .light-theme .nav-link:hover,
+            .light-theme .nav-link.active,
+            .light-theme .dropdown.active .dropdown-toggle {
+                background-color: rgba(0, 0, 0, 0.08);
+            }
+            
             .dropdown-item:hover {
                 background-color: rgba(255, 255, 255, 0.08);
                 color: var(--text-primary);
+            }
+            
+            .light-theme .dropdown-item:hover {
+                background-color: rgba(0, 0, 0, 0.08);
             }
             
             .telegram-icon:hover {
                 background: rgba(255, 255, 255, 0.1);
                 color: var(--text-primary);
                 border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .light-theme .telegram-icon:hover {
+                background: rgba(0, 0, 0, 0.1);
+                border-color: rgba(0, 0, 0, 0.2);
+            }
+            
+            .theme-toggle:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .light-theme .theme-toggle:hover {
+                background: rgba(0, 0, 0, 0.15);
+                border-color: rgba(0, 0, 0, 0.25);
             }
             
             .content-link:hover {
@@ -1100,14 +1473,15 @@
             
             /* Hover effect for author buttons */
             .author-buttons .button-link:hover {
-                background: var(--button-hover);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
-            
-            .author-buttons .menu-articles-button:hover {
                 background: linear-gradient(135deg, rgba(136, 136, 136, 0.2), rgba(170, 170, 170, 0.3));
                 border-color: rgba(136, 136, 136, 0.4);
                 box-shadow: 0 4px 15px rgba(136, 136, 136, 0.2);
+            }
+            
+            .light-theme .author-buttons .button-link:hover {
+                background: linear-gradient(135deg, rgba(136, 136, 136, 0.15), rgba(170, 170, 170, 0.25));
+                border-color: rgba(136, 136, 136, 0.3);
+                box-shadow: 0 4px 15px rgba(136, 136, 136, 0.1);
             }
         }
         
@@ -1128,6 +1502,21 @@
             background-color: rgba(136, 136, 136, 0.4);
             color: #ffffff;
         }
+        
+        .light-theme ::selection {
+            background-color: rgba(136, 136, 136, 0.3);
+            color: #1a1a1a;
+        }
+        
+        .light-theme ::-moz-selection {
+            background-color: rgba(136, 136, 136, 0.3);
+            color: #1a1a1a;
+        }
+        
+        .light-theme ::-webkit-selection {
+            background-color: rgba(136, 136, 136, 0.3);
+            color: #1a1a1a;
+        }
     </style>
 </head>
 <body>
@@ -1141,14 +1530,21 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="main-nav">
+                <!-- Кнопка переключения темы -->
+                <button class="theme-toggle" id="theme-toggle" title="Переключить тему">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                
                 <!-- Telegram Icon -->
                 <a href="https://t.me/ishupodrygyilidryga" class="telegram-icon" target="_blank" rel="noopener noreferrer" title="Перейти в Telegram канал">
                     <i class="fab fa-telegram"></i>
                 </a>
                 
-                <!-- Logo as link to home page -->
+                <!-- УПРОЩЕННЫЙ ЛОГОТИП - как в первом файле -->
                 <a href="https://ishupodrygyilidryga.fun" class="logo" id="logo" title="Перейти на главную страницу">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users logo-icon"></i>
+                    <span class="logo-text">iipd</span>
                 </a>
                 
                 <!-- Menu Toggle -->
@@ -1262,11 +1658,7 @@
                         </div>
                     </div>
                     <div class="author-buttons">
-                        <a href="https://ishupodrygyilidryga.fun/" class="button-link" target="_blank" rel="noopener noreferrer">
-                            <span>На страницу автора</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="#articles-menu" class="button-link menu-articles-button">
+                        <a href="https://ishupodrygyilidryga.fun/articles" class="button-link">
                             <span>В меню статей</span>
                             <span class="link-icon">→</span>
                         </a>
@@ -1364,11 +1756,45 @@
                 menuOverlay: document.getElementById('menu-overlay'),
                 body: document.body,
                 dropdowns: document.querySelectorAll('.dropdown'),
-                dropdownToggles: document.querySelectorAll('.dropdown-toggle')
+                dropdownToggles: document.querySelectorAll('.dropdown-toggle'),
+                themeToggle: document.getElementById('theme-toggle')
             };
             
             // State
             let isMenuOpen = false;
+            let isLightTheme = false;
+            
+            // Function to apply theme consistently
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    dom.body.classList.add('light-theme');
+                    isLightTheme = true;
+                } else {
+                    dom.body.classList.remove('light-theme');
+                    isLightTheme = false;
+                }
+            }
+            
+            // Initialize theme from localStorage or default
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                isLightTheme = true;
+                dom.body.classList.add('light-theme');
+            } else {
+                isLightTheme = false;
+                dom.body.classList.remove('light-theme');
+                // Сохраняем темную тему как значение по умолчанию
+                if (!savedTheme) {
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+            
+            // Listen for theme changes from other tabs
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'theme') {
+                    applyTheme(e.newValue);
+                }
+            });
             
             // Функция для предотвращения выделения текста при долгом нажатии
             const preventTextSelection = function(e) {
@@ -1440,6 +1866,15 @@
                     menu.toggle();
                 });
                 
+                // Theme toggle
+                dom.themeToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    const newTheme = isLightTheme ? 'dark' : 'light';
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                });
+                
                 // Dropdown toggles
                 dom.dropdownToggles.forEach(toggle => {
                     toggle.addEventListener('click', function(e) {
@@ -1496,7 +1931,7 @@
                 
                 // Предотвращаем выделение текста при долгом нажатии на кнопки
                 const interactiveElements = document.querySelectorAll(
-                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .button-link'
+                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle, .button-link'
                 );
                 
                 interactiveElements.forEach(el => {
@@ -1536,6 +1971,7 @@
                 // Set accessibility attributes
                 dom.menuToggle.setAttribute('aria-expanded', 'false');
                 dom.menuToggle.setAttribute('aria-label', 'Открыть меню навигации');
+                dom.themeToggle.setAttribute('aria-label', 'Переключить тему');
                 
                 // Add aria-labels to dropdown toggles
                 dom.dropdownToggles.forEach(toggle => {
