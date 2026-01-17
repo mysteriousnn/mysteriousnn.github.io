@@ -1809,8 +1809,8 @@
             
             <div class="posts-container">
                 <!-- Пост 1 -->
-                <article class="post" id="post-mila1">
-                    <img src="mila1.jpg" alt="Миля - Пантера тигрица" class="post-image" data-image="mila1.jpg">
+                <article class="post" id="post-mile1">
+                    <img src="mile1.jpg" alt="Миля - Пантера тигрица" class="post-image" data-image="mile1.jpg">
                     <div class="post-date">
                         <i class="far fa-calendar-alt"></i> Опубликовано 17.01.2026
                     </div>
@@ -1818,10 +1818,10 @@
                         Пантера тигрица, всем обзавидоваться
                     </div>
                     <div class="post-actions">
-                        <button class="like-button" data-post-id="post-mila1" title="Поставить лайк">
+                        <button class="like-button" data-post-id="post-mile1" title="Поставить лайк">
                             <i class="far fa-heart"></i>
                         </button>
-                        <button class="share-button" data-post-id="post-mila1">
+                        <button class="share-button" data-post-id="post-mile1">
                             <span>Поделиться</span>
                             <span class="link-icon">→</span>
                         </button>
@@ -1893,8 +1893,6 @@
             let startY = 0;
             let startOffsetX = 0;
             let startOffsetY = 0;
-            let originalWidth = 0;
-            let originalHeight = 0;
             
             const zoomStep = 0.25;
             const minZoom = 0.5;
@@ -2136,15 +2134,11 @@
                     dom.body.style.overflow = 'hidden';
                     isImageOpen = true;
                     
-                    // Ждем загрузки изображения
-                    const img = new Image();
-                    img.onload = () => {
-                        originalWidth = img.width;
-                        originalHeight = img.height;
-                        // Сброс параметров зума и панорамирования
-                        this.resetZoomAndPan();
-                    };
-                    img.src = imageSrc;
+                    // Сброс параметров зума и панорамирования
+                    this.resetZoomAndPan();
+                    
+                    // Обновление отображения
+                    this.updateImageTransform();
                 },
                 
                 close: function() {
@@ -2165,41 +2159,27 @@
                 
                 zoomIn: function() {
                     if (currentZoom < maxZoom) {
+                        const prevZoom = currentZoom;
                         currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+                        
+                        // Сохраняем текущую позицию при зуме
+                        // Не смещаем изображение при зуме
                         this.updateImageTransform();
                     }
                 },
                 
                 zoomOut: function() {
                     if (currentZoom > minZoom) {
+                        const prevZoom = currentZoom;
                         currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+                        
+                        // Сохраняем текущую позицию при зуме
+                        // Не смещаем изображение при зуме
                         this.updateImageTransform();
                     }
                 },
                 
-                // Функция для зума в конкретную точку
-                zoomToPoint: function(clientX, clientY, zoomIn = true) {
-                    const prevZoom = currentZoom;
-                    const containerRect = dom.modalImageContainer.getBoundingClientRect();
-                    
-                    // Вычисляем координаты относительно контейнера
-                    const pointX = clientX - containerRect.left;
-                    const pointY = clientY - containerRect.top;
-                    
-                    // Определяем новый зум
-                    if (zoomIn) {
-                        currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
-                    } else {
-                        currentZoom = Math.max(currentZoom - zoomStep, minZoom);
-                    }
-                    
-                    // Обновляем трансформацию
-                    this.updateImageTransform();
-                },
-                
                 startDrag: function(clientX, clientY) {
-                    if (currentZoom <= 1) return; // Не даем двигать при масштабе 1 или меньше
-                    
                     isDragging = true;
                     startX = clientX;
                     startY = clientY;
@@ -2209,7 +2189,7 @@
                 },
                 
                 doDrag: function(clientX, clientY) {
-                    if (!isDragging || currentZoom <= 1) return;
+                    if (!isDragging) return;
                     
                     const deltaX = clientX - startX;
                     const deltaY = clientY - startY;
@@ -2227,7 +2207,10 @@
                 
                 updateImageTransform: function() {
                     // Применяем трансформации к изображению
-                    dom.modalImage.style.transform = `scale(${currentZoom})`;
+                    dom.modalImage.style.transform = `
+                        translate(${offsetX}px, ${offsetY}px)
+                        scale(${currentZoom})
+                    `;
                     
                     // Обновляем отображение уровня зума
                     dom.zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
@@ -2258,7 +2241,7 @@
                         // Определяем направление зума
                         const delta = distance - this.lastDistance;
                         
-                        if (Math.abs(delta) > 10) {
+                        if (Math.abs(delta) > 10) { // Минимальный порог для предотвращения дрожания
                             if (delta > 0) {
                                 this.zoomIn();
                             } else {
@@ -2529,6 +2512,12 @@
                         } else {
                             imageModalManager.zoomOut();
                         }
+                    } else if (currentZoom > 1) {
+                        // Панорамирование колесиком мыши при увеличении
+                        e.preventDefault();
+                        offsetX -= e.deltaX;
+                        offsetY -= e.deltaY;
+                        imageModalManager.updateImageTransform();
                     }
                 }, { passive: false });
                 
