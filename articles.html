@@ -828,7 +828,7 @@
             color: var(--text-primary);
         }
         
-        /* Suggest Topic Section */
+        /* Suggest Topic Section - ИСПРАВЛЕННЫЙ БЛОК */
         .suggest-topic {
             background-color: var(--bg-secondary);
             border-radius: var(--menu-border-radius);
@@ -836,7 +836,12 @@
             margin-top: 40px;
             border: 1px solid var(--border-color);
             text-align: center;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .light-theme .suggest-topic {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         .suggest-topic-icon {
@@ -979,6 +984,15 @@
                 gap: 25px;
             }
             
+            /* Suggest Topic адаптация */
+            .suggest-topic {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .suggest-topic {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+            
             /* Адаптация кнопки темы для планшетов */
             .theme-toggle {
                 right: 70px;
@@ -1023,6 +1037,11 @@
             .page-description {
                 padding: 20px;
                 margin-bottom: 20px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .page-description {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             }
             
             .page-title {
@@ -1036,6 +1055,11 @@
             
             .article-card {
                 padding: 18px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .article-card {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             }
             
             .article-icon-container {
@@ -1059,9 +1083,15 @@
                 margin-bottom: 30px;
             }
             
+            /* Suggest Topic адаптация для мобильных */
             .suggest-topic {
                 padding: 20px;
                 margin-top: 30px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .suggest-topic {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             }
             
             .suggest-topic-icon {
@@ -1159,6 +1189,17 @@
                 font-size: 1rem;
             }
             
+            /* Suggest Topic адаптация для очень маленьких экранов */
+            .suggest-topic {
+                padding: 18px;
+                margin-top: 25px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .suggest-topic {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
             /* Сдвигаем кнопку меню левее, чтобы освободить место */
             .menu-toggle {
                 padding: 8px 16px;
@@ -1199,6 +1240,30 @@
             
             .container {
                 padding: 0 12px;
+            }
+            
+            /* Suggest Topic адаптация для очень узких экранов */
+            .suggest-topic {
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .light-theme .suggest-topic {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .suggest-topic-icon {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .suggest-topic-title {
+                font-size: 1.2rem;
+            }
+            
+            .suggest-topic-text {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
             }
         }
         
