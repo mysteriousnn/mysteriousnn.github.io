@@ -664,7 +664,8 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
-        .page-header::before {
+        /* УДАЛЕНО: Радиальный градиент, создававший белое пятно */
+        /* .page-header::before {
             content: '';
             position: absolute;
             top: 0;
@@ -673,7 +674,7 @@
             height: 150px;
             background: radial-gradient(circle at center, rgba(136, 136, 136, 0.1), transparent 70%);
             z-index: 0;
-        }
+        } */
         
         .page-title {
             font-size: 2.2rem;
@@ -761,65 +762,54 @@
         /* Author Buttons Container */
         .author-buttons {
             display: flex;
-            justify-content: center; /* Центрируем кнопку по горизонтали */
-            align-items: center; /* Центрируем кнопку по вертикали */
+            justify-content: center;
+            align-items: center;
             width: 100%;
             margin-top: 10px;
         }
         
-        /* Button Link Styling (like on main page) - теперь одна кнопка по центру */
-        .author-buttons .button-link {
+        /* Button styling exactly like "Читать статью" from second file */
+        .author-buttons .article-button {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            width: auto; /* Автоматическая ширина */
-            min-width: 250px; /* Минимальная ширина */
-            max-width: 400px; /* Максимальная ширина */
-            background: var(--button-primary);
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 340px;
+            background: rgba(255, 255, 255, 0.05);
             color: white;
             text-decoration: none;
-            padding: 16px 32px;
+            padding: 14px 20px;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             border: 1px solid var(--border-color);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.2s ease, border-color 0.3s ease, color 0.3s ease;
             position: relative;
             z-index: 2;
             text-align: center;
         }
         
-        .light-theme .author-buttons .button-link {
-            color: var(--text-primary);
+        .light-theme .author-buttons .article-button {
             background: rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Special style for "В меню статей" button */
-        .author-buttons .button-link {
-            background: linear-gradient(135deg, rgba(136, 136, 136, 0.15), rgba(170, 170, 170, 0.25));
-            border: 1px solid rgba(136, 136, 136, 0.3);
-        }
-        
-        .light-theme .author-buttons .button-link {
-            background: linear-gradient(135deg, rgba(136, 136, 136, 0.1), rgba(170, 170, 170, 0.2));
-            border: 1px solid rgba(136, 136, 136, 0.2);
+            color: #1a1a1a;
+            border-color: rgba(0, 0, 0, 0.12);
         }
         
         /* Active state for mobile */
-        .author-buttons .button-link:active {
-            background-color: var(--button-active) !important;
+        .author-buttons .article-button:active {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(1px);
         }
         
-        .light-theme .author-buttons .button-link:active {
+        .light-theme .author-buttons .article-button:active {
             background-color: rgba(0, 0, 0, 0.15) !important;
         }
         
-        /* Link icon */
-        .author-buttons .link-icon {
-            font-size: 1.2rem;
-            font-weight: normal;
+        /* Button icon */
+        .author-buttons .button-icon {
+            font-size: 1.1rem;
         }
         
         /* Main Content Styles */
@@ -1199,10 +1189,9 @@
                 font-size: 0.95rem;
             }
             
-            .author-buttons .button-link {
-                padding: 14px 24px;
-                font-size: 0.95rem;
-                min-width: 200px; /* Уменьшенная минимальная ширина для мобильных */
+            .author-buttons .article-button {
+                padding: 12px 16px;
+                max-width: 280px;
             }
             
             .article-item {
@@ -1338,10 +1327,9 @@
             }
             
             /* Еще меньше кнопка на очень маленьких экранах */
-            .author-buttons .button-link {
-                min-width: 180px;
-                padding: 12px 20px;
-                font-size: 0.9rem;
+            .author-buttons .article-button {
+                max-width: 250px;
+                padding: 12px 16px;
             }
         }
         
@@ -1380,10 +1368,10 @@
                 padding: 0 12px;
             }
             
-            .author-buttons .button-link {
-                min-width: 160px;
-                padding: 10px 18px;
-                font-size: 0.85rem;
+            .author-buttons .article-button {
+                max-width: 220px;
+                padding: 10px 14px;
+                font-size: 0.9rem;
             }
         }
         
@@ -1472,16 +1460,12 @@
             }
             
             /* Hover effect for author buttons */
-            .author-buttons .button-link:hover {
-                background: linear-gradient(135deg, rgba(136, 136, 136, 0.2), rgba(170, 170, 170, 0.3));
-                border-color: rgba(136, 136, 136, 0.4);
-                box-shadow: 0 4px 15px rgba(136, 136, 136, 0.2);
+            .author-buttons .article-button:hover {
+                background: rgba(255, 255, 255, 0.1);
             }
             
-            .light-theme .author-buttons .button-link:hover {
-                background: linear-gradient(135deg, rgba(136, 136, 136, 0.15), rgba(170, 170, 170, 0.25));
-                border-color: rgba(136, 136, 136, 0.3);
-                box-shadow: 0 4px 15px rgba(136, 136, 136, 0.1);
+            .light-theme .author-buttons .article-button:hover {
+                background: rgba(0, 0, 0, 0.1);
             }
         }
         
@@ -1658,9 +1642,9 @@
                         </div>
                     </div>
                     <div class="author-buttons">
-                        <a href="https://ishupodrygyilidryga.fun/articles" class="button-link">
+                        <a href="https://ishupodrygyilidryga.fun/articles" class="article-button">
                             <span>В меню статей</span>
-                            <span class="link-icon">→</span>
+                            <span class="button-icon">→</span>
                         </a>
                     </div>
                 </div>
@@ -1931,7 +1915,7 @@
                 
                 // Предотвращаем выделение текста при долгом нажатии на кнопки
                 const interactiveElements = document.querySelectorAll(
-                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle, .button-link'
+                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle, .article-button'
                 );
                 
                 interactiveElements.forEach(el => {
@@ -1959,6 +1943,21 @@
                     
                     el.addEventListener('touchend', function() {
                         this.classList.remove('active-touch');
+                    });
+                });
+                
+                // Явно добавляем обработчик для активного состояния кнопки "В меню статей"
+                document.querySelectorAll('.article-button').forEach(button => {
+                    button.addEventListener('touchstart', function() {
+                        this.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                    });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.backgroundColor = '';
+                    });
+                    
+                    button.addEventListener('touchcancel', function() {
+                        this.style.backgroundColor = '';
                     });
                 });
             };
