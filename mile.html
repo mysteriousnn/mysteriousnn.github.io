@@ -94,27 +94,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Блюр фона при открытом меню или изображении - ТОЧНО КАК В ПРИМЕРЕ */
-        body.menu-open::before,
-        body.image-open::before {
-            content: '';
-            position: fixed;
-            top: var(--header-height);
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--modal-overlay);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 2998;
-            opacity: 0;
-            animation: fadeIn 0.3s ease forwards;
-        }
-        
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        
         /* Разрешаем выделение текста только в текстовых блоках */
         .content-text,
         .info-text,
@@ -397,7 +376,7 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
             border: 1px solid var(--border-color);
             border-radius: var(--menu-border-radius);
-            z-index: 2999;
+            z-index: 3001;
             max-height: 85vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -945,7 +924,7 @@
                 radial-gradient(circle at 80% 70%, #bbb 0%, transparent 50%);
         }
         
-        /* Menu Overlay */
+        /* Menu Overlay - ТОЧНО КАК В ПРИМЕРЕ */
         .menu-overlay {
             position: fixed;
             top: var(--header-height);
@@ -953,7 +932,7 @@
             width: 100%;
             height: calc(100% - var(--header-height));
             background: rgba(0, 0, 0, 0.5);
-            z-index: 2997;
+            z-index: 3000;
             display: none;
             backdrop-filter: blur(2px);
         }
@@ -969,7 +948,7 @@
             left: 0;
             width: 100%;
             height: calc(100% - var(--header-height));
-            z-index: 3001;
+            z-index: 3002;
             display: none;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -982,14 +961,16 @@
             opacity: 1;
         }
         
+        /* Overlay для изображения - ТОЧНО КАК В ПРИМЕРЕ */
         .modal-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--modal-overlay);
+            background: rgba(0, 0, 0, 0.5);
             cursor: pointer;
+            backdrop-filter: blur(2px);
         }
         
         .modal-content {
@@ -2088,7 +2069,6 @@
                     dom.navList.classList.add('active');
                     dom.menuOverlay.classList.add('active');
                     dom.body.style.overflow = 'hidden';
-                    dom.body.classList.add('menu-open');
                     dom.menuToggle.innerHTML = '<i class="fas fa-times"></i><span>Закрыть</span>';
                     isMenuOpen = true;
                     dom.menuToggle.setAttribute('aria-expanded', 'true');
@@ -2098,7 +2078,6 @@
                     dom.navList.classList.remove('active');
                     dom.menuOverlay.classList.remove('active');
                     dom.body.style.overflow = '';
-                    dom.body.classList.remove('menu-open');
                     dom.menuToggle.innerHTML = '<i class="fas fa-bars"></i><span>Меню</span>';
                     isMenuOpen = false;
                     this.closeAllDropdowns();
@@ -2147,7 +2126,6 @@
                     dom.modalImage.alt = altText;
                     dom.imageModal.classList.add('active');
                     dom.body.style.overflow = 'hidden';
-                    dom.body.classList.add('image-open');
                     isImageOpen = true;
                     
                     // Сброс параметров зума и панорамирования
@@ -2160,7 +2138,6 @@
                 close: function() {
                     dom.imageModal.classList.remove('active');
                     dom.body.style.overflow = '';
-                    dom.body.classList.remove('image-open');
                     isImageOpen = false;
                     
                     // Сброс параметров зума и панорамирования
