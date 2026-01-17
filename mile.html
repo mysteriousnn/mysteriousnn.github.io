@@ -747,7 +747,7 @@
             margin-top: 25px;
         }
         
-        /* Кнопка лайка */
+        /* Кнопка лайка - ИСПРАВЛЕНА: без движения при наведении */
         .like-button {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
@@ -769,7 +769,7 @@
             background: rgba(255, 255, 255, 0.1);
             color: var(--like-color-hover);
             border-color: var(--like-color-hover);
-            transform: scale(1.05);
+            /* Убрано: transform: scale(1.05); */
         }
         
         .like-button.active {
@@ -783,7 +783,12 @@
         }
         
         .like-button:active {
-            transform: scale(0.95);
+            /* Убрано: transform: scale(0.95); */
+            background-color: rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .light-theme .like-button:active {
+            background-color: rgba(0, 0, 0, 0.2) !important;
         }
         
         /* Эффект пульсации при лайке */
@@ -797,7 +802,7 @@
             animation: pulse 0.3s ease;
         }
         
-        /* Кнопка поделиться в стиле кнопки "Перейти к информации" */
+        /* Кнопка поделиться в стиле кнопки "Перейти к информации" - ИСПРАВЛЕНА: без движения при наведении */
         .share-button {
             display: flex;
             align-items: center;
@@ -818,8 +823,8 @@
         
         .share-button:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            /* Убрано: transform: translateY(-2px); */
+            /* Убрано: box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); */
         }
         
         .light-theme .share-button {
@@ -838,16 +843,21 @@
         .link-icon {
             font-size: 1.1rem;
             color: var(--share-color);
-            transition: transform 0.3s ease, color 0.3s ease;
+            transition: color 0.3s ease;
+            /* Убрано: transform: translateX(3px); */
         }
         
         .share-button:hover .link-icon {
-            transform: translateX(3px);
             color: var(--text-primary);
         }
         
         .share-button:active {
-            transform: translateY(0);
+            /* Убрано: transform: translateY(0); */
+            background-color: rgba(255, 255, 255, 0.15) !important;
+        }
+        
+        .light-theme .share-button:active {
+            background-color: rgba(0, 0, 0, 0.15) !important;
         }
         
         /* Уведомление о копировании */
@@ -1455,8 +1465,8 @@
             
             <div class="posts-container">
                 <!-- Пост 1 -->
-                <article class="post" id="post-mile1">
-                    <img src="mile1.jpg" alt="Миля - Пантера тигрица" class="post-image">
+                <article class="post" id="post-mila1">
+                    <img src="mila1.jpg" alt="Миля - Пантера тигрица" class="post-image">
                     <div class="post-date">
                         <i class="far fa-calendar-alt"></i> Опубликовано 17.01.2026
                     </div>
@@ -1464,10 +1474,10 @@
                         Пантера тигрица, всем обзавидоваться
                     </div>
                     <div class="post-actions">
-                        <button class="like-button" data-post-id="post-mile1" title="Поставить лайк">
+                        <button class="like-button" data-post-id="post-mila1" title="Поставить лайк">
                             <i class="far fa-heart"></i>
                         </button>
-                        <button class="share-button" data-post-id="post-mile1">
+                        <button class="share-button" data-post-id="post-mila1">
                             <span>Поделиться</span>
                             <span class="link-icon">→</span>
                         </button>
@@ -1606,6 +1616,15 @@
                     // Добавляем обработчик клика
                     button.addEventListener('click', function() {
                         handleLikeClick(this);
+                    });
+                    
+                    // Добавляем активное состояние для мобильных
+                    button.addEventListener('touchstart', function() {
+                        this.classList.add('active-touch');
+                    });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.classList.remove('active-touch');
                     });
                 });
             }
@@ -1827,7 +1846,8 @@
                 });
                 
                 // Добавляем активное состояние для мобильных устройств
-                interactiveElements.forEach(el => {
+                const allButtons = document.querySelectorAll('button');
+                allButtons.forEach(el => {
                     el.addEventListener('touchstart', function() {
                         this.classList.add('active-touch');
                     });
@@ -1844,6 +1864,15 @@
                         if (postId) {
                             copyPostLink(postId);
                         }
+                    });
+                    
+                    // Добавляем активное состояние для мобильных
+                    button.addEventListener('touchstart', function() {
+                        this.classList.add('active-touch');
+                    });
+                    
+                    button.addEventListener('touchend', function() {
+                        this.classList.remove('active-touch');
                     });
                 });
                 
