@@ -1851,164 +1851,285 @@
         </div>
     </main>
 
-    <script>
-        // Оптимизированный JavaScript без анимаций
-        (function() {
-            'use strict';
+
+ <script>
+    // Оптимизированный JavaScript без анимаций
+    (function() {
+        'use strict';
+        
+        // DOM Elements
+        const dom = {
+            menuToggle: document.getElementById('menu-toggle'),
+            navList: document.getElementById('nav-list'),
+            menuOverlay: document.getElementById('menu-overlay'),
+            body: document.body,
+            dropdowns: document.querySelectorAll('.dropdown'),
+            dropdownToggles: document.querySelectorAll('.dropdown-toggle'),
+            themeToggle: document.getElementById('theme-toggle'),
+            shareNotification: document.getElementById('share-notification'),
+            shareButtons: document.querySelectorAll('.share-button'),
+            likeButtons: document.querySelectorAll('.like-button'),
+            postImages: document.querySelectorAll('.post-image'),
+            imageModal: document.getElementById('image-modal'),
+            modalImage: document.getElementById('modal-image'),
+            modalImageContainer: document.getElementById('modal-image-container'),
+            modalClose: document.getElementById('modal-close'),
+            modalOverlay: document.getElementById('modal-overlay'),
+            zoomIn: document.getElementById('zoom-in'),
+            zoomOut: document.getElementById('zoom-out'),
+            resetZoom: document.getElementById('reset-zoom'),
+            zoomLevel: document.getElementById('zoom-level'),
+            header: document.getElementById('header')
+        };
+        
+        // State
+        let isMenuOpen = false;
+        let isLightTheme = false;
+        let isImageOpen = false;
+        let currentZoom = 1;
+        let offsetX = 0;
+        let offsetY = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startOffsetX = 0;
+        let startOffsetY = 0;
+        
+        const zoomStep = 0.25;
+        const minZoom = 0.5;
+        const maxZoom = 3;
+        
+        // ===== ДИНАМИЧЕСКАЯ ЗАГРУЗКА ПОСТОВ ИЗ LOCALSTORAGE =====
+        
+        // Ключ для хранения постов
+        const POSTS_STORAGE_KEY = 'mile-posts';
+        
+        // Функция для загрузки и отображения динамических постов
+        function loadDynamicPosts() {
+            // Загружаем посты из LocalStorage
+            const postsJSON = localStorage.getItem(POSTS_STORAGE_KEY);
+            const posts = postsJSON ? JSON.parse(postsJSON) : [];
             
-            // DOM Elements
-            const dom = {
-                menuToggle: document.getElementById('menu-toggle'),
-                navList: document.getElementById('nav-list'),
-                menuOverlay: document.getElementById('menu-overlay'),
-                body: document.body,
-                dropdowns: document.querySelectorAll('.dropdown'),
-                dropdownToggles: document.querySelectorAll('.dropdown-toggle'),
-                themeToggle: document.getElementById('theme-toggle'),
-                shareNotification: document.getElementById('share-notification'),
-                shareButtons: document.querySelectorAll('.share-button'),
-                likeButtons: document.querySelectorAll('.like-button'),
-                postImages: document.querySelectorAll('.post-image'),
-                imageModal: document.getElementById('image-modal'),
-                modalImage: document.getElementById('modal-image'),
-                modalImageContainer: document.getElementById('modal-image-container'),
-                modalClose: document.getElementById('modal-close'),
-                modalOverlay: document.getElementById('modal-overlay'),
-                zoomIn: document.getElementById('zoom-in'),
-                zoomOut: document.getElementById('zoom-out'),
-                resetZoom: document.getElementById('reset-zoom'),
-                zoomLevel: document.getElementById('zoom-level'),
-                header: document.getElementById('header')
-            };
-            
-            // State
-            let isMenuOpen = false;
-            let isLightTheme = false;
-            let isImageOpen = false;
-            let currentZoom = 1;
-            let offsetX = 0;
-            let offsetY = 0;
-            let isDragging = false;
-            let startX = 0;
-            let startY = 0;
-            let startOffsetX = 0;
-            let startOffsetY = 0;
-            
-            const zoomStep = 0.25;
-            const minZoom = 0.5;
-            const maxZoom = 3;
-            
-            // Function to apply theme consistently
-            function applyTheme(theme) {
-                if (theme === 'light') {
-                    dom.body.classList.add('light-theme');
-                    isLightTheme = true;
-                } else {
-                    dom.body.classList.remove('light-theme');
-                    isLightTheme = false;
-                }
+            // Если постов нет, ничего не делаем
+            if (posts.length === 0) {
+                console.log('Динамических постов нет в LocalStorage');
+                return;
             }
             
-            // Initialize theme from localStorage or default
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                isLightTheme = true;
-                dom.body.classList.add('light-theme');
-            } else {
-                isLightTheme = false;
-                dom.body.classList.remove('light-theme');
-                // Сохраняем темную тему как значение по умолчанию
-                if (!savedTheme) {
-                    localStorage.setItem('theme', 'dark');
-                }
-            }
+            // Сортируем посты по дате (новые сверху)
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
             
-            // Listen for theme changes from other tabs
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'theme') {
-                    applyTheme(e.newValue);
+            // Получаем контейнер для постов
+            const postsContainer = document.querySelector('.posts-container');
+            
+            // Добавляем каждый пост
+            posts.forEach((post, index) => {
+                // Создаем HTML для поста
+                const postHTML = `
+                    <article class="post" id="${post.id}">
+                        <img src="${post.image}" alt="${post.text.substring(0, 30)}" class="post-image" data-image="${post.image}">
+                        <div class="post-date">
+                            <i class="far fa-calendar-alt"></i> Опубликовано ${post.date}
+                        </div>
+                        <div class="post-description">
+                            ${post.text}
+                        </div>
+                        <div class="post-actions">
+                            <button class="like-button" data-post-id="${post.id}" title="Поставить лайк">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="share-button" data-post-id="${post.id}">
+                                <span>Поделиться</span>
+                                <span class="link-icon">→</span>
+                            </button>
+                        </div>
+                    </article>
+                `;
+                
+                // Добавляем пост в контейнер (в начало)
+                postsContainer.insertAdjacentHTML('beforeend', postHTML);
+            });
+            
+            console.log(`Загружено ${posts.length} динамических постов`);
+            
+            // Переинициализируем обработчики для новых постов
+            setTimeout(initNewPosts, 100);
+        }
+        
+        // Функция для инициализации новых постов
+        function initNewPosts() {
+            // Добавляем обработчики для новых изображений
+            document.querySelectorAll('.post-image').forEach(image => {
+                // Проверяем, есть ли уже обработчик
+                if (!image.dataset.hasListener) {
+                    image.addEventListener('click', function() {
+                        const src = this.getAttribute('src');
+                        const alt = this.getAttribute('alt');
+                        imageModalManager.open(src, alt);
+                    });
+                    image.dataset.hasListener = 'true';
                 }
             });
             
-            // Функция для сохранения состояния лайков
-            function saveLikeState(postId, isLiked) {
-                localStorage.setItem(`like_${postId}`, isLiked ? 'true' : 'false');
-            }
-            
-            // Функция для загрузки состояния лайков
-            function loadLikeState(postId) {
-                return localStorage.getItem(`like_${postId}`) === 'true';
-            }
-            
-            // Функция для обновления отображения кнопки лайка
-            function updateLikeButton(button, isLiked) {
-                const icon = button.querySelector('i');
-                if (isLiked) {
-                    button.classList.add('active');
-                    icon.className = 'fas fa-heart';
-                } else {
-                    button.classList.remove('active');
-                    icon.className = 'far fa-heart';
-                }
-            }
-            
-            // Функция для обработки клика на лайк
-            function handleLikeClick(button) {
-                const postId = button.getAttribute('data-post-id');
-                const isCurrentlyLiked = button.classList.contains('active');
-                const newLikedState = !isCurrentlyLiked;
-                
-                // Обновляем отображение
-                updateLikeButton(button, newLikedState);
-                
-                // Сохраняем состояние
-                saveLikeState(postId, newLikedState);
-                
-                // Анимация пульсации
-                if (newLikedState) {
-                    const icon = button.querySelector('i');
-                    icon.style.animation = 'none';
-                    setTimeout(() => {
-                        icon.style.animation = 'pulse 0.3s ease';
-                    }, 10);
-                }
-            }
-            
-            // Инициализация лайков
-            function initLikes() {
-                dom.likeButtons.forEach(button => {
-                    const postId = button.getAttribute('data-post-id');
-                    const isLiked = loadLikeState(postId);
-                    updateLikeButton(button, isLiked);
-                    
-                    // Добавляем обработчик клика
+            // Добавляем обработчики для новых кнопок лайков
+            document.querySelectorAll('.like-button').forEach(button => {
+                if (!button.dataset.hasListener) {
                     button.addEventListener('click', function() {
+                        const postId = this.getAttribute('data-post-id');
                         handleLikeClick(this);
                     });
-                    
-                    // Добавляем активное состояние для мобильных
-                    button.addEventListener('touchstart', function() {
-                        this.classList.add('active-touch');
+                    button.dataset.hasListener = 'true';
+                }
+            });
+            
+            // Добавляем обработчики для новых кнопок "Поделиться"
+            document.querySelectorAll('.share-button').forEach(button => {
+                if (!button.dataset.hasListener) {
+                    button.addEventListener('click', function() {
+                        const postId = this.getAttribute('data-post-id');
+                        if (postId) {
+                            copyPostLink(postId);
+                        }
                     });
-                    
-                    button.addEventListener('touchend', function() {
-                        this.classList.remove('active-touch');
-                    });
-                });
+                    button.dataset.hasListener = 'true';
+                }
+            });
+        }
+        
+        // Function to apply theme consistently
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                dom.body.classList.add('light-theme');
+                isLightTheme = true;
+            } else {
+                dom.body.classList.remove('light-theme');
+                isLightTheme = false;
             }
+        }
+        
+        // Initialize theme from localStorage or default
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            isLightTheme = true;
+            dom.body.classList.add('light-theme');
+        } else {
+            isLightTheme = false;
+            dom.body.classList.remove('light-theme');
+            // Сохраняем темную тему как значение по умолчанию
+            if (!savedTheme) {
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // Listen for theme changes from other tabs
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'theme') {
+                applyTheme(e.newValue);
+            }
+        });
+        
+        // Функция для сохранения состояния лайков
+        function saveLikeState(postId, isLiked) {
+            localStorage.setItem(`like_${postId}`, isLiked ? 'true' : 'false');
+        }
+        
+        // Функция для загрузки состояния лайков
+        function loadLikeState(postId) {
+            return localStorage.getItem(`like_${postId}`) === 'true';
+        }
+        
+        // Функция для обновления отображения кнопки лайка
+        function updateLikeButton(button, isLiked) {
+            const icon = button.querySelector('i');
+            if (isLiked) {
+                button.classList.add('active');
+                icon.className = 'fas fa-heart';
+            } else {
+                button.classList.remove('active');
+                icon.className = 'far fa-heart';
+            }
+        }
+        
+        // Функция для обработки клика на лайк
+        function handleLikeClick(button) {
+            const postId = button.getAttribute('data-post-id');
+            const isCurrentlyLiked = button.classList.contains('active');
+            const newLikedState = !isCurrentlyLiked;
             
-            // Функция для предотвращения выделения текста при долгом нажатии
-            const preventTextSelection = function(e) {
-                e.preventDefault();
-                return false;
-            };
+            // Обновляем отображение
+            updateLikeButton(button, newLikedState);
             
-            // Функция для копирования ссылки на пост
-            function copyPostLink(postId) {
-                const postUrl = window.location.origin + window.location.pathname + '#' + postId;
+            // Сохраняем состояние
+            saveLikeState(postId, newLikedState);
+            
+            // Анимация пульсации
+            if (newLikedState) {
+                const icon = button.querySelector('i');
+                icon.style.animation = 'none';
+                setTimeout(() => {
+                    icon.style.animation = 'pulse 0.3s ease';
+                }, 10);
+            }
+        }
+        
+        // Инициализация лайков
+        function initLikes() {
+            dom.likeButtons.forEach(button => {
+                const postId = button.getAttribute('data-post-id');
+                const isLiked = loadLikeState(postId);
+                updateLikeButton(button, isLiked);
                 
-                // Используем современный Clipboard API
-                navigator.clipboard.writeText(postUrl).then(function() {
+                // Добавляем обработчик клика
+                button.addEventListener('click', function() {
+                    handleLikeClick(this);
+                });
+                
+                // Добавляем активное состояние для мобильных
+                button.addEventListener('touchstart', function() {
+                    this.classList.add('active-touch');
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.classList.remove('active-touch');
+                });
+            });
+        }
+        
+        // Функция для предотвращения выделения текста при долгом нажатии
+        const preventTextSelection = function(e) {
+            e.preventDefault();
+            return false;
+        };
+        
+        // Функция для копирования ссылки на пост
+        function copyPostLink(postId) {
+            const postUrl = window.location.origin + window.location.pathname + '#' + postId;
+            
+            // Используем современный Clipboard API
+            navigator.clipboard.writeText(postUrl).then(function() {
+                // Показываем уведомление
+                dom.shareNotification.classList.add('show');
+                
+                // Скрываем уведомление через 3 секунды
+                setTimeout(function() {
+                    dom.shareNotification.classList.remove('show');
+                }, 3000);
+                
+                console.log('Ссылка скопирована: ' + postUrl);
+            }).catch(function(err) {
+                console.error('Ошибка копирования: ', err);
+                
+                // Fallback для старых браузеров
+                const textArea = document.createElement('textarea');
+                textArea.value = postUrl;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    
                     // Показываем уведомление
                     dom.shareNotification.classList.add('show');
                     
@@ -2017,563 +2138,543 @@
                         dom.shareNotification.classList.remove('show');
                     }, 3000);
                     
-                    console.log('Ссылка скопирована: ' + postUrl);
-                }).catch(function(err) {
-                    console.error('Ошибка копирования: ', err);
-                    
-                    // Fallback для старых браузеров
-                    const textArea = document.createElement('textarea');
-                    textArea.value = postUrl;
-                    textArea.style.position = 'fixed';
-                    textArea.style.opacity = '0';
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    
-                    try {
-                        document.execCommand('copy');
-                        
-                        // Показываем уведомление
-                        dom.shareNotification.classList.add('show');
-                        
-                        // Скрываем уведомление через 3 секунды
-                        setTimeout(function() {
-                            dom.shareNotification.classList.remove('show');
-                        }, 3000);
-                        
-                        console.log('Ссылка скопирована (fallback): ' + postUrl);
-                    } catch (fallbackErr) {
-                        console.error('Fallback тоже не сработал: ', fallbackErr);
-                        alert('Не удалось скопировать ссылку. Скопируйте её вручную: ' + postUrl);
-                    }
-                    
-                    document.body.removeChild(textArea);
-                });
+                    console.log('Ссылка скопирована (fallback): ' + postUrl);
+                } catch (fallbackErr) {
+                    console.error('Fallback тоже не сработал: ', fallbackErr);
+                    alert('Не удалось скопировать ссылку. Скопируйте её вручную: ' + postUrl);
+                }
+                
+                document.body.removeChild(textArea);
+            });
+        }
+        
+        // Функция для прокрутки к посту по хешу в URL
+        function scrollToPostFromHash() {
+            const hash = window.location.hash;
+            if (hash) {
+                const targetPost = document.querySelector(hash);
+                if (targetPost) {
+                    // Небольшая задержка для загрузки всех элементов
+                    setTimeout(function() {
+                        targetPost.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
             }
+        }
+        
+        // Menu Functions
+        const menu = {
+            open: function() {
+                // Закрываем изображение если открыто
+                if (isImageOpen) {
+                    imageModalManager.close();
+                }
+                
+                dom.navList.classList.add('active');
+                dom.menuOverlay.classList.add('active');
+                dom.body.style.overflow = 'hidden';
+                dom.menuToggle.innerHTML = '<i class="fas fa-times"></i><span>Закрыть</span>';
+                isMenuOpen = true;
+                dom.menuToggle.setAttribute('aria-expanded', 'true');
+            },
             
-            // Функция для прокрутки к посту по хешу в URL
-            function scrollToPostFromHash() {
-                const hash = window.location.hash;
-                if (hash) {
-                    const targetPost = document.querySelector(hash);
-                    if (targetPost) {
-                        // Небольшая задержка для загрузки всех элементов
-                        setTimeout(function() {
-                            targetPost.scrollIntoView({ behavior: 'smooth' });
-                        }, 100);
+            close: function() {
+                dom.navList.classList.remove('active');
+                dom.menuOverlay.classList.remove('active');
+                dom.body.style.overflow = '';
+                dom.menuToggle.innerHTML = '<i class="fas fa-bars"></i><span>Меню</span>';
+                isMenuOpen = false;
+                this.closeAllDropdowns();
+                dom.menuToggle.setAttribute('aria-expanded', 'false');
+            },
+            
+            toggle: function() {
+                if (isMenuOpen) {
+                    this.close();
+                } else {
+                    this.open();
+                }
+            },
+            
+            closeAllDropdowns: function() {
+                dom.dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                    const toggle = dropdown.querySelector('.dropdown-toggle');
+                    if (toggle) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            },
+            
+            toggleDropdown: function(dropdown) {
+                const isActive = dropdown.classList.contains('active');
+                
+                // Close all other dropdowns
+                this.closeAllDropdowns();
+                
+                // Toggle current dropdown
+                if (!isActive) {
+                    dropdown.classList.add('active');
+                    const toggle = dropdown.querySelector('.dropdown-toggle');
+                    if (toggle) {
+                        toggle.setAttribute('aria-expanded', 'true');
                     }
                 }
             }
+        };
+        
+        // Image Modal Functions
+        const imageModalManager = {
+            open: function(imageSrc, altText) {
+                dom.modalImage.src = imageSrc;
+                dom.modalImage.alt = altText;
+                dom.imageModal.classList.add('active');
+                dom.body.style.overflow = 'hidden';
+                isImageOpen = true;
+                
+                // Сброс параметров зума и панорамирования
+                this.resetZoomAndPan();
+                
+                // Обновление отображения
+                this.updateImageTransform();
+            },
             
-            // Menu Functions
-            const menu = {
-                open: function() {
-                    // Закрываем изображение если открыто
+            close: function() {
+                dom.imageModal.classList.remove('active');
+                dom.body.style.overflow = '';
+                isImageOpen = false;
+                
+                // Сброс параметров зума и панорамирования
+                this.resetZoomAndPan();
+            },
+            
+            resetZoomAndPan: function() {
+                currentZoom = 1;
+                offsetX = 0;
+                offsetY = 0;
+                this.updateImageTransform();
+            },
+            
+            zoomIn: function() {
+                if (currentZoom < maxZoom) {
+                    const prevZoom = currentZoom;
+                    currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+                    
+                    // Сохраняем текущую позицию при зуме
+                    // Не смещаем изображение при зуме
+                    this.updateImageTransform();
+                }
+            },
+            
+            zoomOut: function() {
+                if (currentZoom > minZoom) {
+                    const prevZoom = currentZoom;
+                    currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+                    
+                    // Сохраняем текущую позицию при зуме
+                    // Не смещаем изображение при зуме
+                    this.updateImageTransform();
+                }
+            },
+            
+            startDrag: function(clientX, clientY) {
+                isDragging = true;
+                startX = clientX;
+                startY = clientY;
+                startOffsetX = offsetX;
+                startOffsetY = offsetY;
+                dom.modalImageContainer.classList.add('dragging');
+            },
+            
+            doDrag: function(clientX, clientY) {
+                if (!isDragging) return;
+                
+                const deltaX = clientX - startX;
+                const deltaY = clientY - startY;
+                
+                offsetX = startOffsetX + deltaX;
+                offsetY = startOffsetY + deltaY;
+                
+                this.updateImageTransform();
+            },
+            
+            endDrag: function() {
+                isDragging = false;
+                dom.modalImageContainer.classList.remove('dragging');
+            },
+            
+            updateImageTransform: function() {
+                // Применяем трансформации к изображению
+                dom.modalImage.style.transform = `
+                    translate(${offsetX}px, ${offsetY}px)
+                    scale(${currentZoom})
+                `;
+                
+                // Обновляем отображение уровня зума
+                dom.zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
+                
+                // Обновляем состояние кнопок
+                dom.zoomIn.classList.toggle('disabled', currentZoom >= maxZoom);
+                dom.zoomOut.classList.toggle('disabled', currentZoom <= minZoom);
+            },
+            
+            // Обработка жестов для зума на мобильных
+            handleTouchZoom: function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touch1 = e.touches[0];
+                    const touch2 = e.touches[1];
+                    
+                    // Вычисляем расстояние между пальцами
+                    const distance = Math.hypot(
+                        touch2.clientX - touch1.clientX,
+                        touch2.clientY - touch1.clientY
+                    );
+                    
+                    if (!this.lastDistance) {
+                        this.lastDistance = distance;
+                        return;
+                    }
+                    
+                    // Определяем направление зума
+                    const delta = distance - this.lastDistance;
+                    
+                    if (Math.abs(delta) > 10) { // Минимальный порог для предотвращения дрожания
+                        if (delta > 0) {
+                            this.zoomIn();
+                        } else {
+                            this.zoomOut();
+                        }
+                        this.lastDistance = distance;
+                    }
+                }
+            },
+            
+            resetTouchZoom: function() {
+                this.lastDistance = null;
+            }
+        };
+        
+        // Event Listeners
+        const initEventListeners = function() {
+            // Menu toggle
+            dom.menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.toggle();
+            });
+            
+            // Theme toggle
+            dom.themeToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const newTheme = isLightTheme ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+            
+            // Dropdown toggles
+            dom.dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const dropdown = this.parentElement;
+                    menu.toggleDropdown(dropdown);
+                });
+            });
+            
+            // Close menu on overlay click
+            dom.menuOverlay.addEventListener('click', function() {
+                menu.close();
+            });
+            
+            // Close menu on regular link click
+            document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+                link.addEventListener('click', function() {
+                    menu.close();
+                });
+            });
+            
+            // Закрытие меню при клике в любом месте кроме самого меню
+            document.addEventListener('click', function(e) {
+                if (isMenuOpen && 
+                    !e.target.closest('.nav-list') && 
+                    !e.target.closest('.menu-toggle')) {
+                    menu.close();
+                }
+                
+                // Закрытие фото при клике на header (кроме интерактивных элементов)
+                if (isImageOpen && e.target.closest('.header')) {
+                    // Проверяем, не кликнули ли на интерактивный элемент в header
+                    if (!e.target.closest('.theme-toggle') && 
+                        !e.target.closest('.telegram-icon') && 
+                        !e.target.closest('.logo') && 
+                        !e.target.closest('.menu-toggle')) {
+                        imageModalManager.close();
+                    }
+                }
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (isMenuOpen) {
+                        menu.close();
+                    }
                     if (isImageOpen) {
                         imageModalManager.close();
                     }
-                    
-                    dom.navList.classList.add('active');
-                    dom.menuOverlay.classList.add('active');
-                    dom.body.style.overflow = 'hidden';
-                    dom.menuToggle.innerHTML = '<i class="fas fa-times"></i><span>Закрыть</span>';
-                    isMenuOpen = true;
-                    dom.menuToggle.setAttribute('aria-expanded', 'true');
-                },
-                
-                close: function() {
-                    dom.navList.classList.remove('active');
-                    dom.menuOverlay.classList.remove('active');
-                    dom.body.style.overflow = '';
-                    dom.menuToggle.innerHTML = '<i class="fas fa-bars"></i><span>Меню</span>';
-                    isMenuOpen = false;
-                    this.closeAllDropdowns();
-                    dom.menuToggle.setAttribute('aria-expanded', 'false');
-                },
-                
-                toggle: function() {
-                    if (isMenuOpen) {
-                        this.close();
-                    } else {
-                        this.open();
-                    }
-                },
-                
-                closeAllDropdowns: function() {
-                    dom.dropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                        const toggle = dropdown.querySelector('.dropdown-toggle');
-                        if (toggle) {
-                            toggle.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                },
-                
-                toggleDropdown: function(dropdown) {
-                    const isActive = dropdown.classList.contains('active');
-                    
-                    // Close all other dropdowns
-                    this.closeAllDropdowns();
-                    
-                    // Toggle current dropdown
-                    if (!isActive) {
-                        dropdown.classList.add('active');
-                        const toggle = dropdown.querySelector('.dropdown-toggle');
-                        if (toggle) {
-                            toggle.setAttribute('aria-expanded', 'true');
-                        }
-                    }
                 }
-            };
+            });
             
-            // Image Modal Functions
-            const imageModalManager = {
-                open: function(imageSrc, altText) {
-                    dom.modalImage.src = imageSrc;
-                    dom.modalImage.alt = altText;
-                    dom.imageModal.classList.add('active');
-                    dom.body.style.overflow = 'hidden';
-                    isImageOpen = true;
-                    
-                    // Сброс параметров зума и панорамирования
-                    this.resetZoomAndPan();
-                    
-                    // Обновление отображения
-                    this.updateImageTransform();
-                },
-                
-                close: function() {
-                    dom.imageModal.classList.remove('active');
-                    dom.body.style.overflow = '';
-                    isImageOpen = false;
-                    
-                    // Сброс параметров зума и панорамирования
-                    this.resetZoomAndPan();
-                },
-                
-                resetZoomAndPan: function() {
-                    currentZoom = 1;
-                    offsetX = 0;
-                    offsetY = 0;
-                    this.updateImageTransform();
-                },
-                
-                zoomIn: function() {
-                    if (currentZoom < maxZoom) {
-                        const prevZoom = currentZoom;
-                        currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
-                        
-                        // Сохраняем текущую позицию при зуме
-                        // Не смещаем изображение при зуме
-                        this.updateImageTransform();
-                    }
-                },
-                
-                zoomOut: function() {
-                    if (currentZoom > minZoom) {
-                        const prevZoom = currentZoom;
-                        currentZoom = Math.max(currentZoom - zoomStep, minZoom);
-                        
-                        // Сохраняем текущую позицию при зуме
-                        // Не смещаем изображение при зуме
-                        this.updateImageTransform();
-                    }
-                },
-                
-                startDrag: function(clientX, clientY) {
-                    isDragging = true;
-                    startX = clientX;
-                    startY = clientY;
-                    startOffsetX = offsetX;
-                    startOffsetY = offsetY;
-                    dom.modalImageContainer.classList.add('dragging');
-                },
-                
-                doDrag: function(clientX, clientY) {
-                    if (!isDragging) return;
-                    
-                    const deltaX = clientX - startX;
-                    const deltaY = clientY - startY;
-                    
-                    offsetX = startOffsetX + deltaX;
-                    offsetY = startOffsetY + deltaY;
-                    
-                    this.updateImageTransform();
-                },
-                
-                endDrag: function() {
-                    isDragging = false;
-                    dom.modalImageContainer.classList.remove('dragging');
-                },
-                
-                updateImageTransform: function() {
-                    // Применяем трансформации к изображению
-                    dom.modalImage.style.transform = `
-                        translate(${offsetX}px, ${offsetY}px)
-                        scale(${currentZoom})
-                    `;
-                    
-                    // Обновляем отображение уровня зума
-                    dom.zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
-                    
-                    // Обновляем состояние кнопок
-                    dom.zoomIn.classList.toggle('disabled', currentZoom >= maxZoom);
-                    dom.zoomOut.classList.toggle('disabled', currentZoom <= minZoom);
-                },
-                
-                // Обработка жестов для зума на мобильных
-                handleTouchZoom: function(e) {
-                    if (e.touches.length === 2) {
+            // Prevent multiple clicks
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.dataset.clicked) {
                         e.preventDefault();
-                        const touch1 = e.touches[0];
-                        const touch2 = e.touches[1];
-                        
-                        // Вычисляем расстояние между пальцами
-                        const distance = Math.hypot(
-                            touch2.clientX - touch1.clientX,
-                            touch2.clientY - touch1.clientY
-                        );
-                        
-                        if (!this.lastDistance) {
-                            this.lastDistance = distance;
-                            return;
-                        }
-                        
-                        // Определяем направление зума
-                        const delta = distance - this.lastDistance;
-                        
-                        if (Math.abs(delta) > 10) { // Минимальный порог для предотвращения дрожания
-                            if (delta > 0) {
-                                this.zoomIn();
-                            } else {
-                                this.zoomOut();
-                            }
-                            this.lastDistance = distance;
-                        }
+                        return;
                     }
-                },
-                
-                resetTouchZoom: function() {
-                    this.lastDistance = null;
-                }
-            };
+                    
+                    this.dataset.clicked = 'true';
+                    setTimeout(() => {
+                        delete this.dataset.clicked;
+                    }, 1000);
+                });
+            });
             
-            // Event Listeners
-            const initEventListeners = function() {
-                // Menu toggle
-                dom.menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    menu.toggle();
-                });
+            // Предотвращаем выделение текста при долгом нажатии на кнопки
+            const interactiveElements = document.querySelectorAll(
+                'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle'
+            );
+            
+            interactiveElements.forEach(el => {
+                // Предотвращаем контекстное меню (долгое нажатие)
+                el.addEventListener('contextmenu', preventTextSelection);
                 
-                // Theme toggle
-                dom.themeToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    
-                    const newTheme = isLightTheme ? 'dark' : 'light';
-                    applyTheme(newTheme);
-                    localStorage.setItem('theme', newTheme);
-                });
+                // Предотвращаем выделение при долгом тапе
+                el.addEventListener('selectstart', preventTextSelection);
+                el.addEventListener('mousedown', preventTextSelection);
                 
-                // Dropdown toggles
-                dom.dropdownToggles.forEach(toggle => {
-                    toggle.addEventListener('click', function(e) {
+                // Для iOS
+                el.addEventListener('touchstart', function(e) {
+                    // Небольшая задержка для предотвращения выделения
+                    if (e.touches.length > 1) {
                         e.preventDefault();
-                        e.stopPropagation();
-                        const dropdown = this.parentElement;
-                        menu.toggleDropdown(dropdown);
-                    });
-                });
-                
-                // Close menu on overlay click
-                dom.menuOverlay.addEventListener('click', function() {
-                    menu.close();
-                });
-                
-                // Close menu on regular link click
-                document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
-                    link.addEventListener('click', function() {
-                        menu.close();
-                    });
-                });
-                
-                // Закрытие меню при клике в любом месте кроме самого меню
-                document.addEventListener('click', function(e) {
-                    if (isMenuOpen && 
-                        !e.target.closest('.nav-list') && 
-                        !e.target.closest('.menu-toggle')) {
-                        menu.close();
-                    }
-                    
-                    // Закрытие фото при клике на header (кроме интерактивных элементов)
-                    if (isImageOpen && e.target.closest('.header')) {
-                        // Проверяем, не кликнули ли на интерактивный элемент в header
-                        if (!e.target.closest('.theme-toggle') && 
-                            !e.target.closest('.telegram-icon') && 
-                            !e.target.closest('.logo') && 
-                            !e.target.closest('.menu-toggle')) {
-                            imageModalManager.close();
-                        }
-                    }
-                });
-                
-                // Close menu on escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') {
-                        if (isMenuOpen) {
-                            menu.close();
-                        }
-                        if (isImageOpen) {
-                            imageModalManager.close();
-                        }
-                    }
-                });
-                
-                // Prevent multiple clicks
-                const links = document.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (this.dataset.clicked) {
-                            e.preventDefault();
-                            return;
-                        }
-                        
-                        this.dataset.clicked = 'true';
-                        setTimeout(() => {
-                            delete this.dataset.clicked;
-                        }, 1000);
-                    });
-                });
-                
-                // Предотвращаем выделение текста при долгом нажатии на кнопки
-                const interactiveElements = document.querySelectorAll(
-                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle'
-                );
-                
-                interactiveElements.forEach(el => {
-                    // Предотвращаем контекстное меню (долгое нажатие)
-                    el.addEventListener('contextmenu', preventTextSelection);
-                    
-                    // Предотвращаем выделение при долгом тапе
-                    el.addEventListener('selectstart', preventTextSelection);
-                    el.addEventListener('mousedown', preventTextSelection);
-                    
-                    // Для iOS
-                    el.addEventListener('touchstart', function(e) {
-                        // Небольшая задержка для предотвращения выделения
-                        if (e.touches.length > 1) {
-                            e.preventDefault();
-                        }
-                    }, { passive: false });
-                });
-                
-                // Добавляем активное состояние для мобильных устройств
-                const allButtons = document.querySelectorAll('button');
-                allButtons.forEach(el => {
-                    el.addEventListener('touchstart', function() {
-                        this.classList.add('active-touch');
-                    });
-                    
-                    el.addEventListener('touchend', function() {
-                        this.classList.remove('active-touch');
-                    });
-                });
-                
-                // Обработчики для кнопок "Поделиться"
-                dom.shareButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const postId = this.getAttribute('data-post-id');
-                        if (postId) {
-                            copyPostLink(postId);
-                        }
-                    });
-                    
-                    // Добавляем активное состояние для мобильных
-                    button.addEventListener('touchstart', function() {
-                        this.classList.add('active-touch');
-                    });
-                    
-                    button.addEventListener('touchend', function() {
-                        this.classList.remove('active-touch');
-                    });
-                });
-                
-                // Обработчик для изменения хеша в URL
-                window.addEventListener('hashchange', function() {
-                    scrollToPostFromHash();
-                });
-                
-                // Открытие изображений
-                dom.postImages.forEach(image => {
-                    image.addEventListener('click', function() {
-                        const src = this.getAttribute('src');
-                        const alt = this.getAttribute('alt');
-                        imageModalManager.open(src, alt);
-                    });
-                });
-                
-                // Закрытие модального окна с изображением
-                dom.modalClose.addEventListener('click', function() {
-                    imageModalManager.close();
-                });
-                
-                dom.modalOverlay.addEventListener('click', function() {
-                    imageModalManager.close();
-                });
-                
-                // Управление зумом
-                dom.zoomIn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    imageModalManager.zoomIn();
-                });
-                
-                dom.zoomOut.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    imageModalManager.zoomOut();
-                });
-                
-                dom.resetZoom.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    imageModalManager.resetZoomAndPan();
-                });
-                
-                // Двойной клик для зума в точку или сброса
-                dom.modalImageContainer.addEventListener('dblclick', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    if (currentZoom > 1) {
-                        // Если уже увеличен, сбрасываем
-                        imageModalManager.resetZoomAndPan();
-                    } else {
-                        // Иначе зумируем
-                        imageModalManager.zoomIn();
-                    }
-                });
-                
-                // Обработка мыши для панорамирования
-                dom.modalImageContainer.addEventListener('mousedown', function(e) {
-                    if (e.button === 0 && currentZoom > 1) { // Левая кнопка мыши
-                        e.preventDefault();
-                        imageModalManager.startDrag(e.clientX, e.clientY);
-                    }
-                });
-                
-                document.addEventListener('mousemove', function(e) {
-                    if (isDragging) {
-                        e.preventDefault();
-                        imageModalManager.doDrag(e.clientX, e.clientY);
-                    }
-                });
-                
-                document.addEventListener('mouseup', function(e) {
-                    if (e.button === 0 && isDragging) {
-                        imageModalManager.endDrag();
-                    }
-                });
-                
-                // Обработка касаний для панорамирования и зума
-                dom.modalImageContainer.addEventListener('touchstart', function(e) {
-                    if (e.touches.length === 1 && currentZoom > 1) {
-                        // Панорамирование одним пальцем
-                        e.preventDefault();
-                        imageModalManager.startDrag(e.touches[0].clientX, e.touches[0].clientY);
-                    } else if (e.touches.length === 2) {
-                        // Зум двумя пальцами
-                        e.preventDefault();
-                        imageModalManager.handleTouchZoom(e);
-                    }
-                });
-                
-                dom.modalImageContainer.addEventListener('touchmove', function(e) {
-                    if (isDragging && e.touches.length === 1) {
-                        // Панорамирование одним пальцем
-                        e.preventDefault();
-                        imageModalManager.doDrag(e.touches[0].clientX, e.touches[0].clientY);
-                    } else if (e.touches.length === 2) {
-                        // Зум двумя пальцами
-                        e.preventDefault();
-                        imageModalManager.handleTouchZoom(e);
-                    }
-                });
-                
-                dom.modalImageContainer.addEventListener('touchend', function(e) {
-                    if (isDragging) {
-                        imageModalManager.endDrag();
-                    }
-                    imageModalManager.resetTouchZoom();
-                });
-                
-                // Предотвращаем скролл страницы при взаимодействии с изображением
-                dom.imageModal.addEventListener('wheel', function(e) {
-                    if (e.ctrlKey) {
-                        e.preventDefault();
-                        if (e.deltaY < 0) {
-                            imageModalManager.zoomIn();
-                        } else {
-                            imageModalManager.zoomOut();
-                        }
-                    } else if (currentZoom > 1) {
-                        // Панорамирование колесиком мыши при увеличении
-                        e.preventDefault();
-                        offsetX -= e.deltaX;
-                        offsetY -= e.deltaY;
-                        imageModalManager.updateImageTransform();
                     }
                 }, { passive: false });
+            });
+            
+            // Добавляем активное состояние для мобильных устройств
+            const allButtons = document.querySelectorAll('button');
+            allButtons.forEach(el => {
+                el.addEventListener('touchstart', function() {
+                    this.classList.add('active-touch');
+                });
                 
-                // Закрытие модального окна при нажатии на Esc
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && isImageOpen) {
-                        imageModalManager.close();
+                el.addEventListener('touchend', function() {
+                    this.classList.remove('active-touch');
+                });
+            });
+            
+            // Обработчики для кнопок "Поделиться"
+            dom.shareButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-post-id');
+                    if (postId) {
+                        copyPostLink(postId);
                     }
                 });
-            };
-            
-            // Initialize
-            const init = function() {
-                // Initialize event listeners
-                initEventListeners();
                 
-                // Initialize likes
-                initLikes();
-                
-                // Set accessibility attributes
-                dom.menuToggle.setAttribute('aria-expanded', 'false');
-                dom.menuToggle.setAttribute('aria-label', 'Открыть меню навигации');
-                dom.themeToggle.setAttribute('aria-label', 'Переключить тему');
-                
-                // Add aria-labels to dropdown toggles
-                dom.dropdownToggles.forEach(toggle => {
-                    toggle.setAttribute('aria-expanded', 'false');
-                    toggle.setAttribute('aria-haspopup', 'true');
+                // Добавляем активное состояние для мобильных
+                button.addEventListener('touchstart', function() {
+                    this.classList.add('active-touch');
                 });
                 
-                // Устанавливаем текущий год в футер
-                const currentYear = new Date().getFullYear();
-                const yearElement = document.querySelector('.nav-footer-year');
-                if (yearElement) {
-                    yearElement.textContent = currentYear;
-                }
-                
-                // Добавляем плавный скролл для меню
-                dom.navList.addEventListener('wheel', function(e) {
-                    // Плавный скролл для колесика мыши
-                    this.scrollTop += e.deltaY * 0.5;
-                    e.preventDefault();
-                }, { passive: false });
-                
-                // При загрузке страницы проверяем хеш и скроллим к посту
+                button.addEventListener('touchend', function() {
+                    this.classList.remove('active-touch');
+                });
+            });
+            
+            // Обработчик для изменения хеша в URL
+            window.addEventListener('hashchange', function() {
                 scrollToPostFromHash();
-            };
+            });
             
-            // Start when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
+            // Открытие изображений
+            dom.postImages.forEach(image => {
+                image.addEventListener('click', function() {
+                    const src = this.getAttribute('src');
+                    const alt = this.getAttribute('alt');
+                    imageModalManager.open(src, alt);
+                });
+            });
+            
+            // Закрытие модального окна с изображением
+            dom.modalClose.addEventListener('click', function() {
+                imageModalManager.close();
+            });
+            
+            dom.modalOverlay.addEventListener('click', function() {
+                imageModalManager.close();
+            });
+            
+            // Управление зумом
+            dom.zoomIn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                imageModalManager.zoomIn();
+            });
+            
+            dom.zoomOut.addEventListener('click', function(e) {
+                e.stopPropagation();
+                imageModalManager.zoomOut();
+            });
+            
+            dom.resetZoom.addEventListener('click', function(e) {
+                e.stopPropagation();
+                imageModalManager.resetZoomAndPan();
+            });
+            
+            // Двойной клик для зума в точку или сброса
+            dom.modalImageContainer.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (currentZoom > 1) {
+                    // Если уже увеличен, сбрасываем
+                    imageModalManager.resetZoomAndPan();
+                } else {
+                    // Иначе зумируем
+                    imageModalManager.zoomIn();
+                }
+            });
+            
+            // Обработка мыши для панорамирования
+            dom.modalImageContainer.addEventListener('mousedown', function(e) {
+                if (e.button === 0 && currentZoom > 1) { // Левая кнопка мыши
+                    e.preventDefault();
+                    imageModalManager.startDrag(e.clientX, e.clientY);
+                }
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    imageModalManager.doDrag(e.clientX, e.clientY);
+                }
+            });
+            
+            document.addEventListener('mouseup', function(e) {
+                if (e.button === 0 && isDragging) {
+                    imageModalManager.endDrag();
+                }
+            });
+            
+            // Обработка касаний для панорамирования и зума
+            dom.modalImageContainer.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1 && currentZoom > 1) {
+                    // Панорамирование одним пальцем
+                    e.preventDefault();
+                    imageModalManager.startDrag(e.touches[0].clientX, e.touches[0].clientY);
+                } else if (e.touches.length === 2) {
+                    // Зум двумя пальцами
+                    e.preventDefault();
+                    imageModalManager.handleTouchZoom(e);
+                }
+            });
+            
+            dom.modalImageContainer.addEventListener('touchmove', function(e) {
+                if (isDragging && e.touches.length === 1) {
+                    // Панорамирование одним пальцем
+                    e.preventDefault();
+                    imageModalManager.doDrag(e.touches[0].clientX, e.touches[0].clientY);
+                } else if (e.touches.length === 2) {
+                    // Зум двумя пальцами
+                    e.preventDefault();
+                    imageModalManager.handleTouchZoom(e);
+                }
+            });
+            
+            dom.modalImageContainer.addEventListener('touchend', function(e) {
+                if (isDragging) {
+                    imageModalManager.endDrag();
+                }
+                imageModalManager.resetTouchZoom();
+            });
+            
+            // Предотвращаем скролл страницы при взаимодействии с изображением
+            dom.imageModal.addEventListener('wheel', function(e) {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    if (e.deltaY < 0) {
+                        imageModalManager.zoomIn();
+                    } else {
+                        imageModalManager.zoomOut();
+                    }
+                } else if (currentZoom > 1) {
+                    // Панорамирование колесиком мыши при увеличении
+                    e.preventDefault();
+                    offsetX -= e.deltaX;
+                    offsetY -= e.deltaY;
+                    imageModalManager.updateImageTransform();
+                }
+            }, { passive: false });
+            
+            // Закрытие модального окна при нажатии на Esc
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isImageOpen) {
+                    imageModalManager.close();
+                }
+            });
+        };
+        
+        // Initialize
+        const init = function() {
+            // Initialize event listeners
+            initEventListeners();
+            
+            // Initialize likes
+            initLikes();
+            
+            // Set accessibility attributes
+            dom.menuToggle.setAttribute('aria-expanded', 'false');
+            dom.menuToggle.setAttribute('aria-label', 'Открыть меню навигации');
+            dom.themeToggle.setAttribute('aria-label', 'Переключить тему');
+            
+            // Add aria-labels to dropdown toggles
+            dom.dropdownToggles.forEach(toggle => {
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.setAttribute('aria-haspopup', 'true');
+            });
+            
+            // Устанавливаем текущий год в футер
+            const currentYear = new Date().getFullYear();
+            const yearElement = document.querySelector('.nav-footer-year');
+            if (yearElement) {
+                yearElement.textContent = currentYear;
             }
             
-        })();
-    </script>
+            // Добавляем плавный скролл для меню
+            dom.navList.addEventListener('wheel', function(e) {
+                // Плавный скролл для колесика мыши
+                this.scrollTop += e.deltaY * 0.5;
+                e.preventDefault();
+            }, { passive: false });
+            
+            // При загрузке страницы проверяем хеш и скроллим к посту
+            scrollToPostFromHash();
+            
+            // Загружаем динамические посты из LocalStorage
+            loadDynamicPosts();
+        };
+        
+        // Start when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        
+    })();
+</script>
 </body>
 </html>
