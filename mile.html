@@ -94,6 +94,27 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
+        /* Блюр фона при открытом меню или изображении - ТОЧНО КАК В ПРИМЕРЕ */
+        body.menu-open::before,
+        body.image-open::before {
+            content: '';
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--modal-overlay);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2998;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
         /* Разрешаем выделение текста только в текстовых блоках */
         .content-text,
         .info-text,
@@ -131,33 +152,11 @@
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
             padding: 10px 0;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
         }
         
         .light-theme .header {
             background-color: rgba(245, 245, 247, 0.95);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Блюр фона при открытом меню или изображении */
-        body.menu-open::before,
-        body.image-open::before {
-            content: '';
-            position: fixed;
-            top: var(--header-height);
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--modal-overlay);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 2998;
-            opacity: 0;
-            animation: fadeIn 0.3s ease forwards;
-        }
-        
-        @keyframes fadeIn {
-            to { opacity: 1; }
         }
         
         .container {
@@ -1015,16 +1014,23 @@
             background: var(--modal-bg);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             position: relative;
+            cursor: grab;
+            user-select: none;
+        }
+        
+        .modal-image-container.dragging {
+            cursor: grabbing;
         }
         
         .modal-image {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transform-origin: center center;
-            transition: transform 0.3s ease;
+            transform-origin: 0 0;
+            transition: transform 0.1s ease;
             user-select: none;
             -webkit-user-drag: none;
+            position: relative;
         }
         
         .modal-close {
@@ -1091,6 +1097,12 @@
             transform: scale(0.95);
         }
         
+        .zoom-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
         .zoom-level {
             color: white;
             font-size: 0.9rem;
@@ -1101,16 +1113,42 @@
             font-weight: 600;
         }
         
+        .reset-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .reset-btn:active {
+            transform: scale(0.95);
+        }
+        
         /* Для светлой темы модального окна */
         .light-theme .modal-close,
-        .light-theme .zoom-btn {
+        .light-theme .zoom-btn,
+        .light-theme .reset-btn {
             background: rgba(0, 0, 0, 0.1);
             border-color: rgba(0, 0, 0, 0.2);
             color: var(--text-primary);
         }
         
         .light-theme .modal-close:hover,
-        .light-theme .zoom-btn:hover {
+        .light-theme .zoom-btn:hover,
+        .light-theme .reset-btn:hover {
             background: rgba(0, 0, 0, 0.2);
         }
         
@@ -1218,9 +1256,11 @@
             .modal-controls {
                 bottom: 20px;
                 padding: 12px 20px;
+                gap: 12px;
             }
             
-            .zoom-btn {
+            .zoom-btn,
+            .reset-btn {
                 width: 45px;
                 height: 45px;
                 font-size: 1.1rem;
@@ -1381,9 +1421,13 @@
                 bottom: 15px;
                 padding: 10px 15px;
                 gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
             }
             
-            .zoom-btn {
+            .zoom-btn,
+            .reset-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
@@ -1444,9 +1488,11 @@
             .modal-controls {
                 bottom: 10px;
                 padding: 8px 12px;
+                gap: 8px;
             }
             
-            .zoom-btn {
+            .zoom-btn,
+            .reset-btn {
                 width: 35px;
                 height: 35px;
                 font-size: 0.9rem;
@@ -1647,7 +1693,7 @@
             <button class="modal-close" id="modal-close" title="Закрыть">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="modal-image-container">
+            <div class="modal-image-container" id="modal-image-container">
                 <img src="" alt="" class="modal-image" id="modal-image">
             </div>
             <div class="modal-controls">
@@ -1657,6 +1703,9 @@
                 <div class="zoom-level" id="zoom-level">100%</div>
                 <button class="zoom-btn zoom-in" title="Увеличить" id="zoom-in">
                     <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="reset-btn" title="Сбросить зум и позицию" id="reset-zoom">
+                    <i class="fas fa-sync-alt"></i>
                 </button>
             </div>
         </div>
@@ -1841,10 +1890,12 @@
                 postImages: document.querySelectorAll('.post-image'),
                 imageModal: document.getElementById('image-modal'),
                 modalImage: document.getElementById('modal-image'),
+                modalImageContainer: document.getElementById('modal-image-container'),
                 modalClose: document.getElementById('modal-close'),
                 modalOverlay: document.getElementById('modal-overlay'),
                 zoomIn: document.getElementById('zoom-in'),
                 zoomOut: document.getElementById('zoom-out'),
+                resetZoom: document.getElementById('reset-zoom'),
                 zoomLevel: document.getElementById('zoom-level')
             };
             
@@ -1853,6 +1904,14 @@
             let isLightTheme = false;
             let isImageOpen = false;
             let currentZoom = 1;
+            let offsetX = 0;
+            let offsetY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let startOffsetX = 0;
+            let startOffsetY = 0;
+            
             const zoomStep = 0.25;
             const minZoom = 0.5;
             const maxZoom = 3;
@@ -2090,8 +2149,12 @@
                     dom.body.style.overflow = 'hidden';
                     dom.body.classList.add('image-open');
                     isImageOpen = true;
-                    currentZoom = 1;
-                    this.updateZoom();
+                    
+                    // Сброс параметров зума и панорамирования
+                    this.resetZoomAndPan();
+                    
+                    // Обновление отображения
+                    this.updateImageTransform();
                 },
                 
                 close: function() {
@@ -2099,36 +2162,116 @@
                     dom.body.style.overflow = '';
                     dom.body.classList.remove('image-open');
                     isImageOpen = false;
+                    
+                    // Сброс параметров зума и панорамирования
+                    this.resetZoomAndPan();
+                },
+                
+                resetZoomAndPan: function() {
                     currentZoom = 1;
-                    this.updateZoom();
+                    offsetX = 0;
+                    offsetY = 0;
+                    this.updateImageTransform();
                 },
                 
                 zoomIn: function() {
                     if (currentZoom < maxZoom) {
-                        currentZoom += zoomStep;
-                        this.updateZoom();
+                        const prevZoom = currentZoom;
+                        currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+                        
+                        // Рассчитываем новый offset для зума к центру
+                        const containerRect = dom.modalImageContainer.getBoundingClientRect();
+                        const centerX = containerRect.width / 2;
+                        const centerY = containerRect.height / 2;
+                        
+                        // Корректируем offset для зума к центру
+                        offsetX = centerX - (centerX - offsetX) * (currentZoom / prevZoom);
+                        offsetY = centerY - (centerY - offsetY) * (currentZoom / prevZoom);
+                        
+                        this.updateImageTransform();
                     }
                 },
                 
                 zoomOut: function() {
                     if (currentZoom > minZoom) {
-                        currentZoom -= zoomStep;
-                        this.updateZoom();
+                        const prevZoom = currentZoom;
+                        currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+                        
+                        // Рассчитываем новый offset для зума от центра
+                        const containerRect = dom.modalImageContainer.getBoundingClientRect();
+                        const centerX = containerRect.width / 2;
+                        const centerY = containerRect.height / 2;
+                        
+                        // Корректируем offset для зума от центра
+                        offsetX = centerX - (centerX - offsetX) * (currentZoom / prevZoom);
+                        offsetY = centerY - (centerY - offsetY) * (currentZoom / prevZoom);
+                        
+                        this.updateImageTransform();
                     }
                 },
                 
-                resetZoom: function() {
-                    currentZoom = 1;
-                    this.updateZoom();
+                // Функция для зума в конкретную точку (например, по клику)
+                zoomToPoint: function(clientX, clientY, zoomIn = true) {
+                    const prevZoom = currentZoom;
+                    const containerRect = dom.modalImageContainer.getBoundingClientRect();
+                    
+                    // Вычисляем координаты относительно контейнера
+                    const pointX = clientX - containerRect.left;
+                    const pointY = clientY - containerRect.top;
+                    
+                    // Определяем новый зум
+                    if (zoomIn) {
+                        currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+                    } else {
+                        currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+                    }
+                    
+                    // Корректируем offset для зума к/от указанной точки
+                    offsetX = pointX - (pointX - offsetX) * (currentZoom / prevZoom);
+                    offsetY = pointY - (pointY - offsetY) * (currentZoom / prevZoom);
+                    
+                    this.updateImageTransform();
                 },
                 
-                updateZoom: function() {
-                    dom.modalImage.style.transform = `scale(${currentZoom})`;
+                startDrag: function(clientX, clientY) {
+                    isDragging = true;
+                    startX = clientX;
+                    startY = clientY;
+                    startOffsetX = offsetX;
+                    startOffsetY = offsetY;
+                    dom.modalImageContainer.classList.add('dragging');
+                },
+                
+                doDrag: function(clientX, clientY) {
+                    if (!isDragging) return;
+                    
+                    const deltaX = clientX - startX;
+                    const deltaY = clientY - startY;
+                    
+                    offsetX = startOffsetX + deltaX;
+                    offsetY = startOffsetY + deltaY;
+                    
+                    this.updateImageTransform();
+                },
+                
+                endDrag: function() {
+                    isDragging = false;
+                    dom.modalImageContainer.classList.remove('dragging');
+                },
+                
+                updateImageTransform: function() {
+                    // Применяем трансформации к изображению
+                    dom.modalImage.style.transform = `
+                        translate(${offsetX}px, ${offsetY}px)
+                        scale(${currentZoom})
+                    `;
+                    
+                    // Обновляем отображение уровня зума
                     dom.zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
                     
-                    // Изменяем прозрачность кнопок при достижении лимитов
-                    dom.zoomIn.style.opacity = currentZoom >= maxZoom ? '0.5' : '1';
-                    dom.zoomOut.style.opacity = currentZoom <= minZoom ? '0.5' : '1';
+                    // Обновляем состояние кнопок
+                    dom.zoomIn.classList.toggle('disabled', currentZoom >= maxZoom);
+                    dom.zoomOut.classList.toggle('disabled', currentZoom <= minZoom);
                 },
                 
                 // Обработка жестов для зума на мобильных
@@ -2153,10 +2296,14 @@
                         const delta = distance - this.lastDistance;
                         
                         if (Math.abs(delta) > 10) { // Минимальный порог для предотвращения дрожания
+                            const containerRect = dom.modalImageContainer.getBoundingClientRect();
+                            const centerX = (touch1.clientX + touch2.clientX) / 2 - containerRect.left;
+                            const centerY = (touch1.clientY + touch2.clientY) / 2 - containerRect.top;
+                            
                             if (delta > 0) {
-                                this.zoomIn();
+                                this.zoomToPoint(centerX + containerRect.left, centerY + containerRect.top, true);
                             } else {
-                                this.zoomOut();
+                                this.zoomToPoint(centerX + containerRect.left, centerY + containerRect.top, false);
                             }
                             this.lastDistance = distance;
                         }
@@ -2331,26 +2478,79 @@
                     imageModalManager.zoomOut();
                 });
                 
-                // Двойной клик для сброса зума
-                dom.modalImage.addEventListener('dblclick', function(e) {
+                dom.resetZoom.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    imageModalManager.resetZoom();
+                    imageModalManager.resetZoomAndPan();
                 });
                 
-                // Обработка жестов для зума на мобильных
-                dom.modalImage.addEventListener('touchstart', function(e) {
-                    imageModalManager.handleTouchZoom(e);
+                // Двойной клик для зума в точку или сброса
+                dom.modalImageContainer.addEventListener('dblclick', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (currentZoom > 1) {
+                        // Если уже увеличен, сбрасываем
+                        imageModalManager.resetZoomAndPan();
+                    } else {
+                        // Иначе зумируем в точку клика
+                        imageModalManager.zoomToPoint(e.clientX, e.clientY, true);
+                    }
                 });
                 
-                dom.modalImage.addEventListener('touchmove', function(e) {
-                    imageModalManager.handleTouchZoom(e);
+                // Обработка мыши для панорамирования
+                dom.modalImageContainer.addEventListener('mousedown', function(e) {
+                    if (e.button === 0 && currentZoom > 1) { // Левая кнопка мыши
+                        e.preventDefault();
+                        imageModalManager.startDrag(e.clientX, e.clientY);
+                    }
                 });
                 
-                dom.modalImage.addEventListener('touchend', function() {
+                document.addEventListener('mousemove', function(e) {
+                    if (isDragging) {
+                        e.preventDefault();
+                        imageModalManager.doDrag(e.clientX, e.clientY);
+                    }
+                });
+                
+                document.addEventListener('mouseup', function(e) {
+                    if (e.button === 0 && isDragging) {
+                        imageModalManager.endDrag();
+                    }
+                });
+                
+                // Обработка касаний для панорамирования и зума
+                dom.modalImageContainer.addEventListener('touchstart', function(e) {
+                    if (e.touches.length === 1 && currentZoom > 1) {
+                        // Панорамирование одним пальцем
+                        e.preventDefault();
+                        imageModalManager.startDrag(e.touches[0].clientX, e.touches[0].clientY);
+                    } else if (e.touches.length === 2) {
+                        // Зум двумя пальцами
+                        e.preventDefault();
+                        imageModalManager.handleTouchZoom(e);
+                    }
+                });
+                
+                dom.modalImageContainer.addEventListener('touchmove', function(e) {
+                    if (isDragging && e.touches.length === 1) {
+                        // Панорамирование одним пальцем
+                        e.preventDefault();
+                        imageModalManager.doDrag(e.touches[0].clientX, e.touches[0].clientY);
+                    } else if (e.touches.length === 2) {
+                        // Зум двумя пальцами
+                        e.preventDefault();
+                        imageModalManager.handleTouchZoom(e);
+                    }
+                });
+                
+                dom.modalImageContainer.addEventListener('touchend', function(e) {
+                    if (isDragging) {
+                        imageModalManager.endDrag();
+                    }
                     imageModalManager.resetTouchZoom();
                 });
                 
-                // Предотвращаем скролл страницы при зуме изображения
+                // Предотвращаем скролл страницы при взаимодействии с изображением
                 dom.imageModal.addEventListener('wheel', function(e) {
                     if (e.ctrlKey) {
                         e.preventDefault();
@@ -2359,6 +2559,12 @@
                         } else {
                             imageModalManager.zoomOut();
                         }
+                    } else if (currentZoom > 1) {
+                        // Панорамирование колесиком мыши при увеличении
+                        e.preventDefault();
+                        offsetX -= e.deltaX;
+                        offsetY -= e.deltaY;
+                        imageModalManager.updateImageTransform();
                     }
                 }, { passive: false });
                 
