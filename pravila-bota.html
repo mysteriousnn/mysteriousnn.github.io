@@ -720,6 +720,21 @@
             margin-bottom: 0;
         }
         
+        /* Стиль для примеров нарушений */
+        .example-block {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-left: 3px solid #888;
+            margin: 15px 0;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .light-theme .example-block {
+            background-color: rgba(0, 0, 0, 0.08);
+            border-left-color: #666;
+        }
+        
         /* Requirements List */
         .requirements-list {
             list-style-type: none;
@@ -931,6 +946,11 @@
             .content-text {
                 font-size: 1rem;
                 margin-bottom: 15px;
+            }
+            
+            .example-block {
+                padding: 12px;
+                font-size: 0.95rem;
             }
             
             .requirement-item {
@@ -1362,9 +1382,9 @@
                     </p>
                     
                     <h5 style="font-size: 1.1rem; color: var(--text-primary); margin: 20px 0 10px 0; font-weight: 600;">Примером подобного нарушения является следующая ситуация:</h5>
-                    <p class="content-text" style="background-color: rgba(255,255,255,0.05); padding: 15px; border-left: 3px solid #888; margin: 15px 0;">
+                    <div class="example-block">
                         "Приветствую всех, меня зовут Лиза, мне 15 лет, и я ищу друга, преимущественно в возрасте от 15 до 17 лет, проживающего в России. Увлекаюсь рисованием, музыкой и вокалом. Мой основной аккаунт: @Liza Дополнительный аккаунт (второй аккаунт) (для связи, если не отвечаю на основном): @LizaSailomoina" *
-                    </p>
+                    </div>
                     <p class="content-text" style="font-size: 0.95rem; color: #aaa;">
                         * Данное отступление является ярким примером нарушения пункта 1.2.1.
                     </p>
