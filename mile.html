@@ -909,7 +909,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: -1; /* Изменено: -1 чтобы было под всеми элементами */
             opacity: 0.02;
             background: 
                 radial-gradient(circle at 20% 30%, #888 0%, transparent 50%),
@@ -948,7 +948,7 @@
             left: 0;
             width: 100%;
             height: calc(100% - var(--header-height));
-            z-index: 3002;
+            z-index: 5000; /* Увеличено: чтобы было над всем кроме меню */
             display: none;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -1007,7 +1007,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transform-origin: 0 0;
+            transform-origin: center center; /* Изменено: центр для правильного зума */
             transition: transform 0.1s ease;
             user-select: none;
             -webkit-user-drag: none;
@@ -1809,8 +1809,8 @@
             
             <div class="posts-container">
                 <!-- Пост 1 -->
-                <article class="post" id="post-mile1">
-                    <img src="mile1.jpg" alt="Миля - Пантера тигрица" class="post-image" data-image="mile1.jpg">
+                <article class="post" id="post-mila1">
+                    <img src="mila1.jpg" alt="Миля - Пантера тигрица" class="post-image" data-image="mila1.jpg">
                     <div class="post-date">
                         <i class="far fa-calendar-alt"></i> Опубликовано 17.01.2026
                     </div>
@@ -1818,10 +1818,10 @@
                         Пантера тигрица, всем обзавидоваться
                     </div>
                     <div class="post-actions">
-                        <button class="like-button" data-post-id="post-mile1" title="Поставить лайк">
+                        <button class="like-button" data-post-id="post-mila1" title="Поставить лайк">
                             <i class="far fa-heart"></i>
                         </button>
-                        <button class="share-button" data-post-id="post-mile1">
+                        <button class="share-button" data-post-id="post-mila1">
                             <span>Поделиться</span>
                             <span class="link-icon">→</span>
                         </button>
@@ -1877,7 +1877,8 @@
                 zoomIn: document.getElementById('zoom-in'),
                 zoomOut: document.getElementById('zoom-out'),
                 resetZoom: document.getElementById('reset-zoom'),
-                zoomLevel: document.getElementById('zoom-level')
+                zoomLevel: document.getElementById('zoom-level'),
+                header: document.getElementById('header')
             };
             
             // State
@@ -1892,6 +1893,8 @@
             let startY = 0;
             let startOffsetX = 0;
             let startOffsetY = 0;
+            let originalWidth = 0;
+            let originalHeight = 0;
             
             const zoomStep = 0.25;
             const minZoom = 0.5;
@@ -2066,6 +2069,11 @@
             // Menu Functions
             const menu = {
                 open: function() {
+                    // Закрываем изображение если открыто
+                    if (isImageOpen) {
+                        imageModalManager.close();
+                    }
+                    
                     dom.navList.classList.add('active');
                     dom.menuOverlay.classList.add('active');
                     dom.body.style.overflow = 'hidden';
@@ -2128,11 +2136,15 @@
                     dom.body.style.overflow = 'hidden';
                     isImageOpen = true;
                     
-                    // Сброс параметров зума и панорамирования
-                    this.resetZoomAndPan();
-                    
-                    // Обновление отображения
-                    this.updateImageTransform();
+                    // Ждем загрузки изображения
+                    const img = new Image();
+                    img.onload = () => {
+                        originalWidth = img.width;
+                        originalHeight = img.height;
+                        // Сброс параметров зума и панорамирования
+                        this.resetZoomAndPan();
+                    };
+                    img.src = imageSrc;
                 },
                 
                 close: function() {
@@ -2153,41 +2165,19 @@
                 
                 zoomIn: function() {
                     if (currentZoom < maxZoom) {
-                        const prevZoom = currentZoom;
                         currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
-                        
-                        // Рассчитываем новый offset для зума к центру
-                        const containerRect = dom.modalImageContainer.getBoundingClientRect();
-                        const centerX = containerRect.width / 2;
-                        const centerY = containerRect.height / 2;
-                        
-                        // Корректируем offset для зума к центру
-                        offsetX = centerX - (centerX - offsetX) * (currentZoom / prevZoom);
-                        offsetY = centerY - (centerY - offsetY) * (currentZoom / prevZoom);
-                        
                         this.updateImageTransform();
                     }
                 },
                 
                 zoomOut: function() {
                     if (currentZoom > minZoom) {
-                        const prevZoom = currentZoom;
                         currentZoom = Math.max(currentZoom - zoomStep, minZoom);
-                        
-                        // Рассчитываем новый offset для зума от центра
-                        const containerRect = dom.modalImageContainer.getBoundingClientRect();
-                        const centerX = containerRect.width / 2;
-                        const centerY = containerRect.height / 2;
-                        
-                        // Корректируем offset для зума от центра
-                        offsetX = centerX - (centerX - offsetX) * (currentZoom / prevZoom);
-                        offsetY = centerY - (centerY - offsetY) * (currentZoom / prevZoom);
-                        
                         this.updateImageTransform();
                     }
                 },
                 
-                // Функция для зума в конкретную точку (например, по клику)
+                // Функция для зума в конкретную точку
                 zoomToPoint: function(clientX, clientY, zoomIn = true) {
                     const prevZoom = currentZoom;
                     const containerRect = dom.modalImageContainer.getBoundingClientRect();
@@ -2203,14 +2193,13 @@
                         currentZoom = Math.max(currentZoom - zoomStep, minZoom);
                     }
                     
-                    // Корректируем offset для зума к/от указанной точки
-                    offsetX = pointX - (pointX - offsetX) * (currentZoom / prevZoom);
-                    offsetY = pointY - (pointY - offsetY) * (currentZoom / prevZoom);
-                    
+                    // Обновляем трансформацию
                     this.updateImageTransform();
                 },
                 
                 startDrag: function(clientX, clientY) {
+                    if (currentZoom <= 1) return; // Не даем двигать при масштабе 1 или меньше
+                    
                     isDragging = true;
                     startX = clientX;
                     startY = clientY;
@@ -2220,7 +2209,7 @@
                 },
                 
                 doDrag: function(clientX, clientY) {
-                    if (!isDragging) return;
+                    if (!isDragging || currentZoom <= 1) return;
                     
                     const deltaX = clientX - startX;
                     const deltaY = clientY - startY;
@@ -2238,10 +2227,7 @@
                 
                 updateImageTransform: function() {
                     // Применяем трансформации к изображению
-                    dom.modalImage.style.transform = `
-                        translate(${offsetX}px, ${offsetY}px)
-                        scale(${currentZoom})
-                    `;
+                    dom.modalImage.style.transform = `scale(${currentZoom})`;
                     
                     // Обновляем отображение уровня зума
                     dom.zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
@@ -2272,15 +2258,11 @@
                         // Определяем направление зума
                         const delta = distance - this.lastDistance;
                         
-                        if (Math.abs(delta) > 10) { // Минимальный порог для предотвращения дрожания
-                            const containerRect = dom.modalImageContainer.getBoundingClientRect();
-                            const centerX = (touch1.clientX + touch2.clientX) / 2 - containerRect.left;
-                            const centerY = (touch1.clientY + touch2.clientY) / 2 - containerRect.top;
-                            
+                        if (Math.abs(delta) > 10) {
                             if (delta > 0) {
-                                this.zoomToPoint(centerX + containerRect.left, centerY + containerRect.top, true);
+                                this.zoomIn();
                             } else {
-                                this.zoomToPoint(centerX + containerRect.left, centerY + containerRect.top, false);
+                                this.zoomOut();
                             }
                             this.lastDistance = distance;
                         }
@@ -2337,6 +2319,17 @@
                         !e.target.closest('.nav-list') && 
                         !e.target.closest('.menu-toggle')) {
                         menu.close();
+                    }
+                    
+                    // Закрытие фото при клике на header (кроме интерактивных элементов)
+                    if (isImageOpen && e.target.closest('.header')) {
+                        // Проверяем, не кликнули ли на интерактивный элемент в header
+                        if (!e.target.closest('.theme-toggle') && 
+                            !e.target.closest('.telegram-icon') && 
+                            !e.target.closest('.logo') && 
+                            !e.target.closest('.menu-toggle')) {
+                            imageModalManager.close();
+                        }
                     }
                 });
                 
@@ -2469,8 +2462,8 @@
                         // Если уже увеличен, сбрасываем
                         imageModalManager.resetZoomAndPan();
                     } else {
-                        // Иначе зумируем в точку клика
-                        imageModalManager.zoomToPoint(e.clientX, e.clientY, true);
+                        // Иначе зумируем
+                        imageModalManager.zoomIn();
                     }
                 });
                 
@@ -2536,12 +2529,6 @@
                         } else {
                             imageModalManager.zoomOut();
                         }
-                    } else if (currentZoom > 1) {
-                        // Панорамирование колесиком мыши при увеличении
-                        e.preventDefault();
-                        offsetX -= e.deltaX;
-                        offsetY -= e.deltaY;
-                        imageModalManager.updateImageTransform();
                     }
                 }, { passive: false });
                 
@@ -2585,32 +2572,6 @@
                     this.scrollTop += e.deltaY * 0.5;
                     e.preventDefault();
                 }, { passive: false });
-                
-                // Добавляем инерционный скролл для тач-устройств
-                let startY = 0;
-                let scrollTop = 0;
-                let isScrolling = false;
-                
-                dom.navList.addEventListener('touchstart', function(e) {
-                    if (e.touches.length === 1) {
-                        startY = e.touches[0].pageY;
-                        scrollTop = this.scrollTop;
-                        isScrolling = true;
-                    }
-                });
-                
-                dom.navList.addEventListener('touchmove', function(e) {
-                    if (!isScrolling || e.touches.length !== 1) return;
-                    
-                    e.preventDefault();
-                    const y = e.touches[0].pageY;
-                    const walk = (y - startY) * 2; // Умножаем для более быстрого скролла
-                    this.scrollTop = scrollTop - walk;
-                });
-                
-                dom.navList.addEventListener('touchend', function() {
-                    isScrolling = false;
-                });
                 
                 // При загрузке страницы проверяем хеш и скроллим к посту
                 scrollToPostFromHash();
