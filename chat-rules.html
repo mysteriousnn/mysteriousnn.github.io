@@ -787,6 +787,24 @@
             color: #666;
         }
         
+        /* Стиль для команды /report */
+        .report-command {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .report-command {
+            background: rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        
         /* Decorative Elements */
         .decorative-bg {
             position: fixed;
@@ -943,6 +961,11 @@
             .content-text {
                 font-size: 1rem;
                 margin-bottom: 15px;
+            }
+            
+            .report-command {
+                padding: 12px;
+                font-size: 1.1rem;
             }
             
             .requirement-item {
@@ -1338,7 +1361,7 @@
                     <p class="content-text">
                         Если вы заметили нарушение в чате, ответьте на соответствующее сообщение и напишите команду:
                     </p>
-                    <div class="content-text" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 20px 0; font-family: monospace; font-size: 1.2rem;">
+                    <div class="content-text report-command">
                         /report "описание нарушения"
                     </div>
                     <p class="content-text">
@@ -1362,7 +1385,7 @@
                         <ul style="margin-left: 20px; margin-top: 10px;">
                             <li style="margin-bottom: 8px;"><strong>Неуместное поведение:</strong> Пользователь может не нарушать конкретные правила, но его поведение (например, агрессивные высказывания или провокации) может создать токсичную атмосферу.</li>
                             <li style="margin-bottom: 8px;"><strong>Нарушение доверия:</strong> Если администрация считает, что пользователь нарушает доверие сообщества (например, путем распространения ложной информации), она может принять решение о бане.</li>
-                            <li><strong>Использование некорректных выражений:</strong> публикация неуместных строк, высказываний или упоминаний, недопустимых в нашем чате. Сюда входят высказывания, способные вызвать негативные эмоции, дискомфорт или привести к нежелательным последствиям среди аудитории и самому чату.</li>
+                            <li><strong>Использование некорректных выражений:</strong> публикация неуместных строк, высказываний или упоминаний, недопустимых в нашем чате. Сюда входят высказывания, способные вызвать негативные эмоций, дискомфорт или привести к нежелательным последствиям среди аудитории и самому чату.</li>
                         </ul>
                         <p style="margin-top: 15px; font-style: italic;">
                             Важно отметить:<br>
