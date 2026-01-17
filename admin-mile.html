@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор постов Миля</title>
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #262626;
+            --text-primary: #ffffff;
+            --accent-gradient: linear-gradient(135deg, #888, #aaa);
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+        
+        .editor-form {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #888;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .posts-list {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .posts-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .post-preview {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .post-info h4 {
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+        
+        .post-info p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-danger {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 71, 87, 0.2);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .link {
+            color: #888;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.9rem;
+        }
+        
+        .link:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+        
+        .instructions {
+            background: rgba(136, 136, 136, 0.1);
+            border-left: 4px solid #888;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .instructions h4 {
+            margin-bottom: 10px;
+            color: #888;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="page-title">Редактор постов "Миля"</h1>
+            <p class="subtitle">Создавайте и управляйте постами на странице "Миля"</p>
+        </div>
+        
+        <div class="instructions">
+            <h4>📝 Как добавить пост:</h4>
+            <ul>
+                <li>1. Загрузите изображение на хостинг (например, ImgBB, PostImage)</li>
+                <li>2. Скопируйте ссылку на изображение</li>
+                <li>3. Заполните форму и нажмите "Сохранить пост"</li>
+                <li>4. Пост автоматически появится на странице <a href="mile.html" style="color: #888;">mile.html</a></li>
+            </ul>
+        </div>
+        
+        <div class="editor-form">
+            <h2 style="margin-bottom: 30px;">Добавить новый пост</h2>
+            
+            <div class="form-group">
+                <label for="image-url">URL изображения:</label>
+                <input type="text" id="image-url" placeholder="https://example.com/image.jpg" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="post-date">Дата публикации:</label>
+                <input type="text" id="post-date" placeholder="18.01.2026" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="post-text">Текст поста:</label>
+                <textarea id="post-text" placeholder="Пантера тигрица, всем обзавидоваться..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="post-id">ID поста (латинские буквы и цифры):</label>
+                <input type="text" id="post-id" placeholder="mile3" required>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-primary" id="save-post">💾 Сохранить пост</button>
+                <button class="btn btn-secondary" id="clear-form">🗑️ Очистить форму</button>
+            </div>
+        </div>
+        
+        <div class="posts-list">
+            <h2 class="posts-title">Существующие посты (всего: <span id="posts-count">0</span>)</h2>
+            <div id="posts-container">
+                <!-- Посты загрузятся здесь -->
+            </div>
+        </div>
+        
+        <div class="links">
+            <a href="mile.html" class="link">📄 Посмотреть страницу "Миля"</a>
+            <a href="index.html" class="link">🏠 На главную</a>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Пост успешно сохранен!
+    </div>
+    
+    <script>
+        // Хранилище постов в LocalStorage
+        const STORAGE_KEY = 'mile-posts';
+        
+        // DOM элементы
+        const elements = {
+            imageUrl: document.getElementById('image-url'),
+            postDate: document.getElementById('post-date'),
+            postText: document.getElementById('post-text'),
+            postId: document.getElementById('post-id'),
+            saveBtn: document.getElementById('save-post'),
+            clearBtn: document.getElementById('clear-form'),
+            postsContainer: document.getElementById('posts-container'),
+            postsCount: document.getElementById('posts-count'),
+            notification: document.getElementById('notification')
+        };
+        
+        // Загрузить посты из LocalStorage
+        function loadPosts() {
+            const postsJSON = localStorage.getItem(STORAGE_KEY);
+            return postsJSON ? JSON.parse(postsJSON) : [];
+        }
+        
+        // Сохранить посты в LocalStorage
+        function savePosts(posts) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+        }
+        
+        // Показать уведомление
+        function showNotification(message) {
+            elements.notification.textContent = message;
+            elements.notification.style.display = 'block';
+            setTimeout(() => {
+                elements.notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Отобразить все посты
+        function renderPosts() {
+            const posts = loadPosts();
+            elements.postsCount.textContent = posts.length;
+            
+            if (posts.length === 0) {
+                elements.postsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: rgba(255, 255, 255, 0.5);">
+                        Пока нет сохраненных постов. Добавьте первый пост выше.
+                    </div>
+                `;
+                return;
+            }
+            
+            // Сортируем посты по дате (новые сверху)
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            elements.postsContainer.innerHTML = posts.map((post, index) => `
+                <div class="post-preview">
+                    <div class="post-info">
+                        <h4>${post.id} • ${post.date}</h4>
+                        <p>${post.text.length > 100 ? post.text.substring(0, 100) + '...' : post.text}</p>
+                        <small style="color: #888;">Изображение: ${post.image.substring(0, 50)}...</small>
+                    </div>
+                    <div class="post-actions">
+                        <button class="btn-small btn-danger" onclick="deletePost(${index})">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Удалить пост
+        function deletePost(index) {
+            if (confirm('Удалить этот пост?')) {
+                const posts = loadPosts();
+                posts.splice(index, 1);
+                savePosts(posts);
+                renderPosts();
+                showNotification('Пост удален');
+            }
+        }
+        
+        // Глобальная функция для кнопок удаления
+        window.deletePost = deletePost;
+        
+        // Сохранить новый пост
+        function saveNewPost() {
+            // Получаем данные из формы
+            const imageUrl = elements.imageUrl.value.trim();
+            const date = elements.postDate.value.trim();
+            const text = elements.postText.value.trim();
+            const id = elements.postId.value.trim();
+            
+            // Проверяем заполнение полей
+            if (!imageUrl || !date || !text || !id) {
+                alert('Заполните все поля!');
+                return;
+            }
+            
+            // Проверяем ID на уникальность
+            const posts = loadPosts();
+            if (posts.some(post => post.id === id)) {
+                alert('Пост с таким ID уже существует! Используйте другой ID.');
+                return;
+            }
+            
+            // Создаем объект поста
+            const newPost = {
+                id: id,
+                image: imageUrl,
+                date: date,
+                text: text,
+                created: new Date().toISOString()
+            };
+            
+            // Добавляем пост в массив
+            posts.push(newPost);
+            
+            // Сохраняем в LocalStorage
+            savePosts(posts);
+            
+            // Обновляем список
+            renderPosts();
+            
+            // Очищаем форму
+            clearForm();
+            
+            // Показываем уведомление
+            showNotification('Пост успешно сохранен!');
+            
+            // Показываем предупреждение
+            console.log('✅ Пост сохранен! Не забудьте загрузить изображение на хостинг!');
+        }
+        
+        // Очистить форму
+        function clearForm() {
+            elements.imageUrl.value = '';
+            elements.postDate.value = '';
+            elements.postText.value = '';
+            elements.postId.value = '';
+            
+            // Генерируем следующий ID
+            const posts = loadPosts();
+            const nextId = `mile${posts.length + 1}`;
+            elements.postId.value = nextId;
+            
+            // Устанавливаем сегодняшнюю дату
+            const today = new Date();
+            const formattedDate = `${today.getDate().toString().padStart(2, '0')}.${(today.getMonth()+1).toString().padStart(2, '0')}.${today.getFullYear()}`;
+            elements.postDate.value = formattedDate;
+        }
+        
+        // Инициализация
+        function init() {
+            // Загружаем и отображаем посты
+            renderPosts();
+            
+            // Устанавливаем значения по умолчанию
+            clearForm();
+            
+            // Обработчики событий
+            elements.saveBtn.addEventListener('click', saveNewPost);
+            elements.clearBtn.addEventListener('click', clearForm);
+            
+            // Автосохранение при нажатии Ctrl+S
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveNewPost();
+                }
+            });
+            
+            console.log('👑 Редактор постов "Миля" загружен!');
+            console.log('💡 Совет: Используйте Ctrl+S для быстрого сохранения');
+        }
+        
+        // Запускаем при загрузке страницы
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
