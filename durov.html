@@ -40,28 +40,31 @@
             --flame-glow: rgba(255, 204, 0, 0.6);
             --timer-color: #ff9900;
             --timer-bg: rgba(255, 153, 0, 0.1);
-            --carousel-bg: rgba(26, 26, 26, 0.7);
+            --carousel-bg: rgba(26, 26, 26, 0.9);
+            --carousel-item-bg: rgba(30, 30, 30, 0.9);
             --like-color: #ff4757;
             --like-color-hover: #ff6b81;
             --share-color: #888;
             --modal-overlay: rgba(0, 0, 0, 0.9);
             --modal-bg: rgba(30, 30, 30, 0.95);
+            --section-bg: rgba(255, 255, 255, 0.03);
+            --title-gradient: linear-gradient(135deg, #ff9900, #ffcc00);
         }
         
         .light-theme {
-            /* Светлая тема */
-            --bg-primary: #f0f0f0;
+            /* Улучшенная светлая тема */
+            --bg-primary: #f8f9fa;
             --bg-secondary: #ffffff;
             --bg-accent: rgba(255, 255, 255, 0.95);
             --text-primary: #1a1a1a;
             --text-secondary: rgba(26, 26, 26, 0.85);
             --accent-gradient: linear-gradient(135deg, #e68900, #ff9900);
             --accent-orange: linear-gradient(135deg, #e68900, #ff6600);
-            --border-color: rgba(0, 0, 0, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.15);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
             --scrollbar-track: rgba(0, 0, 0, 0.05);
-            --scrollbar-thumb: rgba(230, 137, 0, 0.3);
-            --scrollbar-thumb-hover: rgba(230, 137, 0, 0.5);
+            --scrollbar-thumb: rgba(230, 137, 0, 0.4);
+            --scrollbar-thumb-hover: rgba(230, 137, 0, 0.6);
             --theme-toggle-color: #1a1a1a;
             --theme-toggle-bg: rgba(0, 0, 0, 0.08);
             --candle-color: #e68900;
@@ -69,15 +72,18 @@
             --flame-color: #ffb300;
             --flame-glow: rgba(255, 179, 0, 0.4);
             --timer-color: #e68900;
-            --timer-bg: rgba(230, 137, 0, 0.1);
-            --carousel-bg: rgba(255, 255, 255, 0.7);
+            --timer-bg: rgba(230, 137, 0, 0.08);
+            --carousel-bg: rgba(255, 255, 255, 0.95);
+            --carousel-item-bg: rgba(255, 255, 255, 0.95);
             --like-color: #ff4757;
             --like-color-hover: #ff6b81;
             --share-color: #666;
             --modal-overlay: rgba(0, 0, 0, 0.85);
-            --modal-bg: rgba(255, 255, 255, 0.95);
-            --menu-button-bg: rgba(0, 0, 0, 0.12);
-            --menu-button-border: rgba(0, 0, 0, 0.18);
+            --modal-bg: rgba(255, 255, 255, 0.98);
+            --section-bg: rgba(0, 0, 0, 0.02);
+            --title-gradient: linear-gradient(135deg, #e68900, #ff9900);
+            --menu-button-bg: rgba(0, 0, 0, 0.08);
+            --menu-button-border: rgba(0, 0, 0, 0.15);
             --menu-button-text: #1a1a1a;
         }
         
@@ -170,9 +176,9 @@
         .light-theme .bg-gradient {
             background: 
                 radial-gradient(circle at 10% 20%, rgba(255, 153, 0, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 204, 0, 0.04) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(136, 136, 136, 0.03) 0%, transparent 60%),
-                linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+                radial-gradient(circle at 90% 80%, rgba(255, 204, 0, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(136, 136, 136, 0.02) 0%, transparent 60%),
+                linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
         
         .bg-pattern {
@@ -189,77 +195,8 @@
         
         .light-theme .bg-pattern {
             background-image: 
-                radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-        }
-        
-        .bg-floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .floating-element {
-            position: absolute;
-            background: rgba(255, 153, 0, 0.05);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-        }
-        
-        .floating-element:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-            animation-duration: 25s;
-        }
-        
-        .floating-element:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 70%;
-            left: 80%;
-            animation-delay: -5s;
-            animation-duration: 30s;
-        }
-        
-        .floating-element:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            top: 40%;
-            left: 90%;
-            animation-delay: -10s;
-            animation-duration: 20s;
-        }
-        
-        .floating-element:nth-child(4) {
-            width: 100px;
-            height: 100px;
-            top: 85%;
-            left: 15%;
-            animation-delay: -15s;
-            animation-duration: 35s;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(20px, -20px) rotate(90deg);
-            }
-            50% {
-                transform: translate(0, -40px) rotate(180deg);
-            }
-            75% {
-                transform: translate(-20px, -20px) rotate(270deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
+                radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            opacity: 0.2;
         }
         
         /* ===== Header & Navigation ===== */
@@ -279,7 +216,7 @@
         }
         
         .light-theme .header {
-            background-color: rgba(240, 240, 240, 0.95);
+            background-color: rgba(248, 249, 250, 0.95);
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
         }
         
@@ -334,11 +271,6 @@
             transition: color 0.3s ease;
         }
         
-        .light-theme .logo-icon,
-        .light-theme .logo-text {
-            color: var(--text-primary);
-        }
-        
         /* Кнопка переключения темы */
         .theme-toggle {
             position: absolute;
@@ -368,8 +300,8 @@
         }
         
         .light-theme .theme-toggle:hover {
-            background: rgba(0, 0, 0, 0.15);
-            border-color: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
         }
         
         .theme-toggle i {
@@ -462,7 +394,7 @@
             background-color: var(--menu-button-bg);
             border-color: var(--menu-button-border);
             color: var(--menu-button-text);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         button, 
@@ -796,6 +728,15 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
         }
         
+        .light-theme .title-photo-container {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-theme .title-photo-container:hover {
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+        }
+        
         .title-photo {
             width: 100%;
             height: auto;
@@ -811,13 +752,12 @@
             font-size: 2.8rem;
             font-weight: 800;
             margin-bottom: 15px;
-            color: var(--text-primary);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            transition: color 0.3s ease;
-            background: var(--accent-gradient);
+            background: var(--title-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
         
         .subtitle {
@@ -837,7 +777,7 @@
             justify-content: center;
             margin-bottom: 60px;
             padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--section-bg);
             border-radius: var(--menu-border-radius);
             border: 1px solid var(--border-color);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -845,7 +785,7 @@
         }
         
         .light-theme .candle-container {
-            background: rgba(0, 0, 0, 0.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
         /* Photo Frame */
@@ -1121,7 +1061,7 @@
         
         /* Info Section */
         .info-section {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--section-bg);
             padding: 40px;
             border-radius: var(--menu-border-radius);
             margin-top: 60px;
@@ -1132,8 +1072,7 @@
         }
         
         .light-theme .info-section {
-            background: rgba(0, 0, 0, 0.03);
-            border-left: 5px solid var(--candle-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
         
         .info-title {
@@ -1166,7 +1105,7 @@
             color: var(--text-primary);
         }
         
-        /* ===== Карусель фотографий ===== */
+        /* ===== Улучшенная Карусель фотографий ===== */
         .photos-section {
             margin-top: 80px;
             margin-bottom: 80px;
@@ -1193,48 +1132,67 @@
             border-radius: 2px;
         }
         
-        .carousel-container {
+        .carousel-wrapper {
             position: relative;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             overflow: hidden;
+        }
+        
+        .carousel-container {
             border-radius: var(--menu-border-radius);
             background: var(--carousel-bg);
-            padding: 30px 20px;
+            padding: 40px 20px;
             border: 1px solid var(--border-color);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
-        .carousel {
+        .light-theme .carousel-container {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .carousel-track-container {
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: 1100px;
+        }
+        
+        .carousel-track {
             display: flex;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             gap: 25px;
             padding: 10px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none; /* Firefox */
-        }
-        
-        .carousel::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
         }
         
         .carousel-item {
             flex: 0 0 auto;
             width: 300px;
-            background: var(--bg-secondary);
+            background: var(--carousel-item-bg);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             position: relative;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .light-theme .carousel-item {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
         }
         
         .carousel-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .light-theme .carousel-item:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .carousel-image {
@@ -1242,7 +1200,8 @@
             height: 300px;
             object-fit: cover;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
+            display: block;
         }
         
         .carousel-item:hover .carousel-image {
@@ -1253,9 +1212,13 @@
             display: flex;
             padding: 15px;
             gap: 10px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .light-theme .carousel-actions {
+            background: rgba(255, 255, 255, 0.9);
         }
         
         .carousel-like, .carousel-share {
@@ -1272,11 +1235,23 @@
             justify-content: center;
             gap: 8px;
             font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .light-theme .carousel-like,
+        .light-theme .carousel-share {
+            background: rgba(0, 0, 0, 0.05);
         }
         
         .carousel-like:hover, .carousel-share:hover {
             background: rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+        
+        .light-theme .carousel-like:hover,
+        .light-theme .carousel-share:hover {
+            background: rgba(0, 0, 0, 0.1);
         }
         
         .carousel-like.active {
@@ -1296,7 +1271,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--carousel-bg);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 1.5rem;
@@ -1308,11 +1283,14 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .carousel-button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--accent-gradient);
+            color: white;
             transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 153, 0, 0.4);
         }
         
         .carousel-prev {
@@ -1328,6 +1306,7 @@
             justify-content: center;
             gap: 10px;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
         
         .carousel-indicator {
@@ -1341,7 +1320,24 @@
         
         .carousel-indicator.active {
             background: var(--candle-color);
-            transform: scale(1.2);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+        }
+        
+        .carousel-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         /* ===== Модальное окно для фотографий ===== */
@@ -1565,16 +1561,6 @@
             transition: opacity 0.5s ease;
         }
         
-        .candle-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background-color: var(--flame-color);
-            border-radius: 50%;
-            opacity: 0;
-            box-shadow: 0 0 10px var(--flame-glow);
-        }
-        
         .menu-overlay {
             position: fixed;
             top: var(--header-height);
@@ -1654,11 +1640,11 @@
             }
             
             .carousel-item {
-                width: 250px;
+                width: 280px;
             }
             
             .carousel-image {
-                height: 250px;
+                height: 280px;
             }
             
             .carousel-button {
@@ -1674,7 +1660,7 @@
         
         @media (max-width: 480px) {
             .content {
-                padding: 20px 0 50px 0; /* Отступ снизу для мобильных */
+                padding: 20px 0 50px 0;
             }
             
             .nav-list {
@@ -1775,15 +1761,15 @@
             }
             
             .carousel-container {
-                padding: 20px 10px;
+                padding: 25px 15px;
             }
             
             .carousel-item {
-                width: 220px;
+                width: 250px;
             }
             
             .carousel-image {
-                height: 220px;
+                height: 250px;
             }
             
             .carousel-actions {
@@ -1796,9 +1782,10 @@
             }
             
             .carousel-button {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+                top: 45%;
             }
             
             .carousel-prev {
@@ -1946,11 +1933,11 @@
             }
             
             .carousel-item {
-                width: 200px;
+                width: 220px;
             }
             
             .carousel-image {
-                height: 200px;
+                height: 220px;
             }
         }
         
@@ -1998,11 +1985,11 @@
             }
             
             .carousel-item {
-                width: 180px;
+                width: 200px;
             }
             
             .carousel-image {
-                height: 180px;
+                height: 200px;
             }
         }
         
@@ -2040,9 +2027,9 @@
             }
             
             .light-theme .menu-toggle:hover {
-                background-color: rgba(0, 0, 0, 0.15);
-                border-color: rgba(0, 0, 0, 0.25);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+                background-color: rgba(0, 0, 0, 0.1);
+                border-color: rgba(0, 0, 0, 0.2);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             }
             
             .nav-link:hover, 
@@ -2089,13 +2076,18 @@
             }
             
             .light-theme .theme-toggle:hover {
-                background: rgba(0, 0, 0, 0.15);
-                border-color: rgba(0, 0, 0, 0.25);
+                background: rgba(0, 0, 0, 0.1);
+                border-color: rgba(0, 0, 0, 0.2);
             }
             
             .carousel-like:hover, .carousel-share:hover {
                 background: rgba(255, 255, 255, 0.2);
                 color: var(--text-primary);
+            }
+            
+            .light-theme .carousel-like:hover,
+            .light-theme .carousel-share:hover {
+                background: rgba(0, 0, 0, 0.1);
             }
         }
         
@@ -2136,12 +2128,6 @@
     <div class="theme-background">
         <div class="bg-gradient"></div>
         <div class="bg-pattern"></div>
-        <div class="bg-floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-        </div>
     </div>
     
     <!-- Candle Particles -->
@@ -2371,16 +2357,24 @@
             <div class="photos-section">
                 <h2 class="photos-title">Наши любимые фотографии Павла Дурова!</h2>
                 
-                <div class="carousel-container">
-                    <div class="carousel" id="carousel">
-                        <!-- Фотографии будут добавлены динамически -->
+                <div class="carousel-wrapper">
+                    <div class="carousel-container">
+                        <div class="carousel-track-container">
+                            <div class="carousel-track" id="carousel-track">
+                                <!-- Фотографии будут добавлены динамически -->
+                            </div>
+                        </div>
+                        <button class="carousel-button carousel-prev" id="carousel-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-button carousel-next" id="carousel-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <div class="carousel-counter" id="carousel-counter">
+                            <i class="fas fa-images"></i>
+                            <span id="current-slide">1</span>/<span id="total-slides">11</span>
+                        </div>
                     </div>
-                    <button class="carousel-button carousel-prev" id="carousel-prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="carousel-button carousel-next" id="carousel-next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
                 
                 <div class="carousel-indicators" id="carousel-indicators">
@@ -2416,10 +2410,13 @@
                 timerSeconds: document.getElementById('timer-seconds'),
                 photoImage: document.getElementById('photo-image'),
                 // Carousel elements
-                carousel: document.getElementById('carousel'),
+                carouselTrack: document.getElementById('carousel-track'),
                 carouselPrev: document.getElementById('carousel-prev'),
                 carouselNext: document.getElementById('carousel-next'),
                 carouselIndicators: document.getElementById('carousel-indicators'),
+                carouselCounter: document.getElementById('carousel-counter'),
+                currentSlide: document.getElementById('current-slide'),
+                totalSlides: document.getElementById('total-slides'),
                 // Modal elements
                 shareNotification: document.getElementById('share-notification'),
                 imageModal: document.getElementById('image-modal'),
@@ -2805,14 +2802,17 @@
                 return false;
             };
             
-            // ===== Carousel Functions =====
+            // ===== Улучшенная Карусель =====
             
             // Initialize carousel
             function initCarousel() {
                 // Clear existing content
-                dom.carousel.innerHTML = '';
+                dom.carouselTrack.innerHTML = '';
                 dom.carouselIndicators.innerHTML = '';
                 carouselItems = [];
+                
+                // Set total slides count
+                dom.totalSlides.textContent = carouselImages.length;
                 
                 // Create carousel items
                 carouselImages.forEach((image, index) => {
@@ -2855,7 +2855,7 @@
                     item.appendChild(actions);
                     
                     // Add to carousel
-                    dom.carousel.appendChild(item);
+                    dom.carouselTrack.appendChild(item);
                     carouselItems.push(item);
                     
                     // Create indicator
@@ -2880,9 +2880,9 @@
                 const gap = 25;
                 const position = -(currentCarouselIndex * (itemWidth + gap));
                 
-                dom.carousel.style.transform = `translateX(${position}px)`;
+                dom.carouselTrack.style.transform = `translateX(${position}px)`;
                 
-                // Update indicators
+                // Update indicators and counter
                 document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
                     if (index === currentCarouselIndex) {
                         indicator.classList.add('active');
@@ -2890,6 +2890,8 @@
                         indicator.classList.remove('active');
                     }
                 });
+                
+                dom.currentSlide.textContent = currentCarouselIndex + 1;
             }
             
             // Move carousel to next item
@@ -2900,6 +2902,12 @@
                     currentCarouselIndex = 0;
                 }
                 updateCarouselPosition();
+                
+                // Track in Google Analytics
+                gtag('event', 'carousel_nav', {
+                    'event_category': 'interaction',
+                    'event_label': 'Carousel Next'
+                });
             }
             
             // Move carousel to previous item
@@ -2910,6 +2918,12 @@
                     currentCarouselIndex = carouselImages.length - 1;
                 }
                 updateCarouselPosition();
+                
+                // Track in Google Analytics
+                gtag('event', 'carousel_nav', {
+                    'event_category': 'interaction',
+                    'event_label': 'Carousel Previous'
+                });
             }
             
             // Handle like button click
@@ -2929,6 +2943,13 @@
                     setTimeout(() => {
                         icon.style.animation = 'pulse 0.3s ease';
                     }, 10);
+                    
+                    // Track in Google Analytics
+                    gtag('event', 'carousel_like', {
+                        'event_category': 'engagement',
+                        'event_label': `Carousel Image ${index}`,
+                        'value': 1
+                    });
                 } else {
                     image.likes = 0;
                     likeButton.innerHTML = `<i class="far fa-heart"></i><span>0</span>`;
@@ -2946,6 +2967,12 @@
                 // Copy to clipboard
                 navigator.clipboard.writeText(imageUrl).then(() => {
                     showNotification('Ссылка на фото скопирована в буфер обмена!');
+                    
+                    // Track in Google Analytics
+                    gtag('event', 'carousel_share', {
+                        'event_category': 'engagement',
+                        'event_label': `Carousel Image ${index}`
+                    });
                 }).catch(err => {
                     console.error('Ошибка копирования: ', err);
                     showNotification('Не удалось скопировать ссылку');
@@ -2997,6 +3024,33 @@
                         updateCarouselPosition();
                     });
                 });
+                
+                // Touch events for carousel swipe
+                let startX = 0;
+                let endX = 0;
+                
+                dom.carouselTrack.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                });
+                
+                dom.carouselTrack.addEventListener('touchmove', function(e) {
+                    endX = e.touches[0].clientX;
+                });
+                
+                dom.carouselTrack.addEventListener('touchend', function() {
+                    const diff = startX - endX;
+                    const threshold = 50;
+                    
+                    if (Math.abs(diff) > threshold) {
+                        if (diff > 0) {
+                            // Swipe left, go to next
+                            nextCarouselItem();
+                        } else {
+                            // Swipe right, go to previous
+                            prevCarouselItem();
+                        }
+                    }
+                });
             }
             
             // ===== Modal Functions =====
@@ -3046,7 +3100,6 @@
                         currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
                         
                         // Сохраняем текущую позицию при зуме
-                        // Не смещаем изображение при зуме
                         this.updateImageTransform();
                     }
                 },
@@ -3057,7 +3110,6 @@
                         currentZoom = Math.max(currentZoom - zoomStep, minZoom);
                         
                         // Сохраняем текущую позицию при зуме
-                        // Не смещаем изображение при зуме
                         this.updateImageTransform();
                     }
                 },
@@ -3112,6 +3164,11 @@
             // Menu Functions
             const menu = {
                 open: function() {
+                    // Закрываем изображение если открыто
+                    if (isImageOpen) {
+                        imageModalManager.close();
+                    }
+                    
                     dom.navList.classList.add('active');
                     dom.menuOverlay.classList.add('active');
                     dom.body.style.overflow = 'hidden';
@@ -3376,6 +3433,17 @@
                         nextCarouselItem();
                     }
                 }, 10000);
+                
+                // Keyboard navigation for carousel
+                document.addEventListener('keydown', function(e) {
+                    if (isImageOpen) return; // Don't interfere with modal
+                    
+                    if (e.key === 'ArrowLeft') {
+                        prevCarouselItem();
+                    } else if (e.key === 'ArrowRight') {
+                        nextCarouselItem();
+                    }
+                });
             };
             
             // Initialize
@@ -3449,6 +3517,15 @@
                 
                 // Check candle cooldown on load
                 checkCandleCooldown();
+                
+                // Handle window resize for carousel
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(function() {
+                        updateCarouselPosition();
+                    }, 250);
+                });
             };
             
             function initAnalyticsTracking() {
@@ -3521,36 +3598,6 @@
                         });
                     });
                 }
-                
-                // Отслеживание листания карусели
-                dom.carouselPrev.addEventListener('click', function() {
-                    gtag('event', 'carousel_nav', {
-                        'event_category': 'interaction',
-                        'event_label': 'Carousel Previous'
-                    });
-                });
-                
-                dom.carouselNext.addEventListener('click', function() {
-                    gtag('event', 'carousel_nav', {
-                        'event_category': 'interaction',
-                        'event_label': 'Carousel Next'
-                    });
-                });
-                
-                // Отслеживание лайков в карусели
-                document.addEventListener('click', function(e) {
-                    if (e.target.closest('.carousel-like')) {
-                        const button = e.target.closest('.carousel-like');
-                        const index = button.dataset.index;
-                        const isLiked = button.classList.contains('active');
-                        
-                        gtag('event', 'carousel_like', {
-                            'event_category': 'engagement',
-                            'event_label': `Carousel Image ${index}`,
-                            'value': isLiked ? 1 : 0
-                        });
-                    }
-                });
             }
             
             // Start when DOM is ready
