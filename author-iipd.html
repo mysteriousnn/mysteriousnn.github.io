@@ -16,48 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ===== CSS Reset & Base Styles ===== */
-        :root {
-            /* Темная тема (по умолчанию) */
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #262626;
-            --bg-accent: rgba(38, 38, 38, 0.98);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.85);
-            --accent-gradient: linear-gradient(135deg, #888, #aaa);
-            --accent-orange: linear-gradient(135deg, #999, #bbb);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --header-height: 70px;
-            --menu-border-radius: 15px;
-            --scrollbar-track: rgba(255, 255, 255, 0.05);
-            --scrollbar-thumb: rgba(136, 136, 136, 0.5);
-            --scrollbar-thumb-hover: rgba(136, 136, 136, 0.7);
-            --theme-toggle-color: #ffffff;
-            --theme-toggle-bg: rgba(255, 255, 255, 0.05);
-        }
-        
-        .light-theme {
-            /* Светлая тема */
-            --bg-primary: #f5f5f7;
-            --bg-secondary: #ffffff;
-            --bg-accent: rgba(255, 255, 255, 0.98);
-            --text-primary: #1a1a1a;
-            --text-secondary: rgba(26, 26, 26, 0.85);
-            --accent-gradient: linear-gradient(135deg, #666, #888);
-            --accent-orange: linear-gradient(135deg, #777, #999);
-            --border-color: rgba(0, 0, 0, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --scrollbar-track: rgba(0, 0, 0, 0.05);
-            --scrollbar-thumb: rgba(136, 136, 136, 0.3);
-            --scrollbar-thumb-hover: rgba(136, 136, 136, 0.5);
-            --theme-toggle-color: #1a1a1a;
-            --theme-toggle-bg: rgba(0, 0, 0, 0.08);
-            /* Усиленная контрастность для кнопки меню */
-            --menu-button-bg: rgba(0, 0, 0, 0.12);
-            --menu-button-border: rgba(0, 0, 0, 0.18);
-            --menu-button-text: #1a1a1a;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -66,588 +24,234 @@
         }
         
         html {
-            scroll-behavior: auto;
-            overflow: hidden;
             height: 100%;
+            font-size: 62.5%;
         }
         
         body {
-            background-color: var(--bg-primary);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--text-primary);
-            padding-top: var(--header-height);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
             line-height: 1.6;
-            height: 100vh;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        .channel-description,
-        .channel-text,
-        .info-text,
-        .button-description,
-        .subtitle,
-        .link-date,
-        .link-title,
-        p {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-        
-        body::-webkit-scrollbar {
-            width: 0;
-            height: 0;
-            display: none;
-        }
-        
-        body {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        
-        /* ===== Header & Navigation ===== */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: var(--header-height);
-            z-index: 3000;
-            background-color: rgba(26, 26, 26, 0.95);
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
-            padding: 10px 0;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .light-theme .header {
-            background-color: rgba(245, 245, 247, 0.95);
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
-        }
-        
+        /* ===== Container ===== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            height: 100%;
+            width: 100%;
         }
         
-        .main-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            height: 100%;
+        /* ===== Header ===== */
+        .header {
+            background: rgba(15, 15, 15, 0.98);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
         }
         
-        /* УПРОЩЕННЫЙ ЛОГОТИП */
-        .logo {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            text-decoration: none;
-            cursor: pointer;
-            z-index: 1002;
-            user-select: none;
+        .header-content {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 0;
+            position: relative;
         }
         
-        .logo:hover {
-            opacity: 0.8;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 2.4rem;
+            letter-spacing: -0.5px;
         }
         
         .logo-icon {
-            font-size: 1.8rem;
-            color: var(--text-primary);
-            transition: color 0.3s ease;
+            font-size: 2.8rem;
+            color: #888;
         }
         
-        .logo-text {
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: 0.5px;
-            color: var(--text-primary);
-            transition: color 0.3s ease;
-        }
-        
-        .light-theme .logo-icon,
-        .light-theme .logo-text {
-            color: var(--text-primary);
-        }
-        
-        /* Кнопка переключения темы */
-        .theme-toggle {
-            position: absolute;
-            right: 80px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
-            background: var(--theme-toggle-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--theme-toggle-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            z-index: 1002;
-            -webkit-touch-callout: none;
-        }
-        
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .light-theme .theme-toggle:hover {
-            background: rgba(0, 0, 0, 0.15);
-            border-color: rgba(0, 0, 0, 0.25);
-        }
-        
-        .theme-toggle i {
-            font-size: 1.2rem;
-        }
-        
-        /* Иконка луны для темной темы */
-        .theme-toggle .fa-moon {
-            display: block;
-        }
-        
-        .theme-toggle .fa-sun {
+        /* ===== Navigation ===== */
+        .nav-menu {
             display: none;
         }
         
-        /* В светлой теме показываем солнце, скрываем луну */
-        .light-theme .theme-toggle .fa-moon {
-            display: none;
-        }
-        
-        .light-theme .theme-toggle .fa-sun {
-            display: block;
-        }
-        
-        .telegram-icon {
+        .nav-toggle {
             position: absolute;
-            right: 20px;
+            right: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            z-index: 1002;
-            -webkit-touch-callout: none;
+            gap: 8px;
+            transition: all 0.3s ease;
         }
         
-        .telegram-icon:hover {
+        .nav-toggle:hover {
             background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
             border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
         }
         
-        .light-theme .telegram-icon {
-            background: rgba(0, 0, 0, 0.05);
-            color: rgba(26, 26, 26, 0.85);
-        }
-        
-        .light-theme .telegram-icon:hover {
-            background: rgba(0, 0, 0, 0.1);
-            color: var(--text-primary);
-            border-color: rgba(0, 0, 0, 0.2);
-        }
-        
-        .telegram-icon i {
-            font-size: 1.3rem;
-        }
-        
-        .menu-toggle {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            user-select: none;
-            z-index: 1002;
-            position: relative;
-            top: 2px;
-            border: none;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        /* Усиленная видимость кнопки меню в светлой теме */
-        .light-theme .menu-toggle {
-            background-color: var(--menu-button-bg);
-            border-color: var(--menu-button-border);
-            color: var(--menu-button-text);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-        
-        button, 
-        .menu-toggle,
-        .dropdown-toggle,
-        .button-link,
-        .nav-link,
-        .dropdown-item {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .menu-toggle:active,
-        .dropdown-toggle:active,
-        .button-link:active,
-        .nav-link:active,
-        .dropdown-item:active,
-        .telegram-icon:active,
-        .theme-toggle:active {
-            background-color: rgba(255, 255, 255, 0.15) !important;
-            transition: background-color 0.1s;
-        }
-        
-        .light-theme .menu-toggle:active,
-        .light-theme .dropdown-toggle:active,
-        .light-theme .button-link:active,
-        .light-theme .nav-link:active,
-        .light-theme .dropdown-item:active,
-        .light-theme .telegram-icon:active,
-        .light-theme .theme-toggle:active {
-            background-color: rgba(0, 0, 0, 0.15) !important;
-        }
-        
-        .nav-list {
-            display: none;
-            flex-direction: column;
-            width: calc(100% - 40px);
-            max-width: 400px;
+        /* ===== Mobile Navigation ===== */
+        .mobile-nav {
             position: fixed;
-            top: calc(var(--header-height) + 15px);
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--bg-secondary);
-            padding: 0;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--border-color);
-            border-radius: var(--menu-border-radius);
-            z-index: 1001;
-            max-height: 85vh;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: rgba(15, 15, 15, 0.98);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 2000;
+            transition: right 0.3s ease;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            list-style: none;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
-        .light-theme .nav-list {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        .mobile-nav.active {
+            right: 0;
         }
         
-        .nav-list::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .nav-list::-webkit-scrollbar-track {
-            background: var(--scrollbar-track);
-            border-radius: 4px;
-            margin: 8px 0;
-        }
-        
-        .nav-list::-webkit-scrollbar-thumb {
-            background: var(--scrollbar-thumb);
-            border-radius: 4px;
-            border: 2px solid var(--bg-secondary);
-        }
-        
-        .nav-list::-webkit-scrollbar-thumb:hover {
-            background: var(--scrollbar-thumb-hover);
-        }
-        
-        .nav-list {
-            scrollbar-width: thin;
-            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-        }
-        
-        .nav-list.active {
-            display: flex;
-        }
-        
-        .nav-item {
-            position: relative;
-            width: 100%;
-        }
-        
-        .nav-item:first-child .nav-link {
-            border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
-        }
-        
-        .nav-footer {
-            background-color: rgba(0, 0, 0, 0.2);
+        .mobile-nav-header {
             padding: 20px;
-            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 15px;
-            border-radius: 0 0 var(--menu-border-radius) var(--menu-border-radius);
-            flex-shrink: 0;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            justify-content: space-between;
         }
         
-        .light-theme .nav-footer {
-            background-color: rgba(0, 0, 0, 0.05);
+        .mobile-nav-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
         }
         
-        .nav-footer-text {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            text-align: center;
-            line-height: 1.5;
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 2.4rem;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
         }
         
-        .nav-footer-link {
-            color: #aaa;
+        .mobile-nav-content {
+            padding: 20px;
+        }
+        
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            color: #888;
             text-decoration: none;
+            font-size: 1.5rem;
             font-weight: 600;
-            border-bottom: 1px solid transparent;
-            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: color 0.3s ease;
         }
         
-        .nav-footer-link:hover {
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--text-primary);
+        .mobile-nav-link:last-child {
+            border-bottom: none;
         }
         
-        .nav-footer-year {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.85rem;
+        .mobile-nav-link:hover {
+            color: #fff;
+        }
+        
+        .mobile-nav-link i {
+            font-size: 1.8rem;
+            width: 24px;
+        }
+        
+        .mobile-nav-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 20px;
+        }
+        
+        .mobile-nav-footer-text {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-nav-footer-link {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-nav-footer-link:hover {
+            color: #fff;
+        }
+        
+        .mobile-nav-footer-year {
+            font-size: 1.1rem;
+            color: #555;
+            text-align: center;
             margin-top: 5px;
         }
         
-        .light-theme .nav-footer-year {
-            color: rgba(26, 26, 26, 0.6);
-        }
-        
-        .nav-item:last-child .nav-link {
-            border-radius: 0;
-        }
-        
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 18px 24px;
-            font-weight: 600;
-            font-size: 1rem;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color: transparent;
-            position: relative;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-            flex-shrink: 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        .nav-link i {
-            font-size: 1.1rem;
-            margin-right: 12px;
-            width: 24px;
-            text-align: center;
-        }
-        
-        .link-text {
-            flex-grow: 1;
-            text-align: left;
-        }
-        
-        .dropdown-menu {
-            width: 100%;
-            background-color: var(--bg-secondary);
-            padding: 0;
-            margin: 0;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
             display: none;
-            overflow: hidden;
-            flex-shrink: 0;
-            transition: background-color 0.3s ease;
+            backdrop-filter: blur(2px);
         }
         
-        .dropdown.active .dropdown-menu {
+        .nav-overlay.active {
             display: block;
         }
         
-        .nav-item.dropdown:nth-last-child(3) .nav-link {
-            border-radius: 0;
-        }
-        
-        .nav-item.dropdown:nth-last-child(3) .dropdown-menu {
-            border-radius: 0;
-        }
-        
-        .nav-item.dropdown:nth-last-child(2) .nav-link {
-            border-radius: 0;
-        }
-        
-        .nav-item.dropdown:nth-last-child(2) .dropdown-menu {
-            border-radius: 0;
-        }
-        
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            padding: 16px 48px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            position: relative;
-            min-height: 48px;
-            justify-content: flex-start;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-            flex-shrink: 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        .dropdown-item:last-child {
-            border-radius: 0;
-        }
-        
-        .dropdown-item::before {
-            content: '';
-            position: absolute;
-            left: 32px;
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-            width: 8px;
-            height: 8px;
-            background: #888;
-            flex-shrink: 0;
-            transition: background-color 0.3s ease;
-        }
-        
-        .dropdown-item-text {
-            flex: 1;
-            padding-left: 8px;
-            text-align: left;
-        }
-        
-        .dropdown-item::after {
-            content: ' ➥';
-            color: #888;
-            font-weight: bold;
-            margin-left: auto;
-            transition: color 0.3s ease;
-        }
-        
-        .dropdown-toggle::after {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(45deg);
-            margin-left: 12px;
-            flex-shrink: 0;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .dropdown.active .dropdown-toggle::after {
-            transform: rotate(-135deg);
-        }
-        
-        .nav-link:hover, 
-        .nav-link.active,
-        .dropdown.active .dropdown-toggle {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-        }
-        
-        .light-theme .nav-link:hover, 
-        .light-theme .nav-link.active,
-        .light-theme .dropdown.active .dropdown-toggle {
-            background-color: rgba(0, 0, 0, 0.08);
-        }
-        
-        .dropdown-item:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-        }
-        
-        .light-theme .dropdown-item:hover {
-            background-color: rgba(0, 0, 0, 0.08);
-        }
-        
         /* ===== Main Content ===== */
-        .content {
-            padding: 20px 0 40px 0;
-            flex: 1 0 auto;
-            width: 100%;
+        .page-body {
+            flex: 1;
+            padding: 40px 0;
+            background: #0f0f0f;
         }
         
-        /* ===== Author Page Styles (from first code) ===== */
+        /* ===== Author Page ===== */
         .author-page {
-            background-color: var(--bg-secondary);
-            border-radius: var(--menu-border-radius);
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
             padding: 30px;
             margin-bottom: 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .light-theme .author-page {
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
         
         .author-profile {
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
+            gap: 25px;
             margin-bottom: 30px;
         }
         
@@ -656,90 +260,92 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid var(--accent-gradient);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(136, 136, 136, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
         .author-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex: 1;
         }
         
         .author-name {
-            font-size: 2.2rem;
+            font-size: 3.2rem;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-            text-align: center;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
         
         .author-meta {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+            gap: 15px;
+            color: #888;
+            font-size: 1.4rem;
         }
         
         .author-stats {
             display: flex;
             align-items: center;
+            gap: 5px;
         }
         
         .author-social {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         
-        /* Section title */
-        .section-title {
+        .author-social-link {
+            color: #888;
             font-size: 1.8rem;
-            font-weight: 600;
-            margin: 30px 0 30px 0;
-            color: var(--text-primary);
-            text-align: center;
+            transition: color 0.3s ease;
         }
         
-        /* Posts grid - similar to buttons-grid from second code */
+        .author-social-link:hover {
+            color: #fff;
+        }
+        
+        /* ===== Posts Section ===== */
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 30px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+        
         .author-posts {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 25px;
             margin-bottom: 40px;
         }
         
-        /* Post card - similar to button-card but with post layout */
         .post-link {
-            background-color: var(--bg-secondary);
-            border-radius: var(--menu-border-radius);
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
             padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             height: 100%;
-            text-decoration: none;
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
         }
         
         .post-link:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+            border-color: rgba(136, 136, 136, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
         
-        .light-theme .post-link {
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .light-theme .post-link:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        .post-link.no-image {
+            padding: 30px;
         }
         
         .link-body {
@@ -749,54 +355,100 @@
         }
         
         .link-date {
-            font-size: 0.85rem;
+            font-size: 1.2rem;
             color: #888;
-            margin-bottom: 12px;
-            display: block;
-        }
-        
-        .light-theme .link-date {
-            color: #666;
+            margin-bottom: 15px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
         
         .link-title {
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
             margin-bottom: 15px;
-            color: var(--text-primary);
             line-height: 1.3;
+            letter-spacing: -0.3px;
         }
         
         .post-link p {
-            font-size: 0.98rem;
-            color: var(--text-secondary);
+            font-size: 1.4rem;
+            color: #aaa;
             line-height: 1.6;
-            flex-grow: 1;
             margin-bottom: 20px;
+            flex: 1;
         }
         
-        .post-link .text-white {
-            color: var(--text-primary) !important;
+        .text-white {
+            color: #fff !important;
             font-weight: 600;
         }
         
-        /* Footer */
+        /* ===== Footer ===== */
         .page-footer {
             text-align: right;
-            color: #8b8b8b;
-            font-size: 11px;
-            padding: 20px 0;
-            font-weight: 600;
-        }
-        
-        .light-theme .page-footer {
             color: #666;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 30px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
         }
         
+        /* ===== Responsive Design ===== */
         @media (max-width: 768px) {
             .author-posts {
                 grid-template-columns: 1fr;
                 gap: 20px;
+            }
+            
+            .author-profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .author-info {
+                text-align: center;
+            }
+            
+            .author-meta {
+                justify-content: center;
+            }
+            
+            .author-name {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin: 30px 0 25px;
+            }
+            
+            .post-link {
+                padding: 20px;
+            }
+            
+            .link-title {
+                font-size: 1.8rem;
+            }
+            
+            .author-page {
+                padding: 25px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .logo-icon {
+                font-size: 2.4rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
             }
             
             .author-page {
@@ -809,425 +461,179 @@
             }
             
             .author-name {
-                font-size: 1.8rem;
+                font-size: 2.4rem;
             }
             
             .section-title {
-                font-size: 1.5rem;
-                margin: 25px 0;
-            }
-            
-            .post-link {
-                padding: 20px;
+                font-size: 1.8rem;
+                margin: 25px 0 20px;
             }
             
             .link-title {
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .author-page {
-                padding: 15px;
-            }
-            
-            .author-profile-image {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .author-name {
                 font-size: 1.6rem;
             }
             
-            .section-title {
-                font-size: 1.3rem;
-                margin: 20px 0;
+            .post-link {
+                padding: 18px;
+            }
+            
+            .mobile-nav {
+                width: 280px;
             }
         }
         
-        /* Decorative Background */
-        .decorative-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.02;
-            background: 
-                radial-gradient(circle at 20% 30%, #888 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, #999 0%, transparent 50%);
-            transition: opacity 0.3s ease;
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
         
-        .light-theme .decorative-bg {
-            opacity: 0.03;
-            background: 
-                radial-gradient(circle at 20% 30%, #aaa 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, #bbb 0%, transparent 50%);
+        ::-webkit-scrollbar-track {
+            background: rgba(20, 20, 20, 0.8);
         }
         
-        .menu-overlay {
-            position: fixed;
-            top: var(--header-height);
-            left: 0;
-            width: 100%;
-            height: calc(100% - var(--header-height));
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-            backdrop-filter: blur(2px);
+        ::-webkit-scrollbar-thumb {
+            background: rgba(136, 136, 136, 0.5);
+            border-radius: 4px;
         }
         
-        .menu-overlay.active {
-            display: block;
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(136, 136, 136, 0.7);
         }
         
-        /* Media Queries */
-        @media (min-width: 769px) {
-            .nav-list {
-                width: 400px;
-                max-width: 400px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-list {
-                width: calc(100% - 40px);
-                max-width: calc(100% - 40px);
-                max-height: 80vh;
-            }
-            
-            .logo {
-                gap: 8px;
-            }
-            
-            .logo-icon {
-                font-size: 1.6rem;
-            }
-            
-            .logo-text {
-                font-size: 1.6rem;
-            }
-            
-            .theme-toggle {
-                right: 70px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .telegram-icon {
-                right: 15px;
-                width: 40px;
-                height: 40px;
-            }
-            
-            .theme-toggle {
-                right: 70px;
-                width: 40px;
-                height: 40px;
-            }
-            
-            .telegram-icon i {
-                font-size: 1.1rem;
-            }
-            
-            .theme-toggle i {
-                font-size: 1.1rem;
-            }
-            
-            .nav-footer {
-                padding: 15px;
-            }
-            
-            .nav-footer-text {
-                font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 380px) and (max-height: 800px) {
-            .telegram-icon {
-                right: 12px;
-                width: 38px;
-                height: 38px;
-            }
-            
-            .theme-toggle {
-                right: 67px;
-                width: 38px;
-                height: 38px;
-            }
-            
-            .telegram-icon i {
-                font-size: 1rem;
-            }
-            
-            .theme-toggle i {
-                font-size: 1rem;
-            }
-            
-            .menu-toggle {
-                padding: 8px 16px;
-                font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 350px) {
-            .logo {
-                gap: 4px;
-            }
-            
-            .logo-icon {
-                font-size: 1.2rem;
-            }
-            
-            .logo-text {
-                font-size: 1.2rem;
-            }
-            
-            .telegram-icon {
-                right: 10px;
-                width: 36px;
-                height: 36px;
-            }
-            
-            .theme-toggle {
-                right: 65px;
-                width: 36px;
-                height: 36px;
-            }
-            
-            .menu-toggle {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-            }
-            
-            .container {
-                padding: 0 12px;
-            }
-        }
-        
-        /* Improved hover states for better UX */
-        @media (hover: hover) {
-            .menu-toggle:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-            
-            .light-theme .menu-toggle:hover {
-                background-color: rgba(0, 0, 0, 0.15);
-                border-color: rgba(0, 0, 0, 0.25);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            }
-            
-            .nav-link:hover, 
-            .nav-link.active,
-            .dropdown.active .dropdown-toggle {
-                background-color: rgba(255, 255, 255, 0.08);
-                color: var(--text-primary);
-            }
-            
-            .light-theme .nav-link:hover,
-            .light-theme .nav-link.active,
-            .light-theme .dropdown.active .dropdown-toggle {
-                background-color: rgba(0, 0, 0, 0.08);
-            }
-            
-            .dropdown-item:hover {
-                background-color: rgba(255, 255, 255, 0.08);
-                color: var(--text-primary);
-            }
-            
-            .light-theme .dropdown-item:hover {
-                background-color: rgba(0, 0, 0, 0.08);
-            }
-            
-            .telegram-icon:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: var(--text-primary);
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-            
-            .light-theme .telegram-icon:hover {
-                background: rgba(0, 0, 0, 0.1);
-                border-color: rgba(0, 0, 0, 0.2);
-            }
-            
-            .theme-toggle:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: var(--text-primary);
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-            
-            .light-theme .theme-toggle:hover {
-                background: rgba(0, 0, 0, 0.15);
-                border-color: rgba(0, 0, 0, 0.25);
-            }
-        }
-        
-        /* Изменение цвета выделения текста */
+        /* ===== Selection ===== */
         ::selection {
-            background-color: rgba(136, 136, 136, 0.4);
-            color: #ffffff;
-        }
-
-        ::-moz-selection {
-            background-color: rgba(136, 136, 136, 0.4);
-            color: #ffffff;
-        }
-
-        ::-webkit-selection {
-            background-color: rgba(136, 136, 136, 0.4);
-            color: #ffffff;
+            background: rgba(136, 136, 136, 0.3);
+            color: #fff;
         }
         
-        .light-theme ::selection {
-            background-color: rgba(136, 136, 136, 0.3);
-            color: #1a1a1a;
+        /* ===== Utilities ===== */
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .light-theme ::-moz-selection {
-            background-color: rgba(136, 136, 136, 0.3);
-            color: #1a1a1a;
+        .flex-column {
+            display: flex;
+            flex-direction: column;
         }
         
-        .light-theme ::-webkit-selection {
-            background-color: rgba(136, 136, 136, 0.3);
-            color: #1a1a1a;
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- Decorative Background -->
-    <div class="decorative-bg"></div>
-    
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menu-overlay"></div>
-    
     <!-- Header -->
-    <header class="header" id="header">
+    <header class="header">
         <div class="container">
-            <nav class="main-nav">
-                <!-- Кнопка переключения темы -->
-                <button class="theme-toggle" id="theme-toggle" title="Переключить тему">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
-                </button>
-                
-                <!-- Telegram Icon -->
-                <a href="https://t.me/ishupodrygyilidryga" class="telegram-icon" target="_blank" rel="noopener noreferrer" title="Перейти в Telegram канал">
-                    <i class="fab fa-telegram"></i>
-                </a>
-                
-                <!-- ЛОГОТИП -->
-                <a href="https://ishupodrygyilidryga.fun" class="logo" id="logo" title="Перейти на главную страницу">
+            <div class="header-content">
+                <!-- Logo -->
+                <a href="https://ishupodrygyilidryga.fun" class="logo">
                     <i class="fas fa-users logo-icon"></i>
-                    <span class="logo-text">iipd</span>
+                    <span>iipd</span>
                 </a>
                 
-                <!-- Menu Toggle -->
-                <button class="menu-toggle" id="menu-toggle">
+                <!-- Navigation Toggle -->
+                <button class="nav-toggle" id="nav-toggle">
                     <i class="fas fa-bars"></i>
                     <span>Меню</span>
                 </button>
                 
-                <!-- Navigation Menu -->
-                <ul class="nav-list" id="nav-list">
-                    <li class="nav-item">
-                        <a href="https://ishupodrygyilidryga.fun" class="nav-link">
-                            <span class="link-text">
-                                <i class="fas fa-home"></i> Главная
-                            </span>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="https://t.me/ishupodrygyilidryga" class="nav-link" target="_blank" rel="noopener noreferrer">
-                            <span class="link-text">
-                                <i class="fab fa-telegram"></i> Наш канал
-                            </span>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="https://t.me/ankety_bot" class="nav-link" target="_blank" rel="noopener noreferrer">
-                            <span class="link-text">
-                                <i class="fas fa-robot"></i> Бот для анкет
-                            </span>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="https://t.me/lymikanon" class="nav-link" target="_blank" rel="noopener noreferrer">
-                            <span class="link-text">
-                                <i class="fas fa-comments"></i> Наш чат
-                            </span>
-                        </a>
-                    </li>
-                    
-                    <!-- Tgstat с подменю -->
-                    <li class="nav-item dropdown">
-                        <button class="nav-link dropdown-toggle">
-                            <span class="link-text">
-                                <i class="fas fa-chart-line"></i> Tgstat
-                            </span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="https://uk.tgstat.com/channel/@ishupodrygyilidryga" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                                <span class="dropdown-item-text">iipd</span>
-                            </a>
-                            <a href="https://uk.tgstat.com/channel/@surrealtouch" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                                <span class="dropdown-item-text">surrealtouch</span>
-                            </a>
-                        </div>
-                    </li>
-                    
-                    <!-- Стать Админом с подменю -->
-                    <li class="nav-item dropdown">
-                        <button class="nav-link dropdown-toggle">
-                            <span class="link-text">
-                                <i class="fas fa-user-shield"></i> Стать Админом
-                            </span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="https://t.me/info_ishupodrygyilidryga/27" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                                <span class="dropdown-item-text">По Анкетам</span>
-                            </a>
-                            <a href="https://t.me/info_ishupodrygyilidryga/897" class="dropdown-item" target="_blank" rel="noopener noreferrer">
-                                <span class="dropdown-item-text">По Аватаркам</span>
-                            </a>
-                        </div>
-                    </li>
-                    
-                    <!-- Footer in menu -->
-                    <li class="nav-footer">
-                        <p class="nav-footer-text">
-                            Ищу интернет подругу/друга (WEB) © 
-                            <a href="https://ishupodrygyilidryga.fun" class="nav-footer-link" target="_blank" rel="noopener noreferrer">ishupodrygyilidryga.fun</a>
-                        </p>
-                        <p class="nav-footer-year">2024</p>
-                    </li>
-                </ul>
-            </nav>
+                <!-- Desktop Navigation (Hidden) -->
+                <nav class="nav-menu" id="nav-menu">
+                    <!-- Desktop navigation can be added here if needed -->
+                </nav>
+            </div>
         </div>
     </header>
     
+    <!-- Mobile Navigation Overlay -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <div class="mobile-nav-title">Меню</div>
+            <button class="mobile-nav-close" id="nav-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-nav-content">
+            <a href="https://ishupodrygyilidryga.fun" class="mobile-nav-link">
+                <i class="fas fa-home"></i>
+                <span>Главная</span>
+            </a>
+            
+            <a href="https://t.me/ishupodrygyilidryga" class="mobile-nav-link" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+                <span>Наш канал</span>
+            </a>
+            
+            <a href="https://t.me/ankety_bot" class="mobile-nav-link" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-robot"></i>
+                <span>Бот для анкет</span>
+            </a>
+            
+            <a href="https://t.me/lymikanon" class="mobile-nav-link" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-comments"></i>
+                <span>Наш чат</span>
+            </a>
+            
+            <!-- Tgstat Dropdown -->
+            <div class="mobile-nav-link" style="cursor: pointer;" id="tgstat-toggle">
+                <i class="fas fa-chart-line"></i>
+                <span>Tgstat</span>
+                <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 1.2rem;"></i>
+            </div>
+            
+            <div class="mobile-nav-dropdown" id="tgstat-dropdown" style="display: none; padding-left: 36px;">
+                <a href="https://uk.tgstat.com/channel/@ishupodrygyilidryga" class="mobile-nav-link" target="_blank" rel="noopener noreferrer" style="border-bottom: none; padding: 10px 0; font-size: 1.3rem;">
+                    iipd
+                </a>
+                <a href="https://uk.tgstat.com/channel/@surrealtouch" class="mobile-nav-link" target="_blank" rel="noopener noreferrer" style="border-bottom: none; padding: 10px 0; font-size: 1.3rem;">
+                    surrealtouch
+                </a>
+            </div>
+            
+            <!-- Admin Dropdown -->
+            <div class="mobile-nav-link" style="cursor: pointer;" id="admin-toggle">
+                <i class="fas fa-user-shield"></i>
+                <span>Стать Админом</span>
+                <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 1.2rem;"></i>
+            </div>
+            
+            <div class="mobile-nav-dropdown" id="admin-dropdown" style="display: none; padding-left: 36px;">
+                <a href="https://t.me/info_ishupodrygyilidryga/27" class="mobile-nav-link" target="_blank" rel="noopener noreferrer" style="border-bottom: none; padding: 10px 0; font-size: 1.3rem;">
+                    По Анкетам
+                </a>
+                <a href="https://t.me/info_ishupodrygyilidryga/897" class="mobile-nav-link" target="_blank" rel="noopener noreferrer" style="border-bottom: none; padding: 10px 0; font-size: 1.3rem;">
+                    По Аватаркам
+                </a>
+            </div>
+        </div>
+        
+        <div class="mobile-nav-footer">
+            <p class="mobile-nav-footer-text">
+                Ищу интернет подругу/друга (WEB) © 
+                <a href="https://ishupodrygyilidryga.fun" class="mobile-nav-footer-link" target="_blank" rel="noopener noreferrer">ishupodrygyilidryga.fun</a>
+            </p>
+            <p class="mobile-nav-footer-year">2024</p>
+        </div>
+    </div>
+    
     <!-- Main Content -->
-    <main class="content">
+    <main class="page-body">
         <div class="container">
             <!-- Author Profile Section -->
             <div class="author-page">
                 <div class="author-profile">
                     <img class="author-profile-image" src="iipdPin.ico" alt="iipd" />
-                    <div class="author-info">
+                    <div class="author-info flex-column">
                         <h1 class="author-name">iipd</h1>
-                        <div class="author-meta">
+                        <div class="author-meta flex-center">
                             <div class="author-stats">
                                 &#9679 &nbsp 7 постов
                             </div>
@@ -1235,7 +641,7 @@
                     </div>
                 </div>
                 
-                <div class="author-social">
+                <div class="author-social flex-center">
                     <!-- Social links can be added here -->
                 </div>
             </div>
@@ -1245,7 +651,7 @@
             <!-- Author Posts Grid -->
             <div class="author-posts">
                 <!-- Post 1: Что нужно, чтобы анкету выложили? -->
-                <a class="post-link" href="https://ishupodrygyilidryga.fun/posted">
+                <a class="post-link no-image" href="https://ishupodrygyilidryga.fun/posted">
                     <div class="link-body">
                         <div class="content">
                             <div class="link-date date">
@@ -1258,7 +664,7 @@
                 </a>
                 
                 <!-- Post 2: Правила бота -->
-                <a class="post-link" href="https://ishupodrygyilidryga.fun/pravila-bota">
+                <a class="post-link no-image" href="https://ishupodrygyilidryga.fun/pravila-bota">
                     <div class="link-body">
                         <div class="content">
                             <div class="link-date date">
@@ -1271,7 +677,7 @@
                 </a>
                 
                 <!-- Post 3: Почему не выложили анкету? -->
-                <a class="post-link" href="https://ishupodrygyilidryga.fun/notposted">
+                <a class="post-link no-image" href="https://ishupodrygyilidryga.fun/notposted">
                     <div class="link-body">
                         <div class="content">
                             <div class="link-date date">
@@ -1284,7 +690,7 @@
                 </a>
                 
                 <!-- Post 4: Правила чата @lymikanon -->
-                <a class="post-link" href="https://ishupodrygyilidryga.fun/chat-rules">
+                <a class="post-link no-image" href="https://ishupodrygyilidryga.fun/chat-rules">
                     <div class="link-body">
                         <div class="content">
                             <div class="link-date date">
@@ -1297,7 +703,7 @@
                 </a>
                 
                 <!-- Post 5: Частые вопросы. Ответы // Поддержка -->
-                <a class="post-link" href="https://ishupodrygyilidryga.fun/support">
+                <a class="post-link no-image" href="https://ishupodrygyilidryga.fun/support">
                     <div class="link-body">
                         <div class="content">
                             <div class="link-date date">
@@ -1310,7 +716,7 @@
                 </a>
                 
                 <!-- Post 6: Пользовательское соглашение -->
-                <a class="post-link" href="https://ishupodrygyilidryga.fun/privacy">
+                <a class="post-link no-image" href="https://ishupodrygyilidryga.fun/privacy">
                     <div class="link-body">
                         <div class="content">
                             <div class="link-date date">
@@ -1321,29 +727,14 @@
                         </div>
                     </div>
                 </a>
-                
-                <!-- Post 7: Связь с нами @helpforsilencebot -->
-                <a class="post-link" href="https://t.me/helpforsilencebot" target="_blank" rel="noopener noreferrer">
-                    <div class="link-body">
-                        <div class="content">
-                            <div class="link-date date">
-                                <time datetime="2024-10-10">10 октября 2024</time>
-                            </div>
-                            <h2 class="link-title">Связь с нами @helpforsilencebot</h2>
-                            <p>Написать в поддержку для решения вопросов и получения помощи. Если у вас возникли проблемы или вопросы, наш бот поддержки всегда готов помочь... <span class="text-white">Читать далее</span></p>
-                        </div>
-                    </div>
-                </a>
             </div>
+            
+            <!-- Footer -->
+            <footer class="page-footer">
+                iipd © <span id="current-year">2025</span>
+            </footer>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="page-footer">
-        <div class="container">
-            iipd © <span id="current-year">2025</span>
-        </div>
-    </footer>
 
     <script>
         (function() {
@@ -1351,233 +742,91 @@
             
             // DOM Elements
             const dom = {
-                menuToggle: document.getElementById('menu-toggle'),
-                navList: document.getElementById('nav-list'),
-                menuOverlay: document.getElementById('menu-overlay'),
+                navToggle: document.getElementById('nav-toggle'),
+                navClose: document.getElementById('nav-close'),
+                mobileNav: document.getElementById('mobile-nav'),
+                navOverlay: document.getElementById('nav-overlay'),
                 body: document.body,
-                dropdowns: document.querySelectorAll('.dropdown'),
-                dropdownToggles: document.querySelectorAll('.dropdown-toggle'),
-                themeToggle: document.getElementById('theme-toggle'),
+                tgstatToggle: document.getElementById('tgstat-toggle'),
+                tgstatDropdown: document.getElementById('tgstat-dropdown'),
+                adminToggle: document.getElementById('admin-toggle'),
+                adminDropdown: document.getElementById('admin-dropdown'),
                 currentYear: document.getElementById('current-year')
             };
             
             // State
-            let isMenuOpen = false;
-            let isLightTheme = false;
+            let isNavOpen = false;
             
-            // Function to apply theme consistently
-            function applyTheme(theme) {
-                if (theme === 'light') {
-                    dom.body.classList.add('light-theme');
-                    isLightTheme = true;
+            // Navigation Functions
+            function openNav() {
+                dom.mobileNav.classList.add('active');
+                dom.navOverlay.classList.add('active');
+                dom.body.style.overflow = 'hidden';
+                isNavOpen = true;
+            }
+            
+            function closeNav() {
+                dom.mobileNav.classList.remove('active');
+                dom.navOverlay.classList.remove('active');
+                dom.body.style.overflow = '';
+                isNavOpen = false;
+                // Close all dropdowns
+                dom.tgstatDropdown.style.display = 'none';
+                dom.adminDropdown.style.display = 'none';
+            }
+            
+            function toggleNav() {
+                if (isNavOpen) {
+                    closeNav();
                 } else {
-                    dom.body.classList.remove('light-theme');
-                    isLightTheme = false;
+                    openNav();
                 }
             }
             
-            // Initialize theme from localStorage or default
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                isLightTheme = true;
-                dom.body.classList.add('light-theme');
-            } else {
-                isLightTheme = false;
-                dom.body.classList.remove('light-theme');
-                // Сохраняем темную тему как значение по умолчанию
-                if (!savedTheme) {
-                    localStorage.setItem('theme', 'dark');
+            // Dropdown Functions
+            function toggleDropdown(dropdown) {
+                if (dropdown.style.display === 'block') {
+                    dropdown.style.display = 'none';
+                } else {
+                    dropdown.style.display = 'block';
                 }
             }
-            
-            // Listen for theme changes from other tabs
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'theme') {
-                    applyTheme(e.newValue);
-                }
-            });
-            
-            // Function to prevent text selection
-            const preventTextSelection = function(e) {
-                e.preventDefault();
-                return false;
-            };
-            
-            // Menu Functions
-            const menu = {
-                open: function() {
-                    dom.navList.classList.add('active');
-                    dom.menuOverlay.classList.add('active');
-                    dom.body.style.overflow = 'hidden';
-                    dom.menuToggle.innerHTML = '<i class="fas fa-times"></i><span>Закрыть</span>';
-                    isMenuOpen = true;
-                    dom.menuToggle.setAttribute('aria-expanded', 'true');
-                },
-                
-                close: function() {
-                    dom.navList.classList.remove('active');
-                    dom.menuOverlay.classList.remove('active');
-                    dom.body.style.overflow = '';
-                    dom.menuToggle.innerHTML = '<i class="fas fa-bars"></i><span>Меню</span>';
-                    isMenuOpen = false;
-                    this.closeAllDropdowns();
-                    dom.menuToggle.setAttribute('aria-expanded', 'false');
-                },
-                
-                toggle: function() {
-                    if (isMenuOpen) {
-                        this.close();
-                    } else {
-                        this.open();
-                    }
-                },
-                
-                closeAllDropdowns: function() {
-                    dom.dropdowns.forEach(dropdown => {
-                        dropdown.classList.remove('active');
-                        const toggle = dropdown.querySelector('.dropdown-toggle');
-                        if (toggle) {
-                            toggle.setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                },
-                
-                toggleDropdown: function(dropdown) {
-                    const isActive = dropdown.classList.contains('active');
-                    
-                    this.closeAllDropdowns();
-                    
-                    if (!isActive) {
-                        dropdown.classList.add('active');
-                        const toggle = dropdown.querySelector('.dropdown-toggle');
-                        if (toggle) {
-                            toggle.setAttribute('aria-expanded', 'true');
-                        }
-                    }
-                }
-            };
             
             // Event Listeners
-            const initEventListeners = function() {
-                // Menu toggle
-                dom.menuToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    menu.toggle();
-                });
-                
-                // Theme toggle
-                dom.themeToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    
-                    const newTheme = isLightTheme ? 'dark' : 'light';
-                    applyTheme(newTheme);
-                    localStorage.setItem('theme', newTheme);
-                    
-                    // Отправка события в Google Analytics
-                    gtag('event', 'theme_toggle', {
-                        'event_category': 'ui_interaction',
-                        'event_label': newTheme === 'light' ? 'Light Theme' : 'Dark Theme'
-                    });
-                });
+            function initEventListeners() {
+                // Navigation toggle
+                dom.navToggle.addEventListener('click', toggleNav);
+                dom.navClose.addEventListener('click', closeNav);
+                dom.navOverlay.addEventListener('click', closeNav);
                 
                 // Dropdown toggles
-                dom.dropdownToggles.forEach(toggle => {
-                    toggle.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const dropdown = this.parentElement;
-                        menu.toggleDropdown(dropdown);
-                    });
+                dom.tgstatToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleDropdown(dom.tgstatDropdown);
                 });
                 
-                // Close menu on overlay click
-                dom.menuOverlay.addEventListener('click', function() {
-                    menu.close();
+                dom.adminToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleDropdown(dom.adminDropdown);
                 });
                 
-                // Close menu on regular link click
-                document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
-                    link.addEventListener('click', function() {
-                        menu.close();
-                    });
-                });
-                
-                // Close menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (isMenuOpen && 
-                        !e.target.closest('.nav-list') && 
-                        !e.target.closest('.menu-toggle')) {
-                        menu.close();
-                    }
+                // Close menu on link click
+                document.querySelectorAll('.mobile-nav-link[href]').forEach(link => {
+                    link.addEventListener('click', closeNav);
                 });
                 
                 // Close menu on escape key
                 document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && isMenuOpen) {
-                        menu.close();
+                    if (e.key === 'Escape' && isNavOpen) {
+                        closeNav();
                     }
                 });
-                
-                // Prevent multiple clicks on links
-                const links = document.querySelectorAll('a');
-                links.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (this.dataset.clicked) {
-                            e.preventDefault();
-                            return;
-                        }
-                        
-                        this.dataset.clicked = 'true';
-                        setTimeout(() => {
-                            delete this.dataset.clicked;
-                        }, 1000);
-                    });
-                });
-                
-                // Prevent text selection on interactive elements
-                const interactiveElements = document.querySelectorAll(
-                    'button, .menu-toggle, .dropdown-toggle, .nav-link, .dropdown-item, .telegram-icon, .theme-toggle'
-                );
-                
-                interactiveElements.forEach(el => {
-                    el.addEventListener('contextmenu', preventTextSelection);
-                    el.addEventListener('selectstart', preventTextSelection);
-                    el.addEventListener('mousedown', preventTextSelection);
-                    
-                    el.addEventListener('touchstart', function(e) {
-                        if (e.touches.length > 1) {
-                            e.preventDefault();
-                        }
-                    }, { passive: false });
-                });
-                
-                // Add active touch state for mobile
-                interactiveElements.forEach(el => {
-                    el.addEventListener('touchstart', function() {
-                        this.classList.add('active-touch');
-                    });
-                    
-                    el.addEventListener('touchend', function() {
-                        this.classList.remove('active-touch');
-                    });
-                });
-            };
+            }
             
             // Initialize
-            const init = function() {
+            function init() {
                 // Initialize event listeners
                 initEventListeners();
-                
-                // Set accessibility attributes
-                dom.menuToggle.setAttribute('aria-expanded', 'false');
-                dom.menuToggle.setAttribute('aria-label', 'Открыть меню навигации');
-                dom.themeToggle.setAttribute('aria-label', 'Переключить тему');
-                
-                // Add aria-labels to dropdown toggles
-                dom.dropdownToggles.forEach(toggle => {
-                    toggle.setAttribute('aria-expanded', 'false');
-                    toggle.setAttribute('aria-haspopup', 'true');
-                });
                 
                 // Set current year in footer
                 const currentYear = new Date().getFullYear();
@@ -1585,47 +834,15 @@
                     dom.currentYear.textContent = currentYear;
                 }
                 
-                // Set current year in menu footer
-                const yearElement = document.querySelector('.nav-footer-year');
+                // Set current year in mobile nav footer
+                const yearElement = document.querySelector('.mobile-nav-footer-year');
                 if (yearElement) {
                     yearElement.textContent = currentYear;
                 }
                 
-                // Add smooth scroll for menu
-                dom.navList.addEventListener('wheel', function(e) {
-                    this.scrollTop += e.deltaY * 0.5;
-                    e.preventDefault();
-                }, { passive: false });
-                
-                // Add inertial scroll for touch devices
-                let startY = 0;
-                let scrollTop = 0;
-                let isScrolling = false;
-                
-                dom.navList.addEventListener('touchstart', function(e) {
-                    if (e.touches.length === 1) {
-                        startY = e.touches[0].pageY;
-                        scrollTop = this.scrollTop;
-                        isScrolling = true;
-                    }
-                });
-                
-                dom.navList.addEventListener('touchmove', function(e) {
-                    if (!isScrolling || e.touches.length !== 1) return;
-                    
-                    e.preventDefault();
-                    const y = e.touches[0].pageY;
-                    const walk = (y - startY) * 2;
-                    this.scrollTop = scrollTop - walk;
-                });
-                
-                dom.navList.addEventListener('touchend', function() {
-                    isScrolling = false;
-                });
-                
-                // Отслеживание кликов для Google Analytics
-                function initButtonTracking() {
-                    // Отслеживание постов
+                // Google Analytics tracking
+                function initAnalyticsTracking() {
+                    // Track post clicks
                     document.querySelectorAll('.post-link').forEach(post => {
                         post.addEventListener('click', function(e) {
                             const postTitle = this.querySelector('.link-title')?.textContent || 'Без названия';
@@ -1638,12 +855,12 @@
                         });
                     });
                     
-                    // Отслеживание ссылок в навигации
-                    document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+                    // Track mobile nav links
+                    document.querySelectorAll('.mobile-nav-link[href]').forEach(link => {
                         link.addEventListener('click', function(e) {
-                            const linkText = this.querySelector('.link-text')?.textContent || this.textContent;
+                            const linkText = this.querySelector('span')?.textContent || this.textContent;
                             
-                            gtag('event', 'navigation_click', {
+                            gtag('event', 'mobile_nav_click', {
                                 'event_category': 'navigation',
                                 'event_label': linkText.trim(),
                                 'link_url': this.href || 'no-url'
@@ -1651,32 +868,8 @@
                         });
                     });
                     
-                    // Отслеживание ссылок в dropdown
-                    document.querySelectorAll('.dropdown-item').forEach(link => {
-                        link.addEventListener('click', function(e) {
-                            const linkText = this.querySelector('.dropdown-item-text')?.textContent || this.textContent;
-                            
-                            gtag('event', 'dropdown_click', {
-                                'event_category': 'navigation',
-                                'event_label': linkText.trim(),
-                                'link_url': this.href || 'no-url'
-                            });
-                        });
-                    });
-                    
-                    // Отслеживание Telegram иконки
-                    const telegramIcon = document.querySelector('.telegram-icon');
-                    if (telegramIcon) {
-                        telegramIcon.addEventListener('click', function(e) {
-                            gtag('event', 'telegram_click', {
-                                'event_category': 'social',
-                                'event_label': 'Telegram Icon'
-                            });
-                        });
-                    }
-                    
-                    // Отслеживание кликов по логотипу
-                    const logo = document.getElementById('logo');
+                    // Track logo click
+                    const logo = document.querySelector('.logo');
                     if (logo) {
                         logo.addEventListener('click', function(e) {
                             gtag('event', 'logo_click', {
@@ -1686,11 +879,11 @@
                         });
                     }
                     
-                    // Отслеживание открытия меню
-                    const menuToggle = document.getElementById('menu-toggle');
-                    if (menuToggle) {
-                        menuToggle.addEventListener('click', function(e) {
-                            const menuState = document.getElementById('nav-list').classList.contains('active') ? 'closed' : 'opened';
+                    // Track menu toggle
+                    const navToggle = document.getElementById('nav-toggle');
+                    if (navToggle) {
+                        navToggle.addEventListener('click', function(e) {
+                            const menuState = isNavOpen ? 'closed' : 'opened';
                             
                             gtag('event', 'menu_toggle', {
                                 'event_category': 'ui_interaction',
@@ -1700,7 +893,7 @@
                     }
                 }
                 
-                initButtonTracking();
+                initAnalyticsTracking();
             }
             
             // Start when DOM is ready
@@ -1709,7 +902,6 @@
             } else {
                 init();
             }
-            
         })();
     </script>
 </body>
