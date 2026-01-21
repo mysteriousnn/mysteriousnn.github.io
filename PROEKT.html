@@ -36,6 +36,7 @@
             --theme-toggle-bg: rgba(255, 255, 255, 0.05);
             --project-accent: #888;
             --card-bg: rgba(255, 255, 255, 0.03);
+            --list-accent: #999;
         }
         
         .light-theme {
@@ -59,6 +60,7 @@
             --menu-button-text: #1a1a1a;
             --project-accent: #666;
             --card-bg: rgba(0, 0, 0, 0.03);
+            --list-accent: #777;
         }
         
         * {
@@ -785,27 +787,55 @@
             background: rgba(102, 102, 102, 0.1);
         }
         
+        /* Улучшенные стили для списков без точек */
         .bullet-list {
             list-style-type: none;
-            margin: 20px 0 20px 20px;
+            margin: 25px 0 25px 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         
         .bullet-item {
             position: relative;
-            padding: 10px 0 10px 30px;
+            padding: 15px 20px 15px 50px;
             color: var(--text-secondary);
             font-size: 1.1rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            background: rgba(136, 136, 136, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(136, 136, 136, 0.1);
+            line-height: 1.6;
+        }
+        
+        .bullet-item:hover {
+            background: rgba(136, 136, 136, 0.08);
+            border-color: rgba(136, 136, 136, 0.2);
+            transform: translateX(5px);
         }
         
         .bullet-item:before {
-            content: '•';
+            content: '';
             position: absolute;
-            left: 0;
-            top: 10px;
-            color: var(--project-accent);
-            font-size: 1.5rem;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: rgba(136, 136, 136, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--list-accent);
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .bullet-item:hover:before {
+            background: var(--project-accent);
+            color: var(--bg-primary);
         }
         
         /* Link Styling */
@@ -1040,6 +1070,17 @@
             .support-text {
                 font-size: 1.1rem;
             }
+            
+            .bullet-item {
+                padding: 12px 15px 12px 45px;
+                font-size: 1rem;
+            }
+            
+            .bullet-item:before {
+                left: 15px;
+                width: 18px;
+                height: 18px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1126,9 +1167,21 @@
                 margin: 20px 0;
             }
             
+            .bullet-list {
+                margin: 20px 0;
+                gap: 10px;
+            }
+            
             .bullet-item {
-                padding: 8px 0 8px 25px;
-                font-size: 1rem;
+                padding: 10px 12px 10px 40px;
+                font-size: 0.95rem;
+                border-radius: 8px;
+            }
+            
+            .bullet-item:before {
+                left: 12px;
+                width: 16px;
+                height: 16px;
             }
             
             .menu-toggle {
@@ -1289,6 +1342,17 @@
             
             .project-date {
                 font-size: 0.9rem;
+            }
+            
+            .bullet-item {
+                padding: 8px 10px 8px 35px;
+                font-size: 0.9rem;
+            }
+            
+            .bullet-item:before {
+                left: 10px;
+                width: 14px;
+                height: 14px;
             }
         }
         
@@ -1547,18 +1611,18 @@
                         В его основе — реально функционирующий сервис, который включает:
                     </p>
                     <ul class="bullet-list">
-                        <li class="bullet-item">Telegram-бот (@ankety_bot) с более чем 3 000 пользователей в месяц, позволяющий пользователям создавать и публиковать анкеты для поиска друзей;</li>
-                        <li class="bullet-item">Telegram-канал («Ищу интернет подругу/друга») с аудиторией более 13 000 подписчиков, где эти анкеты размещаются;</li>
-                        <li class="bullet-item">Серверную инфраструктуру, обеспечивающую работу бота и хранение данных.</li>
+                        <li class="bullet-item">Telegram-бот (@ankety_bot) с более чем 3 000 пользователей в месяц, позволяющий пользователям создавать и публиковать анкеты для поиска друзей</li>
+                        <li class="bullet-item">Telegram-канал («Ищу интернет подругу/друга») с аудиторией более 13 000 подписчиков, где эти анкеты размещаются</li>
+                        <li class="bullet-item">Серверную инфраструктуру, обеспечивающую работу бота и хранение данных</li>
                     </ul>
                     <p class="content-text">
                         Ключевая цель проекта — продемонстрировать навыки сетевого и системного администратора в условиях эксплуатации живого, востребованного сервиса. Вместо абстрактного исследования социального феномена (например, «Интернет-дружба») фокус смещён на практические задачи:
                     </p>
                     <ul class="bullet-list">
-                        <li class="bullet-item">обеспечение стабильности и отказоуустойчивости платформы;</li>
-                        <li class="bullet-item">мониторинг нагрузки и оптимизация производительности;</li>
-                        <li class="bullet-item">настройка безопасности и резервного копирования;</li>
-                        <li class="bullet-item">документирование процессов администрирования.</li>
+                        <li class="bullet-item">Обеспечение стабильности и отказоустойчивости платформы</li>
+                        <li class="bullet-item">Мониторинг нагрузки и оптимизация производительности</li>
+                        <li class="bullet-item">Настройка безопасности и резервного копирования</li>
+                        <li class="bullet-item">Документирование процессов администрирования</li>
                     </ul>
                     <p class="content-text">
                         Проект показывает, как технические компетенции по специальности применяются для поддержки социально значимого сервиса, который ежемесячно помогает тысячам пользователей находить новых друзей в интернете. Результатом станет не просто отчёт, а полное описание инфраструктуры, анализ её работы и рекомендации по развитию — то, что составляет ежедневную практику системного администратора.
@@ -1584,10 +1648,10 @@
                             Правильно определенная тема:
                         </p>
                         <ul class="bullet-list">
-                            <li class="bullet-item">Задает четкий вектор работы, не позволяя "растекаться мыслью".</li>
-                            <li class="bullet-item">Позволяет реалистично оценить объем и сложность работы в заданные сроки.</li>
-                            <li class="bullet-item">Дает возможность продемонстрировать глубокие, а не поверхностные знания в выбранной области.</li>
-                            <li class="bullet-item">Обеспечивает достижение конкретного, проверяемого результата.</li>
+                            <li class="bullet-item">Задает четкий вектор работы, не позволяя "растекаться мыслью"</li>
+                            <li class="bullet-item">Позволяет реалистично оценить объем и сложность работы в заданные сроки</li>
+                            <li class="bullet-item">Дает возможность продемонстрировать глубокие, а не поверхностные знания в выбранной области</li>
+                            <li class="bullet-item">Обеспечивает достижение конкретного, проверяемого результата</li>
                         </ul>
                         <p class="answer-text">
                             <strong>Почему по нашему мнению тема определена правильно:</strong> Мы не пытаемся объять необъятное, изучая интернет-дружбу как социальный феномен. Вместо этого мы фокусируемся на технической демонстрации и поддержке платформы для конкретно этого взаимодействия (поиска друзей с помощью системно организованной платформы предоставляемой на площадке мессенджера), что полностью соответствует нашей специальности и позволяет достичь осязаемого результата - продемонстрировать проект основанный на администрируемой системе который предоставляет возможность более удобного социального взаимодействия в нашем же случае конкретно поиска друзей.
