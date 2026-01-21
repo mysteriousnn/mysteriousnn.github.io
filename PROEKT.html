@@ -35,6 +35,7 @@
             --theme-toggle-color: #ffffff;
             --theme-toggle-bg: rgba(255, 255, 255, 0.05);
             --project-accent: #888;
+            --card-bg: rgba(255, 255, 255, 0.03);
         }
         
         .light-theme {
@@ -57,6 +58,7 @@
             --menu-button-border: rgba(0, 0, 0, 0.18);
             --menu-button-text: #1a1a1a;
             --project-accent: #666;
+            --card-bg: rgba(0, 0, 0, 0.03);
         }
         
         * {
@@ -672,25 +674,27 @@
         /* Project Date */
         .project-date {
             text-align: center;
-            font-size: 1.3rem;
-            color: var(--project-accent);
-            font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin: 10px 0 30px 0;
+            letter-spacing: 0.5px;
             position: relative;
             display: inline-block;
             padding: 8px 20px;
-            background: rgba(136, 136, 136, 0.1);
+            background: var(--card-bg);
             border-radius: 50px;
-            border: 1px solid rgba(136, 136, 136, 0.3);
-            margin: 0 auto 30px;
+            border: 1px solid var(--border-color);
             display: block;
             width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
         }
         
-        .light-theme .project-date {
-            background: rgba(102, 102, 102, 0.1);
-            border: 1px solid rgba(102, 102, 102, 0.3);
+        .project-date i {
+            margin-right: 8px;
+            color: var(--project-accent);
         }
         
         /* Main Content Styles */
@@ -702,6 +706,7 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             line-height: 1.7;
             transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 40px;
         }
         
         .light-theme .main-content {
@@ -710,6 +715,11 @@
         
         .content-section {
             margin-bottom: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: var(--menu-border-radius);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
         
         .content-section:last-child {
@@ -818,33 +828,89 @@
             border-bottom: 1px solid var(--text-primary);
         }
         
-        /* Support Section */
-        .support-section {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 30px;
+        /* Support Block */
+        .support-block {
+            background-color: var(--bg-secondary);
             border-radius: var(--menu-border-radius);
-            margin-top: 40px;
-            border-left: 5px solid var(--project-accent);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .light-theme .support-section {
-            background: rgba(0, 0, 0, 0.03);
+        .light-theme .support-block {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .support-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .support-header:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 3px;
         }
         
         .support-text {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
             text-align: center;
             line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .support-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .support-link-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--project-accent);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: rgba(136, 136, 136, 0.1);
+            border: 1px solid rgba(136, 136, 136, 0.3);
+            transition: background-color 0.3s ease;
+        }
+        
+        .support-link-item i {
+            font-size: 1.1rem;
         }
         
         .authors {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
             text-align: center;
-            margin-top: 15px;
-            font-style: italic;
+            margin-top: 25px;
+            font-style: normal;
+            font-weight: 500;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
         
         /* Decorative Elements */
@@ -920,6 +986,11 @@
             
             .main-content {
                 padding: 30px;
+                margin-bottom: 30px;
+            }
+            
+            .support-block {
+                padding: 30px;
             }
             
             .page-title {
@@ -928,8 +999,13 @@
             }
             
             .project-date {
-                font-size: 1.2rem;
-                margin-bottom: 25px;
+                font-size: 1rem;
+                margin: 8px auto 25px;
+                padding: 6px 18px;
+            }
+            
+            .content-section {
+                padding: 25px;
             }
             
             .project-theme {
@@ -955,6 +1031,14 @@
             
             .theme-toggle {
                 right: 70px;
+            }
+            
+            .support-header {
+                font-size: 1.6rem;
+            }
+            
+            .support-text {
+                font-size: 1.1rem;
             }
         }
         
@@ -1002,13 +1086,23 @@
             }
             
             .project-date {
-                font-size: 1.1rem;
+                font-size: 0.95rem;
                 padding: 6px 15px;
-                margin-bottom: 20px;
+                margin: 5px auto 20px;
             }
             
             .main-content {
                 padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .support-block {
+                padding: 25px 20px;
+            }
+            
+            .content-section {
+                padding: 20px;
+                margin-bottom: 25px;
             }
             
             .section-title {
@@ -1088,13 +1182,30 @@
                 font-size: 0.75rem;
             }
             
-            .support-section {
-                padding: 20px;
-                margin-top: 30px;
+            .support-header {
+                font-size: 1.4rem;
             }
             
             .support-text {
                 font-size: 1rem;
+                margin-bottom: 20px;
+            }
+            
+            .support-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .support-link-item {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+            }
+            
+            .authors {
+                font-size: 1rem;
+                margin-top: 20px;
+                padding-top: 15px;
             }
         }
         
@@ -1177,7 +1288,7 @@
             }
             
             .project-date {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
         }
         
@@ -1413,15 +1524,45 @@
         <div class="container">
             <div class="page-header">
                 <h1 class="page-title">Индивидуальный проект</h1>
-                <div class="project-date">22.01.2026</div>
             </div>
             
             <div class="main-content">
+                <div class="project-date">
+                    <i class="fas fa-calendar-alt"></i> Дата публикации: 22.01.2026
+                </div>
+                
                 <div class="content-section">
                     <h2 class="section-title">Тема нашего индивидуального проекта:</h2>
                     <div class="project-theme">
                         "Развертывание и администрирование сетевой платформы для социального взаимодействия на базе Telegram мессенджера"
                     </div>
+                </div>
+                
+                <div class="content-section">
+                    <h2 class="section-title">Описание проекта</h2>
+                    <p class="content-text">
+                        Проект посвящён профессиональному администрированию и оптимизации действующей сетевой платформы для социального взаимодействия, работающей на базе Telegram.
+                    </p>
+                    <p class="content-text">
+                        В его основе — реально функционирующий сервис, который включает:
+                    </p>
+                    <ul class="bullet-list">
+                        <li class="bullet-item">Telegram-бот (@ankety_bot) с более чем 3 000 пользователей в месяц, позволяющий пользователям создавать и публиковать анкеты для поиска друзей;</li>
+                        <li class="bullet-item">Telegram-канал («Ищу интернет подругу/друга») с аудиторией более 13 000 подписчиков, где эти анкеты размещаются;</li>
+                        <li class="bullet-item">Серверную инфраструктуру, обеспечивающую работу бота и хранение данных.</li>
+                    </ul>
+                    <p class="content-text">
+                        Ключевая цель проекта — продемонстрировать навыки сетевого и системного администратора в условиях эксплуатации живого, востребованного сервиса. Вместо абстрактного исследования социального феномена (например, «Интернет-дружба») фокус смещён на практические задачи:
+                    </p>
+                    <ul class="bullet-list">
+                        <li class="bullet-item">обеспечение стабильности и отказоуустойчивости платформы;</li>
+                        <li class="bullet-item">мониторинг нагрузки и оптимизация производительности;</li>
+                        <li class="bullet-item">настройка безопасности и резервного копирования;</li>
+                        <li class="bullet-item">документирование процессов администрирования.</li>
+                    </ul>
+                    <p class="content-text">
+                        Проект показывает, как технические компетенции по специальности применяются для поддержки социально значимого сервиса, который ежемесячно помогает тысячам пользователей находить новых друзей в интернете. Результатом станет не просто отчёт, а полное описание инфраструктуры, анализ её работы и рекомендации по развитию — то, что составляет ежедневную практику системного администратора.
+                    </p>
                 </div>
                 
                 <div class="content-section">
@@ -1492,15 +1633,26 @@
                         </p>
                     </div>
                 </div>
-                
-                <div class="support-section">
-                    <p class="support-text">
-                        Проект структурируется и будет реализован при поддержке 
-                        <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank" rel="noopener noreferrer">iipd</a> / 
-                        <a href="https://t.me/ankety_bot" class="content-link" target="_blank" rel="noopener noreferrer">ankety_bot</a>.
-                    </p>
-                    <p class="authors">Дмитрий Бурцев / Фахритдинова Уралия</p>
+            </div>
+            
+            <div class="support-block">
+                <h3 class="support-header">Поддержка проекта</h3>
+                <p class="support-text">
+                    Проект структурируется и будет реализован при поддержке следующих ресурсов:
+                </p>
+                <div class="support-links">
+                    <a href="https://t.me/ishupodrygyilidryga" class="support-link-item" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-telegram"></i>
+                        <span>iipd Telegram</span>
+                    </a>
+                    <a href="https://t.me/ankety_bot" class="support-link-item" target="_blank" rel="noopener noreferrer">
+                        <i class="fas fa-robot"></i>
+                        <span>ankety_bot</span>
+                    </a>
                 </div>
+                <p class="authors">
+                    Дмитрий Бурцев / Фахритдинова Уралия
+                </p>
             </div>
         </div>
     </main>
@@ -1846,6 +1998,19 @@
                             });
                         });
                     }
+                    
+                    // Track support links
+                    document.querySelectorAll('.support-link-item').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            const linkText = this.querySelector('span')?.textContent || this.textContent;
+                            
+                            gtag('event', 'support_link_click', {
+                                'event_category': 'engagement',
+                                'event_label': linkText.trim(),
+                                'link_url': this.href || 'no-url'
+                            });
+                        });
+                    });
                 }
                 
                 initButtonTracking();
