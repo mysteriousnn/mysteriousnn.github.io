@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ищу интернет подругу/друга - iipd</title>
+    <title>Что нужно, чтобы анкету выложили? - iipd</title>
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HKF6P1HJ9Q"></script>
@@ -190,7 +190,7 @@
             transition: right 0.3s ease;
             padding: 2rem;
             border-left: 1px solid #2a2a2a;
-            overflow-y: auto; /* Включаем прокрутку внутри меню */
+            overflow-y: auto;
         }
         
         .mobile-menu.active {
@@ -228,15 +228,18 @@
             align-self: flex-end;
         }
         
-        /* Герой секция */
-        .hero {
+        /* Контент статьи */
+        .article-section {
             padding: 4rem 0;
-            text-align: center;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
         }
         
-        .hero h1 {
-            font-size: 3rem;
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #2ecc71, #27ae60);
@@ -246,113 +249,102 @@
         }
         
         @media (max-width: 768px) {
-            .hero h1 {
+            .article-title {
                 font-size: 2rem;
             }
         }
         
-        .hero-description {
-            font-size: 1.1rem;
+        .article-meta {
             color: #aaa;
-            max-width: 600px;
-            margin: 0 auto 2rem;
+            font-size: 1rem;
         }
         
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2ecc71;
-        }
-        
-        .stat-label {
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .stats {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-        }
-        
-        /* Секция постов */
-        .posts-section {
-            padding: 4rem 0;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            color: #f0f0f0;
-        }
-        
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .post-card {
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
             background: #1a1a1a;
             border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            padding: 3rem;
             border: 1px solid #2a2a2a;
         }
         
-        .post-card:hover {
-            transform: translateY(-5px);
-            border-color: #2ecc71;
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 2rem;
+            }
         }
         
-        .post-content {
-            padding: 1.5rem;
+        .content-section {
+            margin-bottom: 2.5rem;
         }
         
-        .post-date {
-            display: inline-block;
-            background: rgba(46, 204, 113, 0.1);
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #f0f0f0;
+        }
+        
+        .content-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #aaa;
+            line-height: 1.7;
+        }
+        
+        .content-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        .content-link {
             color: #2ecc71;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
+            text-decoration: none;
             font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
         }
         
-        .post-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+        .content-link:hover {
+            border-bottom: 1px solid #2ecc71;
+        }
+        
+        .requirements-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .requirement-item {
+            padding: 0.75rem 0;
+            color: #aaa;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #2a2a2a;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .requirement-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #2ecc71;
+            border-radius: 50%;
+        }
+        
+        .requirement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .requirement-item strong {
             color: #f0f0f0;
             font-weight: 600;
-        }
-        
-        .post-excerpt {
-            color: #aaa;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .read-more {
-            color: #2ecc71;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
         
         /* Футер */
@@ -465,108 +457,55 @@
         </nav>
     </div>
     
-    <!-- Герой секция -->
-    <section class="hero">
+    <!-- Контент статьи -->
+    <section class="article-section">
         <div class="container">
-            <h1>Ищу интернет подругу/друга</h1>
-            <p class="hero-description">
-                Сообщество для тех, кто ищет настоящую дружбу в интернете. 
-                Мы создаем пространство для искреннего общения, поддержки и новых знакомств.
-            </p>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">7</div>
-                    <div class="stat-label">Полезных статей</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Активное сообщество</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Бесплатно</div>
-                </div>
+            <div class="article-header">
+                <h1 class="article-title">Что нужно, чтобы анкету выложили?</h1>
+                <div class="article-meta">Информация о требованиях к публикации анкет</div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Секция с постами -->
-    <section class="posts-section">
-        <div class="container">
-            <h2 class="section-title">Полезные материалы</h2>
             
-            <div class="posts-grid">
-                <!-- Пост 1 -->
-                <a href="https://ishupodrygyilidryga.fun/posted" class="post-card">
-                    <div class="post-content">
-                        <span class="post-date">19 декабря 2025</span>
-                        <h3 class="post-title">Что нужно, чтобы анкету выложили?</h3>
-                        <p class="post-excerpt">
-                            Полное руководство по требованиям и условиям для успешной публикации вашей анкеты на канале.
-                        </p>
-                        <span class="read-more">Читать →</span>
-                    </div>
-                </a>
+            <div class="article-content">
+                <div class="content-section">
+                    <h2 class="section-title">Основные требования</h2>
+                    <p class="content-text">
+                        Для того чтобы анкету выставили, вы должны быть подписаны на 
+                        <a href="https://t.me/ishupodrygyilidryga" class="content-link" target="_blank">ishupodrygyilidryga</a> / 
+                        <a href="https://t.me/surrealtouch" class="content-link" target="_blank">surrealtouch</a> / 
+                        <a href="https://t.me/zziirtk" class="content-link" target="_blank">zziirtk</a>
+                    </p>
+                </div>
                 
-                <!-- Пост 2 -->
-                <a href="https://ishupodrygyilidryga.fun/pravila-bota" class="post-card">
-                    <div class="post-content">
-                        <span class="post-date">12 июня 2025</span>
-                        <h3 class="post-title">Правила использования бота</h3>
-                        <p class="post-excerpt">
-                            Основные правила, которые необходимо соблюдать для успешного взаимодействия с системой анкет.
-                        </p>
-                        <span class="read-more">Читать →</span>
-                    </div>
-                </a>
+                <div class="content-section">
+                    <h2 class="section-title">Обязательные пункты в анкете</h2>
+                    <ul class="requirements-list">
+                        <li class="requirement-item">
+                            <strong>Кого ищешь:</strong> друга/подругу, или без разницы (не отношения, канал предназначен не для этого)
+                        </li>
+                        <li class="requirement-item">
+                            <strong>Имя:</strong> ваше имя или как к вам обращаться
+                        </li>
+                        <li class="requirement-item">
+                            <strong>Возраст:</strong> ваш возраст
+                        </li>
+                        <li class="requirement-item">
+                            <strong>О себе:</strong> краткое описание себя, ваши интересы, увлечения
+                        </li>
+                        <li class="requirement-item">
+                            <strong>Краткое описание друга:</strong> каким вы видите своего будущего друга/подругу
+                        </li>
+                        <li class="requirement-item">
+                            <strong>Юзернейм:</strong> обязательное указание юзернейма для связи
+                        </li>
+                    </ul>
+                </div>
                 
-                <!-- Пост 3 -->
-                <a href="https://ishupodrygyilidryga.fun/notposted" class="post-card">
-                    <div class="post-content">
-                        <span class="post-date">4 июня 2025</span>
-                        <h3 class="post-title">Почему не выложили анкету?</h3>
-                        <p class="post-excerpt">
-                            Разбор основных причин отказа в публикации и рекомендации по их устранению.
-                        </p>
-                        <span class="read-more">Читать →</span>
-                    </div>
-                </a>
-                
-                <!-- Пост 4 -->
-                <a href="https://ishupodrygyilidryga.fun/chat-rules" class="post-card">
-                    <div class="post-content">
-                        <span class="post-date">6 марта 2025</span>
-                        <h3 class="post-title">Правила чата @lymikanon</h3>
-                        <p class="post-excerpt">
-                            Официальные правила общения в основном чате нашего сообщества.
-                        </p>
-                        <span class="read-more">Читать →</span>
-                    </div>
-                </a>
-                
-                <!-- Пост 5 -->
-                <a href="https://ishupodrygyilidryga.fun/support" class="post-card">
-                    <div class="post-content">
-                        <span class="post-date">15 декабря 2024</span>
-                        <h3 class="post-title">Частые вопросы и поддержка</h3>
-                        <p class="post-excerpt">
-                            Ответы на популярные вопросы пользователей и информация о технической поддержке.
-                        </p>
-                        <span class="read-more">Читать →</span>
-                    </div>
-                </a>
-                
-                <!-- Пост 6 -->
-                <a href="https://ishupodrygyilidryga.fun/privacy" class="post-card">
-                    <div class="post-content">
-                        <span class="post-date">20 ноября 2024</span>
-                        <h3 class="post-title">Пользовательское соглашение</h3>
-                        <p class="post-excerpt">
-                            Официальные документы: пользовательское соглашение и политика конфиденциальности.
-                        </p>
-                        <span class="read-more">Читать →</span>
-                    </div>
-                </a>
+                <div class="content-section">
+                    <h2 class="section-title">Дополнительная информация</h2>
+                    <p class="content-text">
+                        По желанию, можно еще что-нибудь добавить: фотографии, больше информации о своих увлечениях, предпочтения в общении и т.д.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -619,8 +558,6 @@
         function openMenu() {
             mobileMenu.classList.add('active');
             menuOverlay.classList.add('active');
-            // Убрали отключение прокрутки страницы
-            // document.body.style.overflow = 'hidden';
             
             // Отслеживание в Google Analytics
             if (typeof gtag !== 'undefined') {
@@ -634,8 +571,6 @@
         function closeMenu() {
             mobileMenu.classList.remove('active');
             menuOverlay.classList.remove('active');
-            // Убрали возврат прокрутки страницы
-            // document.body.style.overflow = '';
         }
         
         mobileMenuBtn.addEventListener('click', openMenu);
@@ -650,14 +585,14 @@
         // Установка текущего года в футере
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Отслеживание кликов на посты для Google Analytics
-        document.querySelectorAll('.post-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                const postTitle = this.querySelector('.post-title').textContent;
+        // Отслеживание кликов на внешние ссылки для Google Analytics
+        document.querySelectorAll('.content-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const linkText = this.textContent;
                 if (typeof gtag !== 'undefined') {
-                    gtag('event', 'post_click', {
+                    gtag('event', 'article_link_click', {
                         'event_category': 'engagement',
-                        'event_label': postTitle
+                        'event_label': linkText
                     });
                 }
             });
