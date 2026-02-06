@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ищу интернет подругу/друга - iipd</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HKF6P1HJ9Q"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HKF6P1HJ9Q');
+    </script>
+    
+    <style>
+        /* Кастомный скроллбар */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+        
+        /* Для Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #2a2a2a #1a1a1a;
+        }
+        
+        /* Сброс и базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0a0a0a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Хедер */
+        .main-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-bottom: 1px solid #2a2a2a;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Навигация */
+        .nav-desktop {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+        }
+        
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #aaa;
+        }
+        
+        .nav-link:hover {
+            background: #1a1a1a;
+            color: #2ecc71;
+        }
+        
+        .telegram-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        /* Мобильное меню */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #f0f0f0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: #1a1a1a;
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: 2rem;
+            border-left: 1px solid #2a2a2a;
+            overflow-y: auto; /* Включаем прокрутку внутри меню */
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .menu-overlay.active {
+            display: block;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .close-menu {
+            background: none;
+            border: none;
+            color: #f0f0f0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        
+        /* Герой секция */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2ecc71;
+        }
+        
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+        
+        /* Секция постов */
+        .posts-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #f0f0f0;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .post-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+            border-color: #2ecc71;
+        }
+        
+        .post-content {
+            padding: 1.5rem;
+        }
+        
+        .post-date {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #f0f0f0;
+            font-weight: 600;
+        }
+        
+        .post-excerpt {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .read-more {
+            color: #2ecc71;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Футер */
+        .main-footer {
+            background: #0a0a0a;
+            border-top: 1px solid #2a2a2a;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: #f0f0f0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #2ecc71;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #2a2a2a;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Утилиты */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Хедер -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="https://ishupodrygyilidryga.fun" class="logo">
+                    <div class="logo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">iipd</div>
+                </a>
+                
+                <!-- Десктопная навигация -->
+                <nav class="nav-desktop">
+                    <a href="https://ishupodrygyilidryga.fun" class="nav-link">Главная</a>
+                    <a href="https://t.me/ishupodrygyilidryga" class="nav-link" target="_blank">Канал</a>
+                    <a href="https://t.me/ankety_bot" class="nav-link" target="_blank">Бот</a>
+                    <a href="https://t.me/lymikanon" class="nav-link" target="_blank">Чат</a>
+                    <a href="https://ishupodrygyilidryga.fun/about" class="nav-link">О нас</a>
+                    <a href="https://t.me/ishupodrygyilidryga" class="telegram-btn" target="_blank">
+                        <span>Подписаться</span>
+                    </a>
+                </nav>
+                
+                <!-- Кнопка мобильного меню -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Мобильное меню -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu" id="closeMenuBtn">×</button>
+        <nav class="mobile-nav">
+            <a href="https://ishupodrygyilidryga.fun" class="nav-link">Главная</a>
+            <a href="https://t.me/ishupodrygyilidryga" class="nav-link" target="_blank">Канал</a>
+            <a href="https://t.me/ankety_bot" class="nav-link" target="_blank">Бот</a>
+            <a href="https://t.me/lymikanon" class="nav-link" target="_blank">Чат</a>
+            <a href="https://ishupodrygyilidryga.fun/about" class="nav-link">О нас</a>
+            <a href="https://t.me/ishupodrygyilidryga" class="telegram-btn" target="_blank" style="margin-top: 1rem;">
+                <span>Подписаться</span>
+            </a>
+        </nav>
+    </div>
+    
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="container">
+            <h1>Ищу интернет подругу/друга</h1>
+            <p class="hero-description">
+                Сообщество для тех, кто ищет настоящую дружбу в интернете. 
+                Мы создаем пространство для искреннего общения, поддержки и новых знакомств.
+            </p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Полезных статей</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Активное сообщество</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Бесплатно</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Секция с постами -->
+    <section class="posts-section">
+        <div class="container">
+            <h2 class="section-title">Полезные материалы</h2>
+            
+            <div class="posts-grid">
+                <!-- Пост 1 -->
+                <a href="https://ishupodrygyilidryga.fun/posted" class="post-card">
+                    <div class="post-content">
+                        <span class="post-date">19 декабря 2025</span>
+                        <h3 class="post-title">Что нужно, чтобы анкету выложили?</h3>
+                        <p class="post-excerpt">
+                            Полное руководство по требованиям и условиям для успешной публикации вашей анкеты на канале.
+                        </p>
+                        <span class="read-more">Читать →</span>
+                    </div>
+                </a>
+                
+                <!-- Пост 2 -->
+                <a href="https://ishupodrygyilidryga.fun/pravila-bota" class="post-card">
+                    <div class="post-content">
+                        <span class="post-date">12 июня 2025</span>
+                        <h3 class="post-title">Правила использования бота</h3>
+                        <p class="post-excerpt">
+                            Основные правила, которые необходимо соблюдать для успешного взаимодействия с системой анкет.
+                        </p>
+                        <span class="read-more">Читать →</span>
+                    </div>
+                </a>
+                
+                <!-- Пост 3 -->
+                <a href="https://ishupodrygyilidryga.fun/notposted" class="post-card">
+                    <div class="post-content">
+                        <span class="post-date">4 июня 2025</span>
+                        <h3 class="post-title">Почему не выложили анкету?</h3>
+                        <p class="post-excerpt">
+                            Разбор основных причин отказа в публикации и рекомендации по их устранению.
+                        </p>
+                        <span class="read-more">Читать →</span>
+                    </div>
+                </a>
+                
+                <!-- Пост 4 -->
+                <a href="https://ishupodrygyilidryga.fun/chat-rules" class="post-card">
+                    <div class="post-content">
+                        <span class="post-date">6 марта 2025</span>
+                        <h3 class="post-title">Правила чата @lymikanon</h3>
+                        <p class="post-excerpt">
+                            Официальные правила общения в основном чате нашего сообщества.
+                        </p>
+                        <span class="read-more">Читать →</span>
+                    </div>
+                </a>
+                
+                <!-- Пост 5 -->
+                <a href="https://ishupodrygyilidryga.fun/support" class="post-card">
+                    <div class="post-content">
+                        <span class="post-date">15 декабря 2024</span>
+                        <h3 class="post-title">Частые вопросы и поддержка</h3>
+                        <p class="post-excerpt">
+                            Ответы на популярные вопросы пользователей и информация о технической поддержке.
+                        </p>
+                        <span class="read-more">Читать →</span>
+                    </div>
+                </a>
+                
+                <!-- Пост 6 -->
+                <a href="https://ishupodrygyilidryga.fun/privacy" class="post-card">
+                    <div class="post-content">
+                        <span class="post-date">20 ноября 2024</span>
+                        <h3 class="post-title">Пользовательское соглашение</h3>
+                        <p class="post-excerpt">
+                            Официальные документы: пользовательское соглашение и политика конфиденциальности.
+                        </p>
+                        <span class="read-more">Читать →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Футер -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>iipd</h3>
+                    <p style="color: #aaa;">
+                        Сообщество для поиска интернет-друзей и интересного общения.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Быстрые ссылки</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://ishupodrygyilidryga.fun">Главная</a></li>
+                        <li><a href="https://t.me/ishupodrygyilidryga" target="_blank">Telegram канал</a></li>
+                        <li><a href="https://t.me/ankety_bot" target="_blank">Бот для анкет</a></li>
+                        <li><a href="https://t.me/lymikanon" target="_blank">Наш чат</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://ishupodrygyilidryga.fun/about">О нас</a></li>
+                        <li><a href="https://ishupodrygyilidryga.fun/rules">Правила</a></li>
+                        <li><a href="https://ishupodrygyilidryga.fun/support">Поддержка</a></li>
+                        <li><a href="https://ishupodrygyilidryga.fun/privacy">Конфиденциальность</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Ищу интернет подругу/друга © <span id="currentYear">2024</span></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Управление мобильным меню
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function openMenu() {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            // Убрали отключение прокрутки страницы
+            // document.body.style.overflow = 'hidden';
+            
+            // Отслеживание в Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'mobile_menu_open', {
+                    'event_category': 'navigation',
+                    'event_label': 'Mobile Menu'
+                });
+            }
+        }
+        
+        function closeMenu() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            // Убрали возврат прокрутки страницы
+            // document.body.style.overflow = '';
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        // Установка текущего года в футере
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Отслеживание кликов на посты для Google Analytics
+        document.querySelectorAll('.post-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const postTitle = this.querySelector('.post-title').textContent;
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'post_click', {
+                        'event_category': 'engagement',
+                        'event_label': postTitle
+                    });
+                }
+            });
+        });
+        
+        // Отслеживание кликов на кнопку подписки
+        document.querySelectorAll('.telegram-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'subscribe_click', {
+                        'event_category': 'conversion',
+                        'event_label': 'Telegram Subscribe'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
