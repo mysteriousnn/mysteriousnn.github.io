@@ -71,14 +71,25 @@
             padding: 0 20px;
         }
         
-        /* Хедер */
+        /* Хедер - ИЗМЕНЕНИЯ ЗДЕСЬ */
         .main-header {
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             border-bottom: 1px solid #2a2a2a;
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            padding: 6rem 0 5rem 0;
+        }
+        
+        @media (max-width: 1000px) {
+            .main-header {
+                padding-top: 3rem;
+                padding-bottom: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 750px) {
+            .main-header {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
         }
         
         .header-content {
@@ -408,7 +419,7 @@
     </style>
 </head>
 <body>
-    <!-- Хедер -->
+    <!-- Хедер - больше не sticky -->
     <header class="main-header">
         <div class="container">
             <div class="header-content">
