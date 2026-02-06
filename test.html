@@ -80,15 +80,13 @@
         
         @media (max-width: 1000px) {
             .main-header {
-                padding-top: 3rem;
-                padding-bottom: 1.25rem;
+                padding: 3rem 0 1.25rem 0;
             }
         }
         
         @media (max-width: 750px) {
             .main-header {
-                padding-top: 1rem;
-                padding-bottom: 1rem;
+                padding: 1rem 0;
             }
         }
         
@@ -241,7 +239,13 @@
         
         /* Контент статьи */
         .article-section {
-            padding: 2rem 0 4rem 0;
+            padding: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .article-section {
+                padding: 1.5rem 0;
+            }
         }
         
         .article-content {
@@ -380,8 +384,13 @@
         .main-footer {
             background: #0a0a0a;
             border-top: 1px solid #2a2a2a;
-            padding: 3rem 0;
-            margin-top: 4rem;
+            padding: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .main-footer {
+                padding: 1.5rem 0;
+            }
         }
         
         .footer-content {
